@@ -1,0 +1,41 @@
+metric,value,numerator,denominator,note
+patient_level_unique_record_id,1109,,,Expected 1109 from first audit
+cpt_rows,1130,,,Cancer panel test records
+cpt_unique_sample_ids,1130,,,Expected 1130 samples
+patients_with_multiple_ngs_samples,20,,,Expected 20 multi-NGS patients
+max_ngs_samples_per_patient,3,,,
+cpt_missing_report_day_rows,0,0,1130,
+cpt_missing_pathology_procedure_day_rows,0,0,1130,
+cpt_order_date_dob_based_missing_rows,72,,,"Order date is DOB-relative, not diagnosis-relative"
+cpt_ambiguous_cancer_association_rows,0,,,cpt_n_ca_seq > 1
+cpt_report_post_death_rows,25,,,Excluded from usable NGS time
+cpt_report_post_last_alive_rows,38,,,Excluded from usable NGS time
+regimen_rows,3153,,,
+regimen_patients,1037,,,
+regimen_missing_start_rows,0,,,
+regimen_missing_end_any_rows,361,,,
+regimen_missing_end_all_rows,361,,,
+regimen_negative_end_any_rows,0,,,
+regimen_negative_end_all_rows,0,,,
+treatment_overlap_pairs_by_end_all,7,,,
+treatment_overlap_patients_by_end_all,4,,,
+same_day_multiple_regimen_start_groups,1,,,
+same_day_multiple_regimen_start_patients,1,,,
+ngs_report_same_day_as_regimen_pairs,6,,,
+ngs_report_same_day_as_regimen_patients,6,,,
+ngs_report_after_regimen_pairs,1674,,,
+ngs_report_after_regimen_patients,931,,,
+date_granularity,day intervals relative to cancer diagnosis for key t0 fields; exact calendar dates masked,,,cpt_seq_date is year only
+recurrence_field_status,no explicit recurrence field found by keyword scan in clinical_data column names,,,Post-diagnosis distant metastasis fields are available
+definition_A_selected_t0_patients,566,,,First new regimen after NGS report; report_day < regimen_start_day
+definition_A_same_day_t0_regimen_ambiguity_patients,0,,,
+definition_A_prior_overlap_with_t0_patients,0,,,
+definition_A_post_t0_evaluable_outcome_patients,566,,,
+definition_B_selected_t0_patients,568,,,First new regimen after or on NGS report day; report_day <= regimen_start_day
+definition_B_same_day_t0_regimen_ambiguity_patients,0,,,
+definition_B_prior_overlap_with_t0_patients,0,,,
+definition_B_post_t0_evaluable_outcome_patients,568,,,
+definition_C_selected_t0_patients,50,,,First regimen with NGS report available before start; report_day < first_regimen_start_day
+definition_C_same_day_t0_regimen_ambiguity_patients,0,,,
+definition_C_prior_overlap_with_t0_patients,0,,,
+definition_C_post_t0_evaluable_outcome_patients,50,,,

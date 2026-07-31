@@ -1,0 +1,22 @@
+t0_definition,definition_label,step_order,step,n_patients,excluded_from_previous,notes
+A,First new regimen after NGS report; report_day < regimen_start_day,1,raw_patients,1109,,patient_level_dataset.record_id
+A,First new regimen after NGS report; report_day < regimen_start_day,2,confirmed_pdac_compatible,1067,42,"ca_histology/naaccr_histology_cd and cpt_oncotree_code; feasibility proxy, not final label"
+A,First new regimen after NGS report; report_day < regimen_start_day,3,advanced_metastatic_recurrent_unresectable_evidence_before_possible_t0,881,186,"Stage IV or distant metastasis at diagnosis, baseline unresectable/locally advanced/metastatic, or dated post-diagnosis distant metastasis before a regimen opportunity"
+A,First new regimen after NGS report; report_day < regimen_start_day,4,interpretable_ngs_report_time,854,27,dx_cpt_rep_days present; cancer association unambiguous; not flagged post-death or post-last-alive
+A,First new regimen after NGS report; report_day < regimen_start_day,5,definition_matching_t0_regimen,566,288,selected regimen also requires advanced_evidence_day <= t0 start
+A,First new regimen after NGS report; report_day < regimen_start_day,6,prior_treatment_reconstructable,566,0,regimen order/start history available and no same-day t0 regimen ambiguity
+A,First new regimen after NGS report; report_day < regimen_start_day,7,post_t0_evaluable_outcome,566,0,regimen-level PFS/OS/TTNT status with non-negative time
+B,First new regimen after or on NGS report day; report_day <= regimen_start_day,1,raw_patients,1109,,patient_level_dataset.record_id
+B,First new regimen after or on NGS report day; report_day <= regimen_start_day,2,confirmed_pdac_compatible,1067,42,"ca_histology/naaccr_histology_cd and cpt_oncotree_code; feasibility proxy, not final label"
+B,First new regimen after or on NGS report day; report_day <= regimen_start_day,3,advanced_metastatic_recurrent_unresectable_evidence_before_possible_t0,881,186,"Stage IV or distant metastasis at diagnosis, baseline unresectable/locally advanced/metastatic, or dated post-diagnosis distant metastasis before a regimen opportunity"
+B,First new regimen after or on NGS report day; report_day <= regimen_start_day,4,interpretable_ngs_report_time,854,27,dx_cpt_rep_days present; cancer association unambiguous; not flagged post-death or post-last-alive
+B,First new regimen after or on NGS report day; report_day <= regimen_start_day,5,definition_matching_t0_regimen,568,286,selected regimen also requires advanced_evidence_day <= t0 start
+B,First new regimen after or on NGS report day; report_day <= regimen_start_day,6,prior_treatment_reconstructable,568,0,regimen order/start history available and no same-day t0 regimen ambiguity
+B,First new regimen after or on NGS report day; report_day <= regimen_start_day,7,post_t0_evaluable_outcome,568,0,regimen-level PFS/OS/TTNT status with non-negative time
+C,First regimen with NGS report available before start; report_day < first_regimen_start_day,1,raw_patients,1109,,patient_level_dataset.record_id
+C,First regimen with NGS report available before start; report_day < first_regimen_start_day,2,confirmed_pdac_compatible,1067,42,"ca_histology/naaccr_histology_cd and cpt_oncotree_code; feasibility proxy, not final label"
+C,First regimen with NGS report available before start; report_day < first_regimen_start_day,3,advanced_metastatic_recurrent_unresectable_evidence_before_possible_t0,881,186,"Stage IV or distant metastasis at diagnosis, baseline unresectable/locally advanced/metastatic, or dated post-diagnosis distant metastasis before a regimen opportunity"
+C,First regimen with NGS report available before start; report_day < first_regimen_start_day,4,interpretable_ngs_report_time,854,27,dx_cpt_rep_days present; cancer association unambiguous; not flagged post-death or post-last-alive
+C,First regimen with NGS report available before start; report_day < first_regimen_start_day,5,definition_matching_t0_regimen,50,804,selected regimen also requires advanced_evidence_day <= t0 start
+C,First regimen with NGS report available before start; report_day < first_regimen_start_day,6,prior_treatment_reconstructable,50,0,regimen order/start history available and no same-day t0 regimen ambiguity
+C,First regimen with NGS report available before start; report_day < first_regimen_start_day,7,post_t0_evaluable_outcome,50,0,regimen-level PFS/OS/TTNT status with non-negative time
