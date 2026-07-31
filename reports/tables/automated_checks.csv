@@ -1,0 +1,8 @@
+check_name,status,value,detail
+main_cohort_max_one_decision_sample_per_patient,pass,557,One selected t0 row per patient.
+index_ngs_strictly_before_t0,pass,557,Main analysis uses latest valid NGS report strictly before t0.
+advanced_evidence_before_t0,pass,557,Advanced evidence day must be <= t0 day.
+t0_treatment_and_post_t0_outcomes_not_inputs,pass,0,Field leakage table excludes t0 treatment/outcome fields from inputs.
+cohort_flow_counts_monotonic,pass,8,Each flow should be non-increasing.
+base_cohort_not_endpoint_dependent,pass,extended=557 max_endpoint=557,Extended cohort is defined before endpoint-specific filtering.
+public_outputs_no_patient_level_ids,pass,0,Scans public outputs for institution-prefixed GENIE patient/sample IDs.

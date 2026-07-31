@@ -1,0 +1,4 @@
+label_family,availability,extended_n,core_n,limitations
+observed_next_regimen,available_as_observed_data,557,485,Descriptive next observed regimen only; standardized=485; masked_investigational=58; manual_review=14; not a gold standard or optimal treatment label.
+evidence_supported_candidate_set,not_available_from_BPC_alone,0,0,"Requires external evidence snapshot, candidate treatment space, clinical constraints, and manual/structured evidence labels. Do not derive by assuming observed regimen is evidence-supported."
+post_t0_outcome,endpoint_specific_available,557,485,OS evaluable=557; PFS-I evaluable=533; PFS-M evaluable=533; TTNT-any-cancer evaluable=557; TTNT-associated-cancer evaluable=557

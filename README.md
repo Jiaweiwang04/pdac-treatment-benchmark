@@ -33,7 +33,7 @@ warehouse/             # Inactive local files; contents ignored by default
 
 ## Environment
 
-Use the local Python environment configured for this project. The current audit script uses only the Python standard library.
+Use the local Python environment configured for this project. Current audit scripts use `pandas` and `pypdf`; see `code/requirements.txt`.
 
 ## Run the Data Audit
 
@@ -62,3 +62,24 @@ Main outputs:
 ## Current Status
 
 The first read-only audit of the BPC PANC raw data has been completed. Primary-key candidates, foreign-key candidates, field meanings, and cohort-size estimates in the report are first-pass audit outputs. They must be checked against the analytic data guide, variable dictionary, and research protocol before cohort construction.
+
+## Round 3 Cohort Lock and Label Feasibility Audit
+
+Run from the repository root:
+
+```powershell
+python code/scripts/audit_cohort_lock_label_feasibility.py --repo-root .
+```
+
+Main outputs:
+
+- [Cohort definition draft](cohort_definition_v0.1.yaml)
+- [Round 3 audit report](reports/cohort_lock_label_feasibility_v0.1.md)
+- [Cohort lock flow counts](reports/tables/cohort_lock_flow_counts.csv)
+- [Endpoint coverage](reports/tables/endpoint_coverage.csv)
+- [Treatment sequence quality](reports/tables/treatment_sequence_quality.csv)
+- [NGS selection sensitivity](reports/tables/ngs_selection_sensitivity.csv)
+- [Label availability](reports/tables/label_availability.csv)
+- [Time leakage field audit](reports/tables/time_leakage_field_audit.csv)
+- [PDAC mapping](code/mappings/pdac_mapping_v0.1.csv)
+- [Regimen mapping](code/mappings/regimen_mapping_v0.1.csv)

@@ -1,4 +1,4 @@
-﻿# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
@@ -235,3 +235,11 @@ warehouse/*
 # Local management documents (kept locally, not versioned)
 docs/notes/ga01_research_workflow.pdf
 docs/notes/ga09_data_code_management.pdf
+
+# Local patient-level review files
+data/processed/cohort_lock_label_feasibility/
+reports/private/
+reports/patient_level/
+
+# Office temporary lock files
+~$*.docx

@@ -1,0 +1,8 @@
+cohort,n_patients,status,definition
+round2_definition_A_reproduced,566,recomputed,Second-round feasibility proxy definition A
+definition_A_selected_all_index_pancreatic,589,audit_pool,Definition A before final PDAC include filter
+definition_A_pdac_include_selected,557,draft,Definition A with draft PDAC include mapping
+definition_A_pdac_manual_review_selected,15,manual_review,Definition A selected but PDAC mapping uncertain
+definition_A_pdac_exclude_selected,17,exclude,Definition A selected but mapped non-PDAC
+extended_draft,557,draft_not_locked,Outcome-independent Extended draft
+core_draft,485,draft_not_locked,Outcome-independent clean Track A Core draft

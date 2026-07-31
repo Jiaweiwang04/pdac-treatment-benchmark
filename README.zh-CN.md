@@ -33,7 +33,7 @@ warehouse/             # 暂时闲置文件，默认不提交内容
 
 ## 环境
 
-使用本项目本地配置的 Python 环境。当前审计脚本只使用 Python 标准库。
+使用本项目本地配置的 Python 环境。当前审计脚本使用 `pandas` 和 `pypdf`；见 `code/requirements.txt`。
 
 ## 运行数据审计
 
@@ -62,3 +62,24 @@ python code/scripts/audit_raw_data.py --repo-root .
 ## 当前状态
 
 已完成第一轮 BPC PANC 原始数据只读审计。报告中的主键/外键、字段含义和队列规模均为第一轮候选结论，正式建队列前必须依据数据手册、变量字典和研究方案继续核验。
+
+## 第三轮队列锁定与标签可用性审计
+
+在仓库根目录运行：
+
+```powershell
+python code/scripts/audit_cohort_lock_label_feasibility.py --repo-root .
+```
+
+主要输出：
+
+- [队列定义草案](cohort_definition_v0.1.yaml)
+- [第三轮审计报告](reports/cohort_lock_label_feasibility_v0.1.md)
+- [队列流程计数](reports/tables/cohort_lock_flow_counts.csv)
+- [终点覆盖](reports/tables/endpoint_coverage.csv)
+- [治疗序列质量](reports/tables/treatment_sequence_quality.csv)
+- [NGS 选择敏感性](reports/tables/ngs_selection_sensitivity.csv)
+- [标签可用性](reports/tables/label_availability.csv)
+- [时间泄漏字段审计](reports/tables/time_leakage_field_audit.csv)
+- [PDAC 映射](code/mappings/pdac_mapping_v0.1.csv)
+- [Regimen 映射](code/mappings/regimen_mapping_v0.1.csv)

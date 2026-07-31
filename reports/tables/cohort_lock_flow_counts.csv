@@ -1,0 +1,9 @@
+cohort_stage,step_order,step,n_patients,notes
+main_definition_A,1,raw_patients,1109,patient_level_dataset record_id
+main_definition_A,2,index_pancreatic_primary,1109,"ca_type=Pancreatic Cancer, ca_d_site C25.*, redcap_ca_index=Yes"
+main_definition_A,3,pdac_mapping_include,1055,draft v0.1 include mapping
+main_definition_A,4,advanced_evidence_before_possible_t0,870,advanced evidence before a possible regimen opportunity
+main_definition_A,5,usable_ngs_time,843,valid report timing and no post-death/post-last-alive flag
+main_definition_A,6,definition_A_t0_regimen,557,strict report_day < regimen_start_day
+main_definition_A,7,extended_draft,557,definition A + PDAC include + latest strict index NGS + reconstructable t0 sequence; outcome independent
+main_definition_A,8,core_draft,485,Extended + clean treatment sequence + standardized non-masked observed regimen; outcome independent

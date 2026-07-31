@@ -1,0 +1,4 @@
+definition,previous_round_usable_patients,recomputed_usable_patients,recomputed_t0_patients,matches_previous
+A,566,566,566,True
+B,568,568,568,True
+C,50,50,50,True

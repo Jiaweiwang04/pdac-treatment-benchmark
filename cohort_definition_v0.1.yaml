@@ -1,0 +1,39 @@
+# Cohort definition v0.1 - draft, not locked
+version: v0.1
+status: draft_not_locked
+track_a_status: conditional_go
+track_b_status: frozen
+raw_data_root: data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public
+formal_keys:
+  patient: [cohort, record_id]
+  cancer_linked_tables: [cohort, record_id, ca_seq]
+  pathology_to_ngs: [cohort, record_id, path_proc_number, path_rep_number]
+main_t0_definition:
+  name: definition_A
+  rule: first new cancer-directed regimen with a valid NGS report strictly before regimen start
+  inequality: dx_cpt_rep_days < dx_reg_start_int
+  index_ngs_strategy: latest valid NGS report strictly before t0
+  status: draft_not_locked
+pdac_mapping:
+  status: draft_manual_review_required
+  include: OncoTree PAAD with pancreatic index primary, or adenocarcinoma-compatible histology when OncoTree is unavailable
+  exclude: non-pancreatic primary or clear non-PDAC pancreatic subtype such as PAAC/UCP
+  manual_review: PAASC, conflicting OncoTree codes, ambiguous histology
+  insufficient_info: no usable histology/code/OncoTree evidence
+cohorts:
+  extended_draft_n: 557
+  core_draft_n: 485
+  pilot_local_n: 30
+endpoint_specific_subcohorts:
+  os_n: 557
+  pfs_i_n: 533
+  pfs_m_n: 533
+  ttnt_any_cancer_n: 557
+  ttnt_associated_cancer_n: 557
+labels:
+  observed_next_regimen: available_as_observed_data_not_gold_standard
+  evidence_supported_candidate_set: not_available_from_bpc_alone_requires_next_stage_evidence_design
+  post_t0_outcome: endpoint_specific_available_not_base_cohort_requirement
+privacy:
+  public_outputs: aggregate_only
+  patient_level_intermediates: data/processed/cohort_lock_label_feasibility/ignored_by_git
