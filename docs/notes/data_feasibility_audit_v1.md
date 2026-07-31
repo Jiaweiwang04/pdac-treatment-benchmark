@@ -1,6 +1,6 @@
 # BPC PANC 原始数据可行性审计 v1
 
-- 生成时间：2026-07-31T09:29:59
+- 生成时间：2026-07-31T10:09:26
 - 仓库根目录：`D:\代码集\Python\pdac-treatment-benchmark`
 - 原始数据目录：`data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public`
 - 审计边界：只读扫描 PANC 1.0-public；不清洗、不建模、不输出患者级记录。
@@ -25,7 +25,7 @@
 
 ## 3. 文件和数据表说明
 
-完整清单位于 `reports/tables/file_inventory.csv`。核心表主题由文件路径和字段名启发式推断，待数据字典复核。
+完整清单位于 `code/results/data_audit/tables/file_inventory.csv`。核心表主题由文件路径和字段名启发式推断，待数据字典复核。
 - `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/case_lists/cases_all.txt`: delimited_text, rows=5, cols=2, theme=metadata_or_case_list
 - `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/case_lists/cases_cna.txt`: delimited_text, rows=5, cols=2, theme=metadata_or_case_list
 - `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/case_lists/cases_cnaseq.txt`: delimited_text, rows=5, cols=2, theme=metadata_or_case_list
@@ -76,7 +76,7 @@
 - shared_identifier_candidate: `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_clinical_sample.txt`.`SAMPLE_ID` -> `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_mutations_extended.txt`.`Tumor_Sample_Barcode`; 1087 overlapping distinct non-missing values
 - shared_identifier_candidate: `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_clinical_sample.txt`.`SAMPLE_ID` -> `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_sv.txt`.`Sample_Id`; 194 overlapping distinct non-missing values
 - shared_identifier_candidate: `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_clinical_sample.txt`.`SAMPLE_ID` -> `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_timeline_sample_acquisition.txt`.`SAMPLE_ID`; 1130 overlapping distinct non-missing values
-- 其余 168 条候选关系见 `reports/tables/table_relationships.csv`。
+- 其余 168 条候选关系见 `code/results/data_audit/tables/table_relationships.csv`。
 
 ## 5. 患者、样本、治疗、分子和结局覆盖
 
@@ -89,11 +89,11 @@
 - 多 NGS 检测患者数：20
 - 多治疗 regimen 患者数：816
 
-组织学、分期、转移、可切除状态和机构分布的聚合统计见 `reports/tables/categorical_summaries.csv`；小于阈值的类别已合并隐藏。
+组织学、分期、转移、可切除状态和机构分布的聚合统计见 `code/results/data_audit/tables/categorical_summaries.csv`；小于阈值的类别已合并隐藏。
 
 ## 6. 关键字段缺失情况
 
-完整字段级缺失率见 `reports/tables/missingness_summary.csv`。以下仅列关键字段：
+完整字段级缺失率见 `code/results/data_audit/tables/missingness_summary.csv`。以下仅列关键字段：
 - `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_clinical_patient.txt`.`CA_DMETS_YN`: missing=612/1109 (0.551849)
 - `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_clinical_patient.txt`.`CA_HISTOLOGY`: missing=401/1109 (0.361587)
 - `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/cBioPortal_files/data_clinical_patient.txt`.`CA_RESECT_STATUS`: missing=1/1109 (0.000902)

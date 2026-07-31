@@ -1,6 +1,6 @@
 """Read-only audit for the AACR GENIE BPC PANC raw data package.
 
-The script writes only derived audit outputs under reports/ and notebooks/.
+The script writes only derived audit outputs under docs/notes, code/results, and code/notebooks.
 It does not modify, clean, model, or resave any file under data/raw.
 Patient-level records and raw cell values are not printed or written.
 """
@@ -1102,7 +1102,7 @@ def write_markdown_report(
     lines.append("")
     lines.append("## 3. 文件和数据表说明")
     lines.append("")
-    lines.append("完整清单位于 `reports/tables/file_inventory.csv`。核心表主题由文件路径和字段名启发式推断，待数据字典复核。")
+    lines.append("完整清单位于 `code/results/data_audit/tables/file_inventory.csv`。核心表主题由文件路径和字段名启发式推断，待数据字典复核。")
     for row in file_rows[:20]:
         lines.append(f"- `{row['relative_path']}`: {row['format']}, rows={row['data_row_count']}, cols={row['column_count']}, theme={row['table_theme']}")
     if len(file_rows) > 20:
@@ -1117,7 +1117,7 @@ def write_markdown_report(
             f"`{row['target_table']}`.`{row['target_field']}`; {row['evidence']}"
         )
     if len(relationship_rows) > 25:
-        lines.append(f"- 其余 {len(relationship_rows) - 25} 条候选关系见 `reports/tables/table_relationships.csv`。")
+        lines.append(f"- 其余 {len(relationship_rows) - 25} 条候选关系见 `code/results/data_audit/tables/table_relationships.csv`。")
     lines.append("")
     lines.append("## 5. 患者、样本、治疗、分子和结局覆盖")
     lines.append("")
@@ -1130,11 +1130,11 @@ def write_markdown_report(
     lines.append(f"- 多 NGS 检测患者数：{metric('patients_with_multiple_ngs_tests')}")
     lines.append(f"- 多治疗 regimen 患者数：{metric('patients_with_multiple_regimens')}")
     lines.append("")
-    lines.append("组织学、分期、转移、可切除状态和机构分布的聚合统计见 `reports/tables/categorical_summaries.csv`；小于阈值的类别已合并隐藏。")
+    lines.append("组织学、分期、转移、可切除状态和机构分布的聚合统计见 `code/results/data_audit/tables/categorical_summaries.csv`；小于阈值的类别已合并隐藏。")
     lines.append("")
     lines.append("## 6. 关键字段缺失情况")
     lines.append("")
-    lines.append("完整字段级缺失率见 `reports/tables/missingness_summary.csv`。以下仅列关键字段：")
+    lines.append("完整字段级缺失率见 `code/results/data_audit/tables/missingness_summary.csv`。以下仅列关键字段：")
     for row in key_missing[:30]:
         lines.append(
             f"- `{row['table_path']}`.`{row['public_field_name']}`: missing={row['missing_count']}/"
@@ -1206,15 +1206,17 @@ def create_notebook(path: Path) -> None:
         "cells": [
             {
                 "cell_type": "markdown",
+                "id": "audit-overview",
                 "metadata": {},
                 "source": [
-                    "# BPC PANC 原始数据只读审计\n",
+                    "# BPC PANC Raw Data Read-Only Audit\n",
                     "\n",
-                    "本 notebook 只运行 `scripts/audit_raw_data.py` 并查看聚合输出。不要在这里展示患者级记录。\n",
+                    "This notebook runs `code/scripts/audit_raw_data.py` and inspects aggregate outputs only. Do not display patient-level records here.\n",
                 ],
             },
             {
                 "cell_type": "code",
+                "id": "run-audit",
                 "execution_count": None,
                 "metadata": {},
                 "outputs": [],
@@ -1222,15 +1224,19 @@ def create_notebook(path: Path) -> None:
                     "from pathlib import Path\n",
                     "import subprocess, sys\n",
                     "\n",
-                    "repo = Path.cwd().resolve()\n",
-                    "if repo.name == 'notebooks':\n",
-                    "    repo = repo.parent\n",
-                    "script = repo / 'scripts' / 'audit_raw_data.py'\n",
+                    "def find_repo_root(start):\n",
+                    "    for p in [start, *start.parents]:\n",
+                    "        if (p / 'data').exists() and (p / 'code' / 'scripts' / 'audit_raw_data.py').exists():\n",
+                    "            return p\n",
+                    "    raise RuntimeError('repo root not found')\n",
+                    "repo = find_repo_root(Path.cwd().resolve())\n",
+                    "script = repo / 'code' / 'scripts' / 'audit_raw_data.py'\n",
                     "subprocess.run([sys.executable, str(script), '--repo-root', str(repo)], check=True)\n",
                 ],
             },
             {
                 "cell_type": "code",
+                "id": "inspect-aggregate-outputs",
                 "execution_count": None,
                 "metadata": {},
                 "outputs": [],
@@ -1238,11 +1244,14 @@ def create_notebook(path: Path) -> None:
                     "import csv\n",
                     "from pathlib import Path\n",
                     "\n",
-                    "repo = Path.cwd().resolve()\n",
-                    "if repo.name == 'notebooks':\n",
-                    "    repo = repo.parent\n",
+                    "def find_repo_root(start):\n",
+                    "    for p in [start, *start.parents]:\n",
+                    "        if (p / 'data').exists() and (p / 'code' / 'scripts' / 'audit_raw_data.py').exists():\n",
+                    "            return p\n",
+                    "    raise RuntimeError('repo root not found')\n",
+                    "repo = find_repo_root(Path.cwd().resolve())\n",
                     "for name in ['file_inventory.csv', 'field_inventory.csv', 'table_relationships.csv', 'feasibility_summary.csv']:\n",
-                    "    path = repo / 'reports' / 'tables' / name\n",
+                    "    path = repo / 'code' / 'results' / 'data_audit' / 'tables' / name\n",
                     "    with path.open(encoding='utf-8', newline='') as f:\n",
                     "        rows = list(csv.DictReader(f))\n",
                     "    print(name, 'rows=', len(rows))\n",
@@ -1267,10 +1276,12 @@ def create_notebook(path: Path) -> None:
 def audit(repo_root: Path, raw_root: Path) -> None:
     if not raw_root.exists():
         raise FileNotFoundError(f"Raw root not found: {raw_root}")
-    reports_dir = repo_root / "reports"
-    tables_dir = reports_dir / "tables"
-    notebook_path = repo_root / "notebooks" / "00_raw_data_inventory.ipynb"
+    tables_dir = repo_root / "code" / "results" / "data_audit" / "tables"
+    report_path = repo_root / "docs" / "notes" / "data_feasibility_audit_v1.md"
+    notebook_path = repo_root / "code" / "notebooks" / "00_raw_data_inventory.ipynb"
     tables_dir.mkdir(parents=True, exist_ok=True)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    notebook_path.parent.mkdir(parents=True, exist_ok=True)
 
     data_dict = load_variable_dictionary(raw_root)
     file_rows: list[dict[str, Any]] = []
@@ -1424,7 +1435,7 @@ def audit(repo_root: Path, raw_root: Path) -> None:
     write_markdown_report(
         repo_root,
         raw_root,
-        reports_dir / "data_feasibility_audit_v1.md",
+        report_path,
         file_rows,
         field_rows,
         relationship_rows,
@@ -1439,19 +1450,31 @@ def audit(repo_root: Path, raw_root: Path) -> None:
     print(f"files={len(file_rows)} fields={len(field_rows)} relationships={len(relationship_rows)}")
 
 
+def find_repo_root(start: Path) -> Path:
+    current = start if start.is_dir() else start.parent
+    for candidate in [current, *current.parents]:
+        if (candidate / ".git").exists() and (candidate / "data").exists():
+            return candidate
+        if (candidate / PANC_RELATIVE_ROOT).exists():
+            return candidate
+    raise FileNotFoundError(f"Could not locate repository root from {start}")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Read-only audit for BPC PANC raw data.")
-    parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument("--repo-root", type=Path, default=None)
     parser.add_argument("--raw-root", type=Path, default=None)
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    repo_root = args.repo_root.resolve()
+    repo_root = args.repo_root.resolve() if args.repo_root else find_repo_root(Path(__file__).resolve())
     raw_root = args.raw_root.resolve() if args.raw_root else repo_root / PANC_RELATIVE_ROOT
     audit(repo_root, raw_root)
 
 
 if __name__ == "__main__":
     main()
+
+

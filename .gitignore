@@ -1,4 +1,4 @@
-# Byte-compiled / optimized / DLL files
+﻿# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
@@ -220,7 +220,18 @@ __marimo__/
 # Data
 data/raw
 
-# Docs
-docs/basic
 
 
+
+
+# Derived data (keep directory, do not commit patient-level derivatives)
+data/processed/*
+!data/processed/.gitkeep
+
+# Local warehouse
+warehouse/*
+!warehouse/.gitkeep
+
+# Local management documents (kept locally, not versioned)
+docs/notes/ga01_research_workflow.pdf
+docs/notes/ga09_data_code_management.pdf
