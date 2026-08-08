@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -21,6 +22,11 @@ sys.path.insert(0, str(SCRIPT_DIR))
 
 import audit_cohort_lock_label_feasibility as audit
 import audit_cohort_t0_feasibility as t0audit
+import privacy_checks as privacy
+
+
+def fake_genie_sample_id() -> str:
+    return "GENIE-" + "FAKE-" + "P-" + "000001-T01-IMX"
 
 
 def make_patient(cohort: str, record_id: str, n_cancers: str = "1") -> dict[str, str]:
@@ -291,6 +297,100 @@ class SyntheticCohortRepairTests(unittest.TestCase):
         rows = audit.flow_rows(data, candidates, strict, audit.strict_core_from_extended(strict), strict, pd.DataFrame())
         main_counts = [row["n_patients"] for row in rows if row["cohort_stage"] == "round3_1_main"]
         self.assertTrue(all(main_counts[i] >= main_counts[i + 1] for i in range(len(main_counts) - 1)))
+
+
+class PublicPrivacyAndSuppressionTests(unittest.TestCase):
+    def write_text(self, root: Path, relative_path: str, text: str, *, encoding: str = "utf-8") -> None:
+        path = root / relative_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding=encoding)
+
+    def test_privacy_scan_fails_for_code_results_identifier(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rel = "code/results/fake.csv"
+            self.write_text(root, rel, "metric,value\nsample," + fake_genie_sample_id() + "\n")
+            hits = privacy.privacy_scan_hits(root, files=[rel])
+            self.assertEqual(len(hits), 1)
+            self.assertEqual(hits[0]["file"], rel)
+
+    def test_privacy_scan_fails_for_reports_identifier(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rel = "reports/fake.csv"
+            self.write_text(root, rel, "metric,value\nsample," + fake_genie_sample_id() + "\n")
+            self.assertEqual(len(privacy.privacy_scan_hits(root, files=[rel])), 1)
+
+    def test_safe_aggregate_table_is_not_flagged(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rel = "reports/safe.csv"
+            self.write_text(root, rel, "cohort,n_patients\nStrict Extended,557\nStrict Core,475\n")
+            self.assertEqual(privacy.privacy_scan_hits(root, files=[rel]), [])
+
+    def test_binary_files_are_safely_skipped(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rel = "reports/binary.pdf"
+            path = root / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"\xff\xfe\x00\x01")
+            self.assertEqual(privacy.privacy_scan_hits(root, files=[rel]), [])
+
+    def test_privacy_scan_uses_tracked_file_list(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.write_text(root, "reports/listed.csv", "metric,value\nn_patients,10\n")
+            self.write_text(root, "reports/unlisted.csv", "metric,value\nsample," + fake_genie_sample_id() + "\n")
+            self.assertEqual(privacy.privacy_scan_hits(root, files=["reports/listed.csv"]), [])
+
+    def test_public_cell_suppresses_common_count_columns(self) -> None:
+        small = max(1, privacy.SMALL_COUNT_THRESHOLD - 1)
+        self.assertEqual(privacy.public_cell("count", small, {}), privacy.SUPPRESSED)
+
+    def test_public_cell_suppresses_ngs_sensitivity_count(self) -> None:
+        small = max(1, privacy.SMALL_COUNT_THRESHOLD - 1)
+        self.assertEqual(privacy.public_cell("different_index_sample_vs_main", small, {}), privacy.SUPPRESSED)
+
+    def test_public_cell_suppresses_metric_value_counts(self) -> None:
+        small = max(1, privacy.SMALL_COUNT_THRESHOLD - 1)
+        self.assertEqual(privacy.public_cell("value", small, {"metric": "n_patients"}), privacy.SUPPRESSED)
+
+    def test_public_cell_does_not_suppress_non_count_values(self) -> None:
+        self.assertEqual(privacy.public_cell("missing_rate", "0.03", {}), "0.03")
+        self.assertEqual(privacy.public_cell("index_ngs_year", "2018", {}), "2018")
+        self.assertEqual(privacy.public_cell("duration", "3", {}), "3")
+        self.assertEqual(privacy.public_cell("value", "3", {"metric": "median_days"}), "3")
+
+    def test_small_count_scan_fails_before_suppression_and_passes_after(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rel = "reports/tables/ngs_selection_sensitivity.csv"
+            self.write_text(root, rel, "strategy,n_patients,different_index_sample_vs_main\nmain,10,2\n")
+            self.assertEqual(len(privacy.small_count_scan_hits(root, files=[rel])), 1)
+            self.write_text(root, rel, "strategy,n_patients,different_index_sample_vs_main\nmain,10,<5\n")
+            self.assertEqual(privacy.small_count_scan_hits(root, files=[rel]), [])
+
+    def test_small_count_scan_handles_metric_value_long_tables(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rel = "reports/tables/long.csv"
+            self.write_text(root, rel, "metric,value\nn_events,1\nmissing_rate,0.01\nmedian_days,3\n")
+            hits = privacy.small_count_scan_hits(root, files=[rel])
+            self.assertEqual(len(hits), 1)
+            self.assertEqual(hits[0]["column"], "value")
+
+    def test_metric_value_count_with_day_in_name_still_suppresses(self) -> None:
+        small = max(1, privacy.SMALL_COUNT_THRESHOLD - 1)
+        self.assertEqual(
+            privacy.public_cell("value", small, {"metric": "same_day_multiple_regimen_start_patients"}),
+            privacy.SUPPRESSED,
+        )
+
+    def test_threshold_comes_from_shared_configuration(self) -> None:
+        small = max(1, privacy.SMALL_COUNT_THRESHOLD - 1)
+        self.assertLess(small, privacy.SMALL_COUNT_THRESHOLD)
+        self.assertEqual(privacy.suppress_count(small), privacy.SUPPRESSED)
 
 
 class IntegrationOutputTests(unittest.TestCase):

@@ -1,6 +1,6 @@
 # Cohort and t0 Feasibility Audit v1
 
-Generated: 2026-07-31T10:43:02
+Generated: deterministic t0 feasibility rebuild; no wall-clock timestamp
 Raw data root: `data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public`
 
 Scope: read-only feasibility audit. No modeling, no final labels, no patient-level records in outputs.

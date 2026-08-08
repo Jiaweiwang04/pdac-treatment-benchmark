@@ -12,11 +12,11 @@ import math
 import re
 import sys
 from collections import Counter
-from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
+import privacy_checks as privacy
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -44,6 +44,7 @@ DEFINITION_LABELS = {
     "B": "First new regimen after or on NGS report day; report_day <= regimen_start_day",
     "C": "First regimen with NGS report available before start; report_day < first_regimen_start_day",
 }
+SMALL_COUNT_THRESHOLD = privacy.SMALL_COUNT_THRESHOLD
 
 
 def find_repo_root(start: Path) -> Path:
@@ -102,7 +103,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> 
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()
         for row in rows:
-            writer.writerow({name: row.get(name, "") for name in fieldnames})
+            writer.writerow({name: privacy.public_cell(name, row.get(name, ""), row) for name in fieldnames})
 
 
 def data_guide_status(raw_root: Path) -> str:
@@ -344,7 +345,7 @@ def sample_count_distribution(cpt: pd.DataFrame) -> list[dict[str, Any]]:
     return rows
 
 
-def suppress_counts(series: pd.Series, threshold: int = 5, top_n: int = 12) -> list[tuple[str, int]]:
+def suppress_counts(series: pd.Series, threshold: int = SMALL_COUNT_THRESHOLD, top_n: int = 12) -> list[tuple[str, int]]:
     counts = series.fillna("").replace("", "Missing/blank").value_counts(dropna=False)
     visible = []
     small_total = 0
@@ -497,7 +498,7 @@ def build_outputs(repo_root: Path) -> dict[str, Any]:
     lines = [
         "# Cohort and t0 Feasibility Audit v1",
         "",
-        f"Generated: {datetime.now().isoformat(timespec='seconds')}",
+        "Generated: deterministic t0 feasibility rebuild; no wall-clock timestamp",
         f"Raw data root: `{PANC_RELATIVE_ROOT.as_posix()}`",
         "",
         "Scope: read-only feasibility audit. No modeling, no final labels, no patient-level records in outputs.",

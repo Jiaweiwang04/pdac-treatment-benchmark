@@ -3,7 +3,7 @@ patient_level_unique_record_id,1109,,,Expected 1109 from first audit
 cpt_rows,1130,,,Cancer panel test records
 cpt_unique_sample_ids,1130,,,Expected 1130 samples
 patients_with_multiple_ngs_samples,20,,,Expected 20 multi-NGS patients
-max_ngs_samples_per_patient,3,,,
+max_ngs_samples_per_patient,<5,,,
 cpt_missing_report_day_rows,0,0,1130,
 cpt_missing_pathology_procedure_day_rows,0,0,1130,
 cpt_order_date_dob_based_missing_rows,72,,,"Order date is DOB-relative, not diagnosis-relative"
@@ -18,9 +18,9 @@ regimen_missing_end_all_rows,361,,,
 regimen_negative_end_any_rows,0,,,
 regimen_negative_end_all_rows,0,,,
 treatment_overlap_pairs_by_end_all,7,,,
-treatment_overlap_patients_by_end_all,4,,,
-same_day_multiple_regimen_start_groups,1,,,
-same_day_multiple_regimen_start_patients,1,,,
+treatment_overlap_patients_by_end_all,<5,,,
+same_day_multiple_regimen_start_groups,<5,,,
+same_day_multiple_regimen_start_patients,<5,,,
 ngs_report_same_day_as_regimen_pairs,6,,,
 ngs_report_same_day_as_regimen_patients,6,,,
 ngs_report_after_regimen_pairs,1674,,,

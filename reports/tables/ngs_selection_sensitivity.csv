@@ -1,6 +1,6 @@
 strategy,n_patients,different_index_sample_vs_main,note
 main_latest_report_strict_before_t0,557,0,Main analysis index NGS rule.
-earliest_report_strict_before_t0,557,2,Sensitivity only; same t0 regimen but earliest prior report sample.
-latest_sample_collection_before_t0,557,1,Uses pathology procedure day before t0 when available.
+earliest_report_strict_before_t0,557,<5,Sensitivity only; same t0 regimen but earliest prior report sample.
+latest_sample_collection_before_t0,557,<5,Uses pathology procedure day before t0 when available.
 allow_same_day_ngs_report,559,not_applicable,Allows report_day <= t0 for t0 eligibility only; main index input remains strict before t0.
 same_day_advanced_evidence_sensitivity,557,not_applicable,Includes same-day advanced evidence but excludes it from strict Core.

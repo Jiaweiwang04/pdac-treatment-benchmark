@@ -41,6 +41,8 @@ labels:
   post_t0_outcome: endpoint_specific_mixed_validation
 privacy:
   public_outputs: aggregate_only_with_n_lt_5_suppression
+  small_count_threshold: 5
+  suppression_symbol: "<5"
   patient_level_intermediates: data/processed/cohort_lock_label_feasibility/ignored_by_git
 unresolved_issues:
   - PDAC mapping remains draft_not_locked; PAASC/ambiguous histology requires medical or mentor confirmation.

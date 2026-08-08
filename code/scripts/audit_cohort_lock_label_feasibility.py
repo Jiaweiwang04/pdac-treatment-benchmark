@@ -24,6 +24,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 import audit_cohort_t0_feasibility as t0audit
+import privacy_checks as privacy
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -31,14 +32,13 @@ if hasattr(sys.stdout, "reconfigure"):
 PANC_RELATIVE_ROOT = t0audit.PANC_RELATIVE_ROOT
 KEY_PATIENT = t0audit.KEY_PATIENT
 KEY_CANCER = t0audit.KEY_CANCER
-SUPPRESSION_THRESHOLD = 5
-SUPPRESSED = "<5"
+SUPPRESSION_THRESHOLD = privacy.SMALL_COUNT_THRESHOLD
+SUPPRESSED = privacy.SUPPRESSED
 ROUND2_DEFINITION_A_REFERENCE = 566
 ROUND3_INITIAL_EXTENDED_REFERENCE = 557
 ROUND3_INITIAL_CORE_REFERENCE = 485
 PDAC_MAPPING_VERSION = "v0.1.3.1"
 COHORT_DEFINITION_VERSION = "v0.1.3.1"
-INSTITUTION_ID_PATTERN = re.compile(r"GENIE-(DFCI|MSK|UHN|VICC)-", re.IGNORECASE)
 
 PDAC_INCLUDE_HIST_CODES = {"8140", "81403", "8500", "85003", "8211", "82603"}
 PDAC_EXCLUDE_HIST_CODES = {"8550", "85503", "8154", "8244", "8070", "80703"}
@@ -234,15 +234,7 @@ def file_sha256(path: Path) -> str:
 
 
 def suppress_count(value: Any, threshold: int = SUPPRESSION_THRESHOLD) -> str:
-    if value in {"", None, "not_applicable"}:
-        return "" if value is None else str(value)
-    try:
-        number = int(value)
-    except (TypeError, ValueError):
-        return str(value)
-    if 0 < number < threshold:
-        return SUPPRESSED
-    return str(number)
+    return privacy.suppress_count(value, threshold)
 
 
 def display_count(value: Any) -> str:
@@ -250,34 +242,11 @@ def display_count(value: Any) -> str:
 
 
 def is_count_field(field: str) -> bool:
-    lower = field.lower()
-    if lower in {"step_order", "release_version", "version", "year", "cpt_seq_year", "sha256", "sample_count_per_patient"}:
-        return False
-    count_tokens = (
-        lower == "n"
-        or lower.startswith("n_")
-        or lower.endswith("_n")
-        or lower.endswith("_count")
-        or "n_patients" in lower
-        or "n_records" in lower
-        or "n_rows" in lower
-        or "n_events" in lower
-        or "event_n" in lower
-        or "censored_n" in lower
-        or "evaluable_n" in lower
-        or "cohort_n" in lower
-        or "patients" in lower
-        or "records" in lower
-        or "rows" in lower
-        or "count" in lower
-    )
-    return count_tokens
+    return privacy.is_count_field(field)
 
 
-def public_cell(field: str, value: Any) -> Any:
-    if is_count_field(field):
-        return suppress_count(value)
-    return value
+def public_cell(field: str, value: Any, row: dict[str, Any] | None = None) -> Any:
+    return privacy.public_cell(field, value, row)
 
 
 def write_public_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
@@ -286,7 +255,7 @@ def write_public_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[st
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()
         for row in rows:
-            writer.writerow({name: public_cell(name, row.get(name, "")) for name in fieldnames})
+            writer.writerow({name: public_cell(name, row.get(name, ""), row) for name in fieldnames})
 
 
 def write_private_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
@@ -1616,41 +1585,14 @@ def choose_pilot_set(repo_root: Path, strict_extended: pd.DataFrame, pending: pd
 
 
 def scan_public_patient_ids(repo_root: Path) -> int:
-    public_roots = [repo_root / "reports", repo_root / "code" / "mappings"]
-    public_files = [repo_root / "cohort_definition_v0.1.yaml", repo_root / "README.md", repo_root / "README.zh-CN.md"]
-    for root in public_roots:
-        if root.exists():
-            public_files.extend(path for path in root.rglob("*") if path.is_file())
-    hits = 0
-    for path in public_files:
-        if "private" in path.parts or "patient_level" in path.parts:
-            continue
-        text = path.read_text(encoding="utf-8", errors="ignore")
-        if INSTITUTION_ID_PATTERN.search(text):
-            hits += 1
-    return hits
+    return len(privacy.privacy_scan_hits(repo_root))
 
 
 def scan_public_small_counts(repo_root: Path) -> list[str]:
-    bad: list[str] = []
-    public_roots = [repo_root / "reports" / "tables", repo_root / "code" / "mappings"]
-    for root in public_roots:
-        if not root.exists():
-            continue
-        for path in root.glob("*.csv"):
-            with path.open(encoding="utf-8", newline="") as handle:
-                reader = csv.DictReader(handle)
-                for line_no, row in enumerate(reader, start=2):
-                    for field, value in row.items():
-                        if not field or not is_count_field(field):
-                            continue
-                        try:
-                            number = int(value)
-                        except (TypeError, ValueError):
-                            continue
-                        if 0 < number < SUPPRESSION_THRESHOLD:
-                            bad.append(f"{path.relative_to(repo_root)}:{line_no}:{field}={number}")
-    return bad
+    return [
+        f"{hit['file']}:{hit.get('line', '')}:{hit.get('column', '')}"
+        for hit in privacy.small_count_scan_hits(repo_root)
+    ]
 
 
 def automated_checks(
@@ -1796,6 +1738,8 @@ labels:
   post_t0_outcome: endpoint_specific_mixed_validation
 privacy:
   public_outputs: aggregate_only_with_n_lt_5_suppression
+  small_count_threshold: {SUPPRESSION_THRESHOLD}
+  suppression_symbol: "{SUPPRESSED}"
   patient_level_intermediates: data/processed/cohort_lock_label_feasibility/ignored_by_git
 unresolved_issues:
 {unresolved_lines}

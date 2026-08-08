@@ -1,6 +1,6 @@
 # BPC PANC 原始数据可行性审计 v1
 
-- 生成时间：2026-07-31T10:09:26
+- Generated: deterministic raw data audit rebuild; no wall-clock timestamp
 - 仓库根目录：`D:\代码集\Python\pdac-treatment-benchmark`
 - 原始数据目录：`data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public`
 - 审计边界：只读扫描 PANC 1.0-public；不清洗、不建模、不输出患者级记录。

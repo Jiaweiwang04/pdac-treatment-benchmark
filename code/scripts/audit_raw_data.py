@@ -17,11 +17,12 @@ import sys
 import zipfile
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
-from datetime import datetime
 from itertools import combinations
 from pathlib import Path
 from typing import Any
 from xml.etree import ElementTree as ET
+
+import privacy_checks as privacy
 
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -32,7 +33,7 @@ PANC_RELATIVE_ROOT = Path(
     "data/raw/AACR GENIE Biopharma Collaborative Public/"
     "Data Releases/PANC/1.0-public"
 )
-SMALL_COUNT_THRESHOLD = 5
+SMALL_COUNT_THRESHOLD = privacy.SMALL_COUNT_THRESHOLD
 TEXT_EXTENSIONS = {".csv", ".txt", ".seg"}
 XLSX_EXTENSIONS = {".xlsx"}
 PDF_EXTENSIONS = {".pdf"}
@@ -293,9 +294,11 @@ def is_wide_dynamic_column(path: Path, index: int, name: str, header_len: int) -
     low_name = name.lower()
     if low_name in STRUCTURAL_WIDE_FIELDS:
         return False
-    if low_file in {"data_cna.txt", "data_gene_matrix.txt"} and index >= 2:
+    if privacy.contains_identifier(name):
         return True
-    if header_len > 200 and index >= 2:
+    if low_file in {"data_cna.txt", "data_gene_matrix.txt"} and index >= 1:
+        return True
+    if header_len > 200 and index >= 1:
         if re.search(r"\d", name) and re.search(r"[-_.]", name):
             return True
     return False
@@ -308,7 +311,7 @@ def public_header(path: Path, header: list[str]) -> tuple[list[str], list[int]]:
         if is_wide_dynamic_column(path, idx, name, len(header))
     ]
     if not dynamic_indices:
-        return header, []
+        return [privacy.safe_public_field_name(name) for name in header], []
     public: list[str] = []
     inserted = False
     for idx, name in enumerate(header):
@@ -317,7 +320,7 @@ def public_header(path: Path, header: list[str]) -> tuple[list[str], list[int]]:
                 public.append(f"<redacted_dynamic_sample_columns:{len(dynamic_indices)}>")
                 inserted = True
             continue
-        public.append(name)
+        public.append(privacy.safe_public_field_name(name))
     return public, dynamic_indices
 
 
@@ -396,11 +399,11 @@ def analyze_delimited(path: Path, repo_root: Path, data_dict: dict[str, dict[str
     for idx, field_name in enumerate(header):
         if idx in dynamic_indices:
             continue
-        public_name = field_name
+        public_name = privacy.safe_public_field_name(field_name)
         dd = data_dict.get(field_name.lower(), {})
         stat = FieldStats(
             table_path=rel,
-            field_name=field_name,
+            field_name=public_name,
             public_field_name=public_name,
             dictionary_label=dd.get("label", "待确认"),
             dictionary_source=dd.get("source", ""),
@@ -583,16 +586,17 @@ def analyze_xlsx(path: Path, repo_root: Path, data_dict: dict[str, dict[str, str
         header_idx = 0
         header = [str(c).strip() for c in rows[header_idx]]
         if not first_header:
-            first_header = header
+            first_header = [privacy.safe_public_field_name(name) for name in header]
         sheet_summaries.append(f"{sheet_name}:rows={max(len(rows)-1,0)},cols={len(header)}")
         for col_idx, field_name in enumerate(header):
             if not field_name:
                 continue
+            public_name = privacy.safe_public_field_name(field_name)
             dd = data_dict.get(field_name.lower(), {})
             stat = FieldStats(
                 table_path=f"{rel}::{sheet_name}",
-                field_name=field_name,
-                public_field_name=field_name,
+                field_name=public_name,
+                public_field_name=public_name,
                 dictionary_label=dd.get("label", "待确认"),
                 dictionary_source=dd.get("source", ""),
                 data_role_hint=role_for_field(field_name),
@@ -714,7 +718,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> 
         writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
         for row in rows:
-            writer.writerow(row)
+            writer.writerow({name: privacy.public_cell(name, row.get(name, ""), row) for name in fieldnames})
 
 
 def candidate_key_and_relationships(
@@ -1082,7 +1086,7 @@ def write_markdown_report(
     lines: list[str] = []
     lines.append("# BPC PANC 原始数据可行性审计 v1")
     lines.append("")
-    lines.append(f"- 生成时间：{datetime.now().isoformat(timespec='seconds')}")
+    lines.append("- Generated: deterministic raw data audit rebuild; no wall-clock timestamp")
     lines.append(f"- 仓库根目录：`{repo_root}`")
     lines.append(f"- 原始数据目录：`{raw_root.relative_to(repo_root).as_posix()}`")
     lines.append("- 审计边界：只读扫描 PANC 1.0-public；不清洗、不建模、不输出患者级记录。")
