@@ -1,8 +1,11 @@
 cohort,n_patients,status,definition
-round2_definition_A_reproduced,566,recomputed,Second-round feasibility proxy definition A
-definition_A_selected_all_index_pancreatic,589,audit_pool,Definition A before final PDAC include filter
-definition_A_pdac_include_selected,557,draft,Definition A with draft PDAC include mapping
-definition_A_pdac_manual_review_selected,15,manual_review,Definition A selected but PDAC mapping uncertain
-definition_A_pdac_exclude_selected,17,exclude,Definition A selected but mapped non-PDAC
-extended_draft,557,draft_not_locked,Outcome-independent Extended draft
-core_draft,485,draft_not_locked,Outcome-independent clean Track A Core draft
+round2_definition_A_reference,566,reference_from_previous_round,Old Definition A usable count from second-round report.
+round2_definition_A_recomputed,566,recomputed_legacy_logic,Recomputed old Definition A for reconciliation only.
+round3_initial_extended_reference,557,reference_from_e7a7007,"Old third-round Extended draft, not reused for selection."
+round3_initial_core_reference,485,reference_from_e7a7007,"Old third-round Core draft, not reused for selection."
+legacy_round3_selected_all,589,legacy_recomputed_for_risk_audit,Old patient-first third-round candidate selection.
+repaired_candidate_pool,594,candidate_pool,Locked PDAC instance regimen candidates with strict prior NGS; advanced relation not yet filtered.
+strict_extended,557,draft_not_locked,Outcome-independent repaired Extended: first PDAC t0 with confirmed_pre_t0 advanced evidence.
+strict_core,475,draft_not_locked,Strict Extended plus clean treatment sequence and standardized non-masked regimen family.
+same_day_sensitivity_extended,557,sensitivity_only,Includes same_day_ambiguous advanced evidence; excluded from strict Core.
+advanced_timing_pending_review,0,manual_review,Advanced status present but date missing or relative timing unknown.

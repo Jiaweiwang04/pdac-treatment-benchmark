@@ -1,22 +1,22 @@
 cohort,metric,value,note
-All definition A selected,n_patients,589,One t0 row per patient
-All definition A selected,line_number_present,589,regimen_number_within_cancer present through t0
-All definition A selected,same_day_multiple_t0_regimens,0,Potential t0 ambiguity
-All definition A selected,duplicate_regimen_records_before_t0,0,Same regimen number/drugs/start duplicated
-All definition A selected,prior_overlap_with_t0,0,Prior regimen end_all_day after t0 start
-All definition A selected,line_start_order_consistent,589,Line order nondecreasing by start day
-All definition A selected,treatment_sequence_clean,589,Clean sequence flag used for Core
-Extended draft,n_patients,557,One t0 row per patient
-Extended draft,line_number_present,557,regimen_number_within_cancer present through t0
-Extended draft,same_day_multiple_t0_regimens,0,Potential t0 ambiguity
-Extended draft,duplicate_regimen_records_before_t0,0,Same regimen number/drugs/start duplicated
-Extended draft,prior_overlap_with_t0,0,Prior regimen end_all_day after t0 start
-Extended draft,line_start_order_consistent,557,Line order nondecreasing by start day
-Extended draft,treatment_sequence_clean,557,Clean sequence flag used for Core
-Core draft,n_patients,485,One t0 row per patient
-Core draft,line_number_present,485,regimen_number_within_cancer present through t0
-Core draft,same_day_multiple_t0_regimens,0,Potential t0 ambiguity
-Core draft,duplicate_regimen_records_before_t0,0,Same regimen number/drugs/start duplicated
-Core draft,prior_overlap_with_t0,0,Prior regimen end_all_day after t0 start
-Core draft,line_start_order_consistent,485,Line order nondecreasing by start day
-Core draft,treatment_sequence_clean,485,Clean sequence flag used for Core
+Strict Extended,n_patients,557,One t0 row per formal patient key.
+Strict Extended,line_number_present,557,One t0 row per formal patient key.
+Strict Extended,same_day_multiple_t0_regimens,0,One t0 row per formal patient key.
+Strict Extended,duplicate_regimen_records_before_t0,0,One t0 row per formal patient key.
+Strict Extended,prior_overlap_with_t0,0,One t0 row per formal patient key.
+Strict Extended,line_start_order_consistent,557,One t0 row per formal patient key.
+Strict Extended,treatment_sequence_clean,557,One t0 row per formal patient key.
+Strict Core,n_patients,475,One t0 row per formal patient key.
+Strict Core,line_number_present,475,One t0 row per formal patient key.
+Strict Core,same_day_multiple_t0_regimens,0,One t0 row per formal patient key.
+Strict Core,duplicate_regimen_records_before_t0,0,One t0 row per formal patient key.
+Strict Core,prior_overlap_with_t0,0,One t0 row per formal patient key.
+Strict Core,line_start_order_consistent,475,One t0 row per formal patient key.
+Strict Core,treatment_sequence_clean,475,One t0 row per formal patient key.
+Same-day sensitivity,n_patients,557,One t0 row per formal patient key.
+Same-day sensitivity,line_number_present,557,One t0 row per formal patient key.
+Same-day sensitivity,same_day_multiple_t0_regimens,0,One t0 row per formal patient key.
+Same-day sensitivity,duplicate_regimen_records_before_t0,0,One t0 row per formal patient key.
+Same-day sensitivity,prior_overlap_with_t0,0,One t0 row per formal patient key.
+Same-day sensitivity,line_start_order_consistent,557,One t0 row per formal patient key.
+Same-day sensitivity,treatment_sequence_clean,557,One t0 row per formal patient key.

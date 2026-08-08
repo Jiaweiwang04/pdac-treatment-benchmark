@@ -1,0 +1,21 @@
+cohort,institution,endpoint,cohort_n,field_present_evaluable_n,post_t0_outcome_status
+Strict Extended,DFCI,OS,194,194,t0_validated
+Strict Extended,DFCI,PFS-I,194,188,t0_validated
+Strict Extended,DFCI,PFS-M,194,188,t0_validated
+Strict Extended,DFCI,TTNT-any-cancer,194,194,field_present_not_t0_validated
+Strict Extended,DFCI,TTNT-associated-cancer,194,194,field_present_not_t0_validated
+Strict Extended,MSK,OS,298,298,t0_validated
+Strict Extended,MSK,PFS-I,298,281,t0_validated
+Strict Extended,MSK,PFS-M,298,281,t0_validated
+Strict Extended,MSK,TTNT-any-cancer,298,298,field_present_not_t0_validated
+Strict Extended,MSK,TTNT-associated-cancer,298,298,field_present_not_t0_validated
+Strict Extended,UHN,OS,32,32,t0_validated
+Strict Extended,UHN,PFS-I,32,31,t0_validated
+Strict Extended,UHN,PFS-M,32,31,t0_validated
+Strict Extended,UHN,TTNT-any-cancer,32,32,field_present_not_t0_validated
+Strict Extended,UHN,TTNT-associated-cancer,32,32,field_present_not_t0_validated
+Strict Extended,VICC,OS,33,33,t0_validated
+Strict Extended,VICC,PFS-I,33,33,t0_validated
+Strict Extended,VICC,PFS-M,33,33,t0_validated
+Strict Extended,VICC,TTNT-any-cancer,33,33,field_present_not_t0_validated
+Strict Extended,VICC,TTNT-associated-cancer,33,33,field_present_not_t0_validated

@@ -1,39 +1,50 @@
-# Cohort definition v0.1 - draft, not locked
-version: v0.1
+# Cohort definition v0.1.3.1 - draft, not locked
+version: v0.1.3.1
 status: draft_not_locked
 track_a_status: conditional_go
 track_b_status: frozen
 raw_data_root: data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public
 formal_keys:
   patient: [cohort, record_id]
-  cancer_linked_tables: [cohort, record_id, ca_seq]
+  cancer_instance: [cohort, record_id, ca_seq]
   pathology_to_ngs: [cohort, record_id, path_proc_number, path_rep_number]
 main_t0_definition:
-  name: definition_A
-  rule: first new cancer-directed regimen with a valid NGS report strictly before regimen start
-  inequality: dx_cpt_rep_days < dx_reg_start_int
+  name: repaired_definition_A_3_1
+  rule: first new cancer-directed regimen for the locked PDAC cancer instance with a valid NGS report strictly before regimen start and advanced evidence strictly before regimen start
+  ngs_inequality: dx_cpt_rep_days < dx_reg_start_int
+  advanced_inequality: advanced_evidence_day < dx_reg_start_int
   index_ngs_strategy: latest valid NGS report strictly before t0
   status: draft_not_locked
 pdac_mapping:
+  version: v0.1.3.1
   status: draft_manual_review_required
   include: OncoTree PAAD with pancreatic index primary, or adenocarcinoma-compatible histology when OncoTree is unavailable
   exclude: non-pancreatic primary or clear non-PDAC pancreatic subtype such as PAAC/UCP
-  manual_review: PAASC, conflicting OncoTree codes, ambiguous histology
-  insufficient_info: no usable histology/code/OncoTree evidence
+  manual_review: PAASC, conflicting OncoTree codes, ambiguous histology, or multiple include PDAC instances for one patient
 cohorts:
-  extended_draft_n: 557
-  core_draft_n: 485
-  pilot_local_n: 30
+  repaired_candidate_pool_n: 594
+  strict_extended_n: 557
+  strict_core_n: 475
+  same_day_sensitivity_n: 557
+  advanced_timing_pending_review_n: 0
 endpoint_specific_subcohorts:
-  os_n: 557
-  pfs_i_n: 533
-  pfs_m_n: 533
-  ttnt_any_cancer_n: 557
-  ttnt_associated_cancer_n: 557
+  os_post_t0_validated_n: 557
+  pfs_i_post_t0_validated_n: 533
+  pfs_m_post_t0_validated_n: 533
+  ttnt_any_cancer_status: field_present_not_t0_validated
+  ttnt_associated_cancer_status: field_present_not_t0_validated
 labels:
   observed_next_regimen: available_as_observed_data_not_gold_standard
+  canonical_drug_set: lossless_order_independent_components
+  regimen_family: derived_after_full_component_parsing
   evidence_supported_candidate_set: not_available_from_bpc_alone_requires_next_stage_evidence_design
-  post_t0_outcome: endpoint_specific_available_not_base_cohort_requirement
+  post_t0_outcome: endpoint_specific_mixed_validation
 privacy:
-  public_outputs: aggregate_only
+  public_outputs: aggregate_only_with_n_lt_5_suppression
   patient_level_intermediates: data/processed/cohort_lock_label_feasibility/ignored_by_git
+unresolved_issues:
+  - PDAC mapping remains draft_not_locked; PAASC/ambiguous histology requires medical or mentor confirmation.
+  - TTNT endpoints are field_present_not_t0_validated until time-origin confirmation is complete.
+  - Observed regimen labels include masked/manual/unknown categories outside strict Core.
+  - Evidence-supported candidate-set labels require the next-stage evidence snapshot and candidate-space design.
+  - Track B remains frozen because ECOG/labs/dose/toxicity fields are not available as stable t0 inputs.

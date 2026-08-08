@@ -1,0 +1,7 @@
+advanced_rule,included_relations,n_selected_patients,core_allowed,advanced_relation,n_candidate_patients,note
+strict,confirmed_pre_t0,557,yes,,,Main analysis requires advanced_evidence_day < t0_start_day.
+same_day_sensitivity,confirmed_pre_t0;same_day_ambiguous,557,no,,,Same-day advanced evidence lacks time-of-day and is not strict Core eligible.
+pending_review,relative_time_unknown,0,no,,,Advanced status exists but relative timing cannot be determined.
+,,,,confirmed_pre_t0,557,"Candidate has PDAC instance, prior NGS report, and regimen start."
+,,,,no_advanced_evidence,26,"Candidate has PDAC instance, prior NGS report, and regimen start."
+,,,,post_t0_only,47,"Candidate has PDAC instance, prior NGS report, and regimen start."

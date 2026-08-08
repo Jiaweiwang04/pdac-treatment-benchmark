@@ -1,46 +1,46 @@
-raw_regimen_drugs,observed_next_regimen,mapping_status,n_all_regimen_rows,n_definition_A_t0_rows,note
-"Fluorouracil, Irinotecan HCL, Leucovorin, Oxaliplatin",FOLFIRINOX_or_variant,standardized,724,92,Mapping is descriptive; not best treatment or gold standard.
-"Gemcitabine HCL, Nabpaclitaxel",gemcitabine_nab_paclitaxel,standardized,629,153,Mapping is descriptive; not best treatment or gold standard.
-Gemcitabine HCL,gemcitabine_monotherapy_or_other_gemcitabine,standardized,293,41,Mapping is descriptive; not best treatment or gold standard.
-Capecitabine,capecitabine_monotherapy,standardized,203,48,Mapping is descriptive; not best treatment or gold standard.
-"Fluorouracil, Leucovorin, Oxaliplatin",FOLFOX_or_variant,standardized,181,30,Mapping is descriptive; not best treatment or gold standard.
-"Capecitabine, Gemcitabine HCL",gemcitabine_capecitabine,standardized,119,28,Mapping is descriptive; not best treatment or gold standard.
-"Fluorouracil, Irinotecan HCL, Leucovorin",FOLFIRI_or_5FU_nalIRI_variant,standardized,111,32,Mapping is descriptive; not best treatment or gold standard.
-"Fluorouracil, Irinotecan liposome, Leucovorin",FOLFIRI_or_5FU_nalIRI_variant,standardized,86,13,Mapping is descriptive; not best treatment or gold standard.
-Investigational Drug,investigational_or_masked,masked_not_actionable,73,21,Mapping is descriptive; not best treatment or gold standard.
-"Investigational Drug, Investigational Drug",investigational_or_masked,masked_not_actionable,58,12,Mapping is descriptive; not best treatment or gold standard.
-"Gemcitabine HCL, Investigational Drug, Nabpaclitaxel",investigational_or_masked,masked_not_actionable,55,4,Mapping is descriptive; not best treatment or gold standard.
-"Fluorouracil, Leucovorin",5FU_leucovorin,standardized,40,9,Mapping is descriptive; not best treatment or gold standard.
-"Cisplatin, Gemcitabine HCL",gemcitabine_cisplatin,standardized,39,3,Mapping is descriptive; not best treatment or gold standard.
-Fluorouracil,manual_review_other_regimen,manual_review,29,3,Mapping is descriptive; not best treatment or gold standard.
-Olaparib,PARP_inhibitor,standardized,23,4,Mapping is descriptive; not best treatment or gold standard.
-Anastrozole,non_pdac_context_or_endocrine,manual_review,19,0,Mapping is descriptive; not best treatment or gold standard.
-Tamoxifen ,non_pdac_context_or_endocrine,manual_review,18,0,Mapping is descriptive; not best treatment or gold standard.
-"Fluorouracil, Irinotecan liposome",FOLFIRI_or_5FU_nalIRI_variant,standardized,18,5,Mapping is descriptive; not best treatment or gold standard.
-"Capecitabine, Oxaliplatin",CAPOX,standardized,17,2,Mapping is descriptive; not best treatment or gold standard.
-"Investigational Drug, Investigational Drug, Investigational Drug",investigational_or_masked,masked_not_actionable,15,4,Mapping is descriptive; not best treatment or gold standard.
-"Gemcitabine HCL, Oxaliplatin",gemcitabine_oxaliplatin,standardized,13,1,Mapping is descriptive; not best treatment or gold standard.
-"Cisplatin, Gemcitabine HCL, Nabpaclitaxel",gemcitabine_nab_paclitaxel,standardized,13,3,Mapping is descriptive; not best treatment or gold standard.
-Leuprolide,non_pdac_context_or_endocrine,manual_review,12,1,Mapping is descriptive; not best treatment or gold standard.
-"Fluorouracil, Oxaliplatin",FOLFOX_or_variant,standardized,10,5,Mapping is descriptive; not best treatment or gold standard.
-Nabpaclitaxel,manual_review_other_regimen,manual_review,8,1,Mapping is descriptive; not best treatment or gold standard.
-Irinotecan liposome,manual_review_other_regimen,manual_review,8,1,Mapping is descriptive; not best treatment or gold standard.
-"Fluorouracil, Irinotecan HCL, Oxaliplatin",FOLFIRINOX_or_variant,standardized,8,3,Mapping is descriptive; not best treatment or gold standard.
-"Gemcitabine HCL, Investigational Drug, Investigational Drug, Nabpaclitaxel",investigational_or_masked,masked_not_actionable,8,2,Mapping is descriptive; not best treatment or gold standard.
-"Gemcitabine HCL, Investigational Drug",investigational_or_masked,masked_not_actionable,7,1,Mapping is descriptive; not best treatment or gold standard.
-Irinotecan HCL,manual_review_other_regimen,manual_review,7,2,Mapping is descriptive; not best treatment or gold standard.
-"Capecitabine, Docetaxel , Gemcitabine HCL",gemcitabine_capecitabine,standardized,7,1,Mapping is descriptive; not best treatment or gold standard.
-Exemestane,non_pdac_context_or_endocrine,manual_review,6,0,Mapping is descriptive; not best treatment or gold standard.
-"Investigational Drug, Pembrolizumab",investigational_or_masked,masked_not_actionable,6,1,Mapping is descriptive; not best treatment or gold standard.
-Rituximab,manual_review_other_regimen,manual_review,6,0,Mapping is descriptive; not best treatment or gold standard.
-Pembrolizumab,immune_checkpoint_inhibitor,standardized,6,0,Mapping is descriptive; not best treatment or gold standard.
-"Cyclophosphamide, Fluorouracil, Methotrexate",manual_review_other_regimen,manual_review,6,0,Mapping is descriptive; not best treatment or gold standard.
-"Fluorouracil, Irinotecan HCL",FOLFIRI_or_5FU_nalIRI_variant,standardized,6,2,Mapping is descriptive; not best treatment or gold standard.
-"Cisplatin, Etoposide",manual_review_other_regimen,manual_review,6,0,Mapping is descriptive; not best treatment or gold standard.
-"Carboplatin, Etoposide",manual_review_other_regimen,manual_review,5,0,Mapping is descriptive; not best treatment or gold standard.
-Imatinib Mesylate,targeted_or_biologic_other,manual_review,5,0,Mapping is descriptive; not best treatment or gold standard.
-"Capecitabine, Erlotinib HCL",targeted_or_biologic_other,manual_review,5,0,Mapping is descriptive; not best treatment or gold standard.
-"Atezolizumab, Cobimetinib",immune_checkpoint_inhibitor,standardized,5,2,Mapping is descriptive; not best treatment or gold standard.
-"Cisplatin, Gemcitabine HCL, Investigational Drug",investigational_or_masked,masked_not_actionable,5,0,Mapping is descriptive; not best treatment or gold standard.
-Other NOS,other_nos,manual_review,5,0,Mapping is descriptive; not best treatment or gold standard.
-suppressed_rare_regimen_values_n_lt_5,manual_review_other_regimen,manual_review,230,suppressed,Rare treatment strings suppressed from public output.
+raw_regimen_drugs,canonical_drug_set,regimen_family,mapping_status,n_all_regimen_rows,n_strict_t0_rows,lossless_components,note
+Anastrozole,anastrozole,non_pdac_context_or_endocrine,manual_review,19,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Atezolizumab, Cobimetinib",atezolizumab+cobimetinib,targeted_or_biologic_other,manual_review,5,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Capecitabine,capecitabine,capecitabine_monotherapy,standardized,203,48,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Capecitabine, Docetaxel , Gemcitabine HCL",capecitabine+docetaxel+gemcitabine,recognized_other_combination,manual_review,7,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Capecitabine, Erlotinib HCL",capecitabine+erlotinib,targeted_or_biologic_other,manual_review,5,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Capecitabine, Gemcitabine HCL",capecitabine+gemcitabine,gemcitabine_capecitabine,standardized,119,28,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Capecitabine, Oxaliplatin",capecitabine+oxaliplatin,CAPOX,standardized,17,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Carboplatin, Etoposide",carboplatin+etoposide,recognized_other_combination,manual_review,5,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Cisplatin, Etoposide",cisplatin+etoposide,recognized_other_combination,manual_review,6,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Cisplatin, Gemcitabine HCL",cisplatin+gemcitabine,gemcitabine_cisplatin,standardized,39,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Cisplatin, Gemcitabine HCL, Investigational Drug",cisplatin+gemcitabine+investigational_drug,contains_investigational_drug,masked_not_actionable,5,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Cisplatin, Gemcitabine HCL, Nabpaclitaxel",cisplatin+gemcitabine+nab-paclitaxel,cisplatin_gemcitabine_nab_paclitaxel,standardized,13,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Cyclophosphamide, Fluorouracil, Methotrexate",cyclophosphamide+fluorouracil+methotrexate,recognized_other_combination,manual_review,6,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+Exemestane,exemestane,non_pdac_context_or_endocrine,manual_review,6,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+Fluorouracil,fluorouracil,fluorouracil_monotherapy,manual_review,29,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Irinotecan HCL",fluorouracil+irinotecan,fluorouracil_irinotecan,standardized,6,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Irinotecan HCL, Leucovorin",fluorouracil+irinotecan+leucovorin,FOLFIRI,standardized,111,32,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Irinotecan HCL, Leucovorin, Oxaliplatin",fluorouracil+irinotecan+leucovorin+oxaliplatin,FOLFIRINOX_or_variant,standardized,724,92,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Irinotecan HCL, Oxaliplatin",fluorouracil+irinotecan+oxaliplatin,fluorouracil_irinotecan_oxaliplatin,standardized,8,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Irinotecan liposome",fluorouracil+liposomal_irinotecan,5FU_liposomal_irinotecan,standardized,18,5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Irinotecan liposome, Leucovorin",fluorouracil+leucovorin+liposomal_irinotecan,5FU_liposomal_irinotecan_leucovorin,standardized,86,13,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Leucovorin",fluorouracil+leucovorin,5FU_leucovorin,standardized,40,9,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Leucovorin, Oxaliplatin",fluorouracil+leucovorin+oxaliplatin,FOLFOX_or_variant,standardized,181,30,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Fluorouracil, Oxaliplatin",fluorouracil+oxaliplatin,fluorouracil_oxaliplatin,standardized,10,5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Gemcitabine HCL,gemcitabine,gemcitabine_monotherapy,standardized,293,41,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Gemcitabine HCL, Investigational Drug",gemcitabine+investigational_drug,contains_investigational_drug,masked_not_actionable,7,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Gemcitabine HCL, Investigational Drug, Investigational Drug, Nabpaclitaxel",gemcitabine+investigational_drug+nab-paclitaxel,contains_investigational_drug,masked_not_actionable,8,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Gemcitabine HCL, Investigational Drug, Nabpaclitaxel",gemcitabine+investigational_drug+nab-paclitaxel,contains_investigational_drug,masked_not_actionable,55,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Gemcitabine HCL, Nabpaclitaxel",gemcitabine+nab-paclitaxel,gemcitabine_nab_paclitaxel,standardized,629,153,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Gemcitabine HCL, Oxaliplatin",gemcitabine+oxaliplatin,gemcitabine_oxaliplatin,standardized,13,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Imatinib Mesylate,imatinib,targeted_or_biologic_other,manual_review,5,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+Investigational Drug,investigational_drug,contains_investigational_drug,masked_not_actionable,73,21,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Investigational Drug, Investigational Drug",investigational_drug,contains_investigational_drug,masked_not_actionable,58,12,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Investigational Drug, Investigational Drug, Investigational Drug",investigational_drug,contains_investigational_drug,masked_not_actionable,15,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+"Investigational Drug, Pembrolizumab",investigational_drug+pembrolizumab,contains_investigational_drug,masked_not_actionable,6,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Irinotecan HCL,irinotecan,irinotecan_monotherapy,manual_review,7,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Irinotecan liposome,liposomal_irinotecan,liposomal_irinotecan_monotherapy,manual_review,8,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Leuprolide,leuprolide,non_pdac_context_or_endocrine,manual_review,12,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Nabpaclitaxel,nab-paclitaxel,recognized_other_combination,manual_review,8,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Olaparib,olaparib,PARP_inhibitor,standardized,23,<5,True,Descriptive observed regimen only; not a gold standard treatment label.
+Other NOS,other_nos,other_nos,manual_review,5,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+Pembrolizumab,pembrolizumab,immune_checkpoint_inhibitor,standardized,6,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+Rituximab,rituximab,targeted_or_biologic_other,manual_review,6,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+Tamoxifen ,tamoxifen,non_pdac_context_or_endocrine,manual_review,18,0,True,Descriptive observed regimen only; not a gold standard treatment label.
+suppressed_rare_regimen_values_n_lt_5,suppressed,suppressed,suppressed,230,27,True,Rare raw treatment strings suppressed from public output.

@@ -1,0 +1,11 @@
+metric,n,note
+patients,1109,Formal patient key cohort + record_id.
+index_cancer_records,1110,Index cancer rows; no row is dropped arbitrarily.
+patients_with_multiple_cancers,216,patient_level_dataset.n_cancers > 1.
+patients_with_multiple_index_cancer_records,<5,Requires instance-level handling.
+regimen_cancer_keys_not_in_index_cancer_table,99,Cross-cancer regimen keys excluded before t0 selection.
+regimen_rows_not_in_index_cancer_table,193,Rows excluded from PDAC t0 search.
+legacy_selected_non_index_cancer_patients,0,Old patient-first script risk check.
+legacy_selected_non_pdac_instance_patients,32,Old selected t0 not mapped as draft PDAC include.
+t0_changed_after_instance_fix_patients,0,"Same patient, different cancer-instance/regimen/start/sample signature."
+manual_review_cancer_instance_patients,<5,Multiple include PDAC instances cannot be automatically locked.

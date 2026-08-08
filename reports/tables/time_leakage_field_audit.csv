@@ -1,14 +1,9 @@
 table,field,role,available_at_t0,allowed_as_model_input,rationale
-patient_level_dataset,record_id/cohort,technical_key,conditional,no,Join key only; patient ID must not enter features.
-patient_level_dataset,institution,source/context,yes,conditional,May encode care-source differences; use only after fairness/site leakage review.
-cancer_level_dataset_index,ca_type/ca_d_site/redcap_ca_index,cohort_definition,yes,conditional,Disease cohort fields; not treatment/outcome labels.
-cancer_level_dataset_index,ca_histology/naaccr_histology_cd,cohort_definition_or_input,conditional,yes_if_documented_before_t0,Use only when known by t0; ambiguous values manual_review.
-cancer_level_dataset_index,stage_dx_iv/ca_dmets_yn/ca_resect_status,pre_t0_input_or_cohort,yes_for_baseline_status,yes,Baseline stage/resectability is before treatment decision.
-cancer_level_dataset_index,dmets_post_dx/dx_to_dmets_days,pre_t0_input_or_cohort,conditional,yes_if_dx_to_dmets_days <= t0,Cannot use post-t0 metastatic events.
-cancer_panel_test_level_dataset,dx_cpt_rep_days,t0_alignment,conditional,yes_if_report_day < t0,Main NGS selection requires strict report before t0.
-cancer_panel_test_level_dataset,cpt_seq_date,metadata,year_only,no_for_exact_timing,Year-level sequencing date cannot replace report day.
-regimen_cancer_level_dataset,prior regimen_drugs/regimen_number/dx_reg_start_int,pre_t0_treatment_history,yes_if_start < t0,yes,Prior treatment history only.
-regimen_cancer_level_dataset,t0 regimen_drugs,observed_next_regimen_label,decision_target,no,"This is the observed next regimen label, not an input."
-regimen_cancer_level_dataset,dx_reg_end_any_int/dx_reg_end_all_int,post_t0_or_sequence_quality,no_for_t0_regimen,prior_only,End dates for current/future regimen leak post-t0 information.
-regimen_cancer_level_dataset,pfs*/os*/ttnt*,outcome,no,no,Outcome fields only.
-patient_level_dataset,hybrid_death_int/dob_lastalive_int/last_*,followup_outcome,no,no,Death/follow-up fields are outcome or censoring data.
+patient,cohort/record_id,formal key only,yes,no,"Identifiers are linkage keys, not features."
+cancer,ca_histology/naaccr_histology_cd/cpt_oncotree_code,PDAC mapping,yes,prior_only,May define cancer instance but final mapping requires medical review.
+cancer,advanced evidence fields,cohort eligibility,pre_t0_only,prior_only,Strict main analysis requires advanced_evidence_day < t0.
+cpt,dx_cpt_rep_days,NGS availability timing,pre_t0_only,prior_only,Index NGS report must be strictly before t0.
+regimen,t0 regimen_drugs,observed treatment label,at_t0,no,"The selected treatment is the label/candidate observation, not an input feature."
+regimen,regimen_number/regimen_number_within_cancer,line history reconstruction,yes,prior_only,Use only prior history and line context; no future regimen fields.
+regimen,pfs*/os*/ttnt*,post-t0 outcome,no,no,Outcome/follow-up fields are labels or censoring information.
+patient,hybrid_death_int/dob_lastalive_int/last_*,follow-up/outcome,no,no,Death and last-alive/follow-up fields leak future information.

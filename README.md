@@ -83,3 +83,24 @@ Main outputs:
 - [Time leakage field audit](reports/tables/time_leakage_field_audit.csv)
 - [PDAC mapping](code/mappings/pdac_mapping_v0.1.csv)
 - [Regimen mapping](code/mappings/regimen_mapping_v0.1.csv)
+
+## Round 3.1 Cohort Repair Audit
+
+Run from the repository root:
+
+```powershell
+C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/audit_cohort_lock_label_feasibility.py --repo-root .
+```
+
+Main repaired outputs:
+
+- [Cohort definition draft](cohort_definition_v0.1.yaml)
+- [Round 3.1 audit report](reports/cohort_lock_label_feasibility_v0.1.md)
+- [Cohort reconciliation](reports/tables/cohort_reconciliation.csv)
+- [Cross-cancer t0 audit](reports/tables/cross_cancer_t0_audit.csv)
+- [Advanced evidence sensitivity](reports/tables/advanced_evidence_sensitivity.csv)
+- [Endpoint coverage](reports/tables/endpoint_coverage.csv)
+- [Center-year distribution](reports/tables/center_year_distribution.csv)
+- [Regimen mapping](code/mappings/regimen_mapping_v0.1.csv)
+
+Current 3.1 status: Conditional Go; strict Extended n=557, strict Core n=475. Counts in public CSVs apply n<5 suppression.

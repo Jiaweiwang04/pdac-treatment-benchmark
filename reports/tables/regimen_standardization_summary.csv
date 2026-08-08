@@ -1,0 +1,12 @@
+metric,value,note
+all_regimen_rows,3153,All regimen rows have an explicit mapping status.
+standardized_rows,2553,0.810 of all regimen rows.
+manual_review_rows,311,0.099 of all regimen rows.
+masked_not_actionable_rows,249,Investigational components are masked.
+unknown_component_rows,40,Components absent from the current dictionary.
+canonical_drug_set_count,180,Order-independent canonical drug sets.
+regimen_family_count,30,Family is assigned after parsing the full canonical set.
+t0_label_changed_patients,184,Old keyword family vs 3.1 two-layer family among repaired Strict Extended t0 rows.
+core_cohort_delta,-10,old_reference=485; repaired=475
+top_regimen_family_share,0.275,gemcitabine_nab_paclitaxel
+regimen_family_imbalance_top_to_second_ratio,1.663,Strict Extended t0 family imbalance.

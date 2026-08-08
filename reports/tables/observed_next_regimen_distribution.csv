@@ -1,12 +1,15 @@
-observed_next_regimen,n_extended_t0,note
-gemcitabine_nab_paclitaxel,156,Observed next regimen only; not a gold standard.
-FOLFIRINOX_or_variant,95,Observed next regimen only; not a gold standard.
-investigational_or_masked,58,Observed next regimen only; not a gold standard.
-FOLFIRI_or_5FU_nalIRI_variant,53,Observed next regimen only; not a gold standard.
-capecitabine_monotherapy,48,Observed next regimen only; not a gold standard.
-gemcitabine_monotherapy_or_other_gemcitabine,43,Observed next regimen only; not a gold standard.
-FOLFOX_or_variant,35,Observed next regimen only; not a gold standard.
-gemcitabine_capecitabine,29,Observed next regimen only; not a gold standard.
-manual_review_other_regimen,12,Observed next regimen only; not a gold standard.
-5FU_leucovorin,10,Observed next regimen only; not a gold standard.
-suppressed_categories_n_lt_5,18,7 rare standardized categories suppressed.
+regimen_family,n_strict_extended_t0,note
+gemcitabine_nab_paclitaxel,153,Observed t0 regimen only; not a gold standard.
+FOLFIRINOX_or_variant,92,Observed t0 regimen only; not a gold standard.
+contains_investigational_drug,58,Observed t0 regimen only; not a gold standard.
+capecitabine_monotherapy,48,Observed t0 regimen only; not a gold standard.
+gemcitabine_monotherapy,41,Observed t0 regimen only; not a gold standard.
+FOLFIRI,32,Observed t0 regimen only; not a gold standard.
+FOLFOX_or_variant,30,Observed t0 regimen only; not a gold standard.
+gemcitabine_capecitabine,28,Observed t0 regimen only; not a gold standard.
+5FU_liposomal_irinotecan_leucovorin,13,Observed t0 regimen only; not a gold standard.
+recognized_other_combination,11,Observed t0 regimen only; not a gold standard.
+5FU_leucovorin,9,Observed t0 regimen only; not a gold standard.
+5FU_liposomal_irinotecan,5,Observed t0 regimen only; not a gold standard.
+fluorouracil_oxaliplatin,5,Observed t0 regimen only; not a gold standard.
+suppressed_categories_n_lt_5,32,14 rare categories suppressed.

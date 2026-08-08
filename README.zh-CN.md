@@ -83,3 +83,24 @@ python code/scripts/audit_cohort_lock_label_feasibility.py --repo-root .
 - [时间泄漏字段审计](reports/tables/time_leakage_field_audit.csv)
 - [PDAC 映射](code/mappings/pdac_mapping_v0.1.csv)
 - [Regimen 映射](code/mappings/regimen_mapping_v0.1.csv)
+
+## 第三轮 3.1 队列修复审计
+
+在仓库根目录运行：
+
+```powershell
+C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/audit_cohort_lock_label_feasibility.py --repo-root .
+```
+
+主要修复输出：
+
+- [队列定义草案](cohort_definition_v0.1.yaml)
+- [第三轮 3.1 审计报告](reports/cohort_lock_label_feasibility_v0.1.md)
+- [新旧队列核账](reports/tables/cohort_reconciliation.csv)
+- [跨癌种 t0 审计](reports/tables/cross_cancer_t0_audit.csv)
+- [晚期证据敏感性](reports/tables/advanced_evidence_sensitivity.csv)
+- [终点覆盖](reports/tables/endpoint_coverage.csv)
+- [中心-年份分布](reports/tables/center_year_distribution.csv)
+- [Regimen 两层映射](code/mappings/regimen_mapping_v0.1.csv)
+
+当前 3.1 状态：Conditional Go；严格 Extended n=557，严格 Core n=475。公开 CSV 已执行 n<5 小样本抑制。
