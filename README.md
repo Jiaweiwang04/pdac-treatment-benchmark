@@ -104,3 +104,14 @@ Main repaired outputs:
 - [Regimen mapping](code/mappings/regimen_mapping_v0.1.csv)
 
 Current 3.1 status: Conditional Go; strict Extended n=557, strict Core n=475. Counts in public CSVs apply n<5 suppression.
+
+## Round 4.1 Candidate Treatment Space
+
+Round 4.1 adds a draft, evidence-linked candidate treatment space for advanced PDAC. It does not generate patient-level labels, doses, prescriptions, model inputs, or treatment recommendations.
+
+```powershell
+C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/generate_candidate_regimen_crosswalk.py --repo-root .
+C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/validate_candidate_treatment_space.py --repo-root .
+```
+
+Outputs: [candidate treatment space](config/candidate_treatment_space_v0.1.yaml), [BPC observed regimen crosswalk](code/mappings/candidate_regimen_crosswalk_v0.1.csv), and [design report](docs/notes/candidate_treatment_space_design_v0.1.md). The candidate space remains `draft_not_locked` pending mentor and clinical-expert review.

@@ -104,3 +104,14 @@ C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/audit_cohort_lock_label
 - [Regimen 两层映射](code/mappings/regimen_mapping_v0.1.csv)
 
 当前 3.1 状态：Conditional Go；严格 Extended n=557，严格 Core n=475。公开 CSV 已执行 n<5 小样本抑制。
+
+## 第四轮 4.1 候选治疗空间
+
+第四轮 4.1 新增面向晚期 PDAC 的证据绑定候选治疗空间草案。本轮不生成患者级标签、剂量、处方、模型输入或治疗建议。
+
+```powershell
+C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/generate_candidate_regimen_crosswalk.py --repo-root .
+C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/validate_candidate_treatment_space.py --repo-root .
+```
+
+输出包括：[候选治疗空间](config/candidate_treatment_space_v0.1.yaml)、[BPC observed regimen 交叉映射](code/mappings/candidate_regimen_crosswalk_v0.1.csv)和[设计报告](docs/notes/candidate_treatment_space_design_v0.1.md)。候选空间仍为 `draft_not_locked`，需要导师和临床专家复核。
