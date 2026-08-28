@@ -105,9 +105,9 @@ Main repaired outputs:
 
 Current 3.1 status: Conditional Go; strict Extended n=557, strict Core n=475. Counts in public CSVs apply n<5 suppression.
 
-## Round 4.1 Candidate Treatment Space
+## Round 4.1.1 Candidate Treatment Space Correction
 
-Round 4.1 adds a draft, evidence-linked candidate treatment space for advanced PDAC. It does not generate patient-level labels, doses, prescriptions, model inputs, or treatment recommendations.
+Round 4.1.1 corrects the draft candidate-space semantics for class-level NTRK agents, claim-specific evidence links, NCI PDQ source classification, and adenosquamous manual-review scope. It does not change the 557/475 cohorts or generate patient-level labels, doses, prescriptions, model inputs, or treatment recommendations.
 
 ```powershell
 C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/generate_candidate_regimen_crosswalk.py --repo-root .
@@ -115,3 +115,23 @@ C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/validate_candidate_trea
 ```
 
 Outputs: [candidate treatment space](config/candidate_treatment_space_v0.1.yaml), [BPC observed regimen crosswalk](code/mappings/candidate_regimen_crosswalk_v0.1.csv), and [design report](docs/notes/candidate_treatment_space_design_v0.1.md). The candidate space remains `draft_not_locked` pending mentor and clinical-expert review.
+
+## Round 4.2 Evidence and Constraint Label Schema
+
+Round 4.2 defines the draft Track A label contract without creating patient-level labels. Evidence, observable Track A constraints, frozen Track B status, and clinical clearance are separate axes. Observed treatment and post-`t0` outcomes cannot become the evidence target.
+
+```powershell
+python -B code/scripts/validate_evidence_constraint_label_schema.py --repo-root .
+python -B -m unittest tests.test_evidence_constraint_label_schema
+```
+
+Outputs: [label schema](config/evidence_constraint_label_schema_v0.1.yaml) and [schema design report](docs/notes/evidence_constraint_label_schema_design_v0.1.md). The patient-candidate table and private Pilot have not been created.
+
+## Controlled External Material Intake
+
+Supplementary local materials are governed by the [external material registry](config/external_material_registry_v0.1.yaml) without committing large archives, full guideline texts, licensed databases, or individual molecular reports. Machine-specific paths are kept in ignored `config/local_external_sources.yaml`. NHC 2025 is used only as claim-specific supplementary official practice guidance; the NMPA snapshot is limited to name and historical market-status checks; the CSCO archive without a pancreatic-cancer guideline, DrugBank with unverified project rights, and identifier-bearing report examples are excluded from the current pipeline. See the [intake record](docs/notes/external_material_intake_v0.1.md).
+
+```powershell
+python -B code/scripts/validate_external_material_registry.py --repo-root .
+python -B -m unittest tests.test_external_material_registry
+```

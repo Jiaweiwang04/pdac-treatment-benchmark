@@ -56,11 +56,127 @@ class CandidateTreatmentSpaceTests(unittest.TestCase):
         errors = validator.validate_config(config)
         self.assertTrue(any("references missing evidence source" in error for error in errors))
 
+    def test_nci_pdq_is_not_classified_as_a_guideline(self) -> None:
+        config = load_config()
+        source = next(item for item in config["evidence_sources"] if item["source_id"] == "nci_pdq_pancreatic_treatment_2025")
+        self.assertEqual(source["source_type"], "evidence_summary")
+        source["source_type"] = "clinical_guideline_summary"
+        errors = validator.validate_config(config)
+        self.assertTrue(any("must be classified as an evidence summary" in error for error in errors))
+
+    def test_nhc_guidance_is_official_and_scoped_to_extended_erlotinib_candidate(self) -> None:
+        config = load_config()
+        source = next(item for item in config["evidence_sources"] if item["source_id"] == "nhc_antitumor_guidance_2025")
+        self.assertEqual(source["source_type"], "official_practice_guidance")
+        self.assertIn("www.nhc.gov.cn", source["url_or_doi"])
+        candidate = next(item for item in config["candidates"] if item["candidate_id"] == "gemcitabine_erlotinib")
+        self.assertIn(source["source_id"], candidate["evidence_source_ids"])
+        linked_candidates = {
+            item["candidate_id"]
+            for item in config["candidates"]
+            if source["source_id"] in item["evidence_source_ids"]
+        }
+        self.assertEqual(linked_candidates, {"gemcitabine_erlotinib"})
+        self.assertIn("gemcitabine_erlotinib", config["extended_candidate_pool"])
+        self.assertNotIn("gemcitabine_erlotinib", config["main_candidate_pool"])
+
+    def test_nhc_guidance_cannot_leak_to_an_unreviewed_candidate(self) -> None:
+        config = load_config()
+        candidate = next(item for item in config["candidates"] if item["candidate_id"] == "folfirinox")
+        candidate["evidence_source_ids"].append("nhc_antitumor_guidance_2025")
+        errors = validator.validate_config(config)
+        self.assertTrue(any("must link only" in error for error in errors))
+
+    def test_broad_fda_directory_is_not_accepted_as_claim_specific_evidence(self) -> None:
+        config = load_config()
+        source = next(item for item in config["evidence_sources"] if item["source_id"] == "fda_ntrk_repotrectinib_2024")
+        source["url_or_doi"] = "https://www.fda.gov/drugs/resources-information-approved-drugs/oncology-cancerhematologic-malignancies-approval-notifications"
+        errors = validator.validate_config(config)
+        self.assertTrue(any("broad regulatory directory" in error for error in errors))
+
+    def test_official_evidence_source_uses_expected_host(self) -> None:
+        config = load_config()
+        source = next(item for item in config["evidence_sources"] if item["source_id"] == "fda_ntrk_repotrectinib_2024")
+        source["url_or_doi"] = "https://example.org/repotrectinib"
+        errors = validator.validate_config(config)
+        self.assertTrue(any("does not use an official source host" in error for error in errors))
+
+    def test_evidence_source_date_cannot_exceed_cutoff(self) -> None:
+        config = load_config()
+        config["evidence_sources"][0]["access_date"] = "2026-08-29"
+        errors = validator.validate_config(config)
+        self.assertTrue(any("access_date exceeds the evidence cutoff" in error for error in errors))
+
     def test_ordinary_and_liposomal_irinotecan_cannot_be_merged(self) -> None:
         config = load_config()
         config["candidates"][0]["canonical_drug_set"].append("liposomal_irinotecan")
         errors = validator.validate_config(config)
         self.assertTrue(any("mixes ordinary and liposomal irinotecan" in error for error in errors))
+
+    def test_class_candidate_uses_alternative_single_agents_not_a_drug_set(self) -> None:
+        config = load_config()
+        candidate = next(item for item in config["candidates"] if item["candidate_id"] == "ntrk_fusion_targeted_therapy")
+        self.assertEqual(candidate["canonical_drug_set"], [])
+        self.assertEqual(set(candidate["permitted_single_agents"]), {"entrectinib", "larotrectinib", "repotrectinib"})
+
+    def test_class_candidate_cannot_encode_alternatives_as_a_combination(self) -> None:
+        config = load_config()
+        candidate = next(item for item in config["candidates"] if item["candidate_id"] == "ntrk_fusion_targeted_therapy")
+        candidate["canonical_drug_set"] = list(candidate["permitted_single_agents"])
+        errors = validator.validate_config(config)
+        self.assertTrue(any("must not encode alternative agents" in error for error in errors))
+
+    def test_class_candidate_requires_permitted_single_agents(self) -> None:
+        config = load_config()
+        candidate = next(item for item in config["candidates"] if item["candidate_id"] == "ntrk_fusion_targeted_therapy")
+        candidate["permitted_single_agents"] = []
+        errors = validator.validate_config(config)
+        self.assertTrue(any("requires permitted_single_agents" in error for error in errors))
+
+    def test_class_candidate_maps_each_agent_to_specific_evidence(self) -> None:
+        config = load_config()
+        candidate = next(item for item in config["candidates"] if item["candidate_id"] == "ntrk_fusion_targeted_therapy")
+        candidate["agent_evidence_source_ids"].pop("entrectinib")
+        errors = validator.validate_config(config)
+        self.assertTrue(any("must map every permitted single agent to evidence" in error for error in errors))
+
+    def test_adenosquamous_scope_inherits_cohort_manual_review(self) -> None:
+        config = load_config()
+        disease = config["disease"]
+        self.assertNotIn("adenosquamous_carcinoma", disease["excluded_histologies"])
+        self.assertIn("adenosquamous_carcinoma", disease["manual_review_histologies"])
+        disease["excluded_histologies"].append("adenosquamous_carcinoma")
+        errors = validator.validate_config(config)
+        self.assertTrue(any("must inherit the cohort manual-review boundary" in error for error in errors))
+
+    def test_confirmed_track_a_candidates_remain_conditional_main_pool_items(self) -> None:
+        config = load_config()
+        for candidate_id in ("folfox_or_off", "gemcitabine_paclitaxel_after_folfirinox"):
+            candidate = next(item for item in config["candidates"] if item["candidate_id"] == candidate_id)
+            self.assertIn(candidate_id, config["main_candidate_pool"])
+            self.assertEqual(candidate["track_a_pool_status"], "retained_main_conditional_not_clinically_cleared")
+            self.assertTrue(candidate["manual_review_required"])
+
+    def test_confirmed_track_a_candidate_cannot_lose_conditional_boundary(self) -> None:
+        config = load_config()
+        candidate = next(item for item in config["candidates"] if item["candidate_id"] == "folfox_or_off")
+        candidate["track_a_pool_status"] = "clinically_cleared"
+        errors = validator.validate_config(config)
+        self.assertTrue(any("lacks the conditional pool boundary" in error for error in errors))
+
+    def test_confirmed_ntrk_class_granularity_is_preserved(self) -> None:
+        config = load_config()
+        candidate = next(item for item in config["candidates"] if item["candidate_id"] == "ntrk_fusion_targeted_therapy")
+        self.assertEqual(candidate["candidate_granularity_status"], "retained_class_with_mutually_exclusive_single_agents")
+        candidate["candidate_granularity_status"] = "split_agents"
+        errors = validator.validate_config(config)
+        self.assertTrue(any("does not preserve the confirmed class-level granularity" in error for error in errors))
+
+    def test_confirmed_decisions_are_not_still_unresolved(self) -> None:
+        config = load_config()
+        config["unresolved_decisions"].append({"decision": "split_ntrk_class_into_individual_agents"})
+        errors = validator.validate_config(config)
+        self.assertTrue(any("confirmed benchmark decision remains listed as unresolved" in error for error in errors))
 
     def test_biomarker_candidate_requires_structured_condition(self) -> None:
         config = load_config()

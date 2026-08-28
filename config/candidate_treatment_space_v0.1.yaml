@@ -1,11 +1,13 @@
-version: v0.1
+version: v0.1.1
 status: draft_not_locked
 disease:
   name: advanced_pancreatic_ductal_adenocarcinoma
   population: unresectable_locally_advanced_recurrent_or_metastatic_pdac
-  excluded_histologies: [acinar_cell_carcinoma, adenosquamous_carcinoma, neuroendocrine_tumor, other_non_pdac_pancreatic_subtype]
+  cohort_scope_policy: inherit_cohort_definition_v0_1
+  excluded_histologies: [acinar_cell_carcinoma, neuroendocrine_tumor, other_non_pdac_pancreatic_subtype]
+  manual_review_histologies: [adenosquamous_carcinoma]
 setting: advanced_pdac_systemic_treatment
-evidence_cutoff_date: '2026-08-15'
+evidence_cutoff_date: '2026-08-28'
 track:
   track_a:
     status: conditional_go
@@ -62,14 +64,50 @@ excluded_categories:
   - patient_level_candidate_assignment
 evidence_sources:
   - source_id: nci_pdq_pancreatic_treatment_2025
-    source_type: clinical_guideline_summary
+    source_type: evidence_summary
     title: Pancreatic Cancer Treatment (PDQ) - Health Professional Version
     organization_or_journal: National Cancer Institute
     publication_date: '2025-02-12'
     version_or_update_date: '2025-02-12'
     url_or_doi: https://www.cancer.gov/types/pancreatic/hp/pancreatic-treatment-pdq
-    access_date: '2026-08-15'
-    supported_claim: Advanced or metastatic PDAC systemic treatment evidence, FOLFIRINOX, NALIRIFOX, gemcitabine combinations, second-line chemotherapy, and olaparib maintenance context.
+    access_date: '2026-08-27'
+    supported_claim: Peer-reviewed evidence summary for advanced or metastatic pancreatic cancer treatment context; NCI states that PDQ does not provide formal clinical guidelines or recommendations.
+  - source_id: nhc_antitumor_guidance_2025
+    source_type: official_practice_guidance
+    title: Guiding Principles for the Clinical Application of New Antitumor Drugs (2025 Edition)
+    organization_or_journal: National Health Commission of the People's Republic of China
+    publication_date: '2026-01-26'
+    version_or_update_date: '2025'
+    url_or_doi: https://www.nhc.gov.cn/cms-search/xxgk/getManuscriptXxgk.htm?id=460c2377aa294b55baacd339b8b19eb8
+    access_date: '2026-08-28'
+    supported_claim: The 2025 NHC guidance records gemcitabine plus erlotinib as an FDA-approved first-line option for locally advanced, unresectable, or metastatic pancreatic cancer while noting that this indication is not approved in China and requires exceptional-use governance and informed consent.
+  - source_id: jco_conko_003_2014
+    source_type: peer_reviewed_randomized_trial
+    title: Second-line oxaliplatin, folinic acid, and fluorouracil versus folinic acid and fluorouracil alone for gemcitabine-refractory pancreatic cancer
+    organization_or_journal: Journal of Clinical Oncology
+    publication_date: '2014-08-10'
+    version_or_update_date: '2014-08-10'
+    url_or_doi: https://doi.org/10.1200/JCO.2013.53.6995
+    access_date: '2026-08-27'
+    supported_claim: CONKO-003 reported an overall-survival benefit for OFF versus folinic acid and fluorouracil after gemcitabine progression.
+  - source_id: jco_pancreox_2016
+    source_type: peer_reviewed_randomized_trial
+    title: PANCREOX fluorouracil and leucovorin with or without oxaliplatin after gemcitabine-based chemotherapy
+    organization_or_journal: Journal of Clinical Oncology
+    publication_date: '2016-11-10'
+    version_or_update_date: '2016-11-10'
+    url_or_doi: https://doi.org/10.1200/JCO.2016.68.5776
+    access_date: '2026-08-27'
+    supported_claim: PANCREOX found no progression-free-survival benefit and inferior overall survival with mFOLFOX6 versus fluorouracil and leucovorin, with greater toxicity.
+  - source_id: jco_gempax_2024
+    source_type: peer_reviewed_randomized_trial
+    title: GEMPAX gemcitabine and paclitaxel versus gemcitabine alone after fluorouracil, oxaliplatin, and irinotecan
+    organization_or_journal: Journal of Clinical Oncology
+    publication_date: '2024-03-20'
+    version_or_update_date: '2024-03-20'
+    url_or_doi: https://doi.org/10.1200/JCO.23.00795
+    access_date: '2026-08-27'
+    supported_claim: GEMPAX did not meet its overall-survival primary end point but improved progression-free survival and response rate with more treatment-related toxicity.
   - source_id: fda_onivyde_first_line_pdac_2024
     source_type: regulatory_approval
     title: FDA approves irinotecan liposome for first-line treatment of metastatic pancreatic adenocarcinoma
@@ -89,13 +127,13 @@ evidence_sources:
     access_date: '2026-08-15'
     supported_claim: Zenocutuzumab has an accelerated indication for advanced unresectable or metastatic pancreatic adenocarcinoma with an NRG1 fusion after prior systemic therapy.
   - source_id: fda_keytruda_msi_h_dmmr_2017
-    source_type: regulatory_approval
-    title: FDA approval package for pembrolizumab MSI-H or dMMR solid tumors
+    source_type: regulatory_review
+    title: FDA Division Director Summary Review for pembrolizumab MSI-H or dMMR solid tumors
     organization_or_journal: U.S. Food and Drug Administration
     publication_date: '2017-05-23'
-    version_or_update_date: '2023-03-28'
-    url_or_doi: https://www.fda.gov/drugs/resources-information-approved-drugs/verified-clinical-benefit-cancer-accelerated-approvals
-    access_date: '2026-08-15'
+    version_or_update_date: '2017-05-23'
+    url_or_doi: https://www.accessdata.fda.gov/drugsatfda_docs/nda/2017/125514Orig1s014.pdf
+    access_date: '2026-08-27'
     supported_claim: Pembrolizumab has a tissue-agnostic MSI-H or dMMR solid tumor indication after prior treatment and no satisfactory alternatives.
   - source_id: fda_keytruda_tmb_h_2020
     source_type: regulatory_approval
@@ -121,9 +159,27 @@ evidence_sources:
     organization_or_journal: U.S. Food and Drug Administration
     publication_date: '2024-06-13'
     version_or_update_date: '2024-06-13'
-    url_or_doi: https://www.fda.gov/drugs/resources-information-approved-drugs/oncology-cancerhematologic-malignancies-approval-notifications
-    access_date: '2026-08-15'
+    url_or_doi: https://www.fda.gov/drugs/resources-information-approved-drugs/fda-grants-accelerated-approval-repotrectinib-adult-and-pediatric-patients-ntrk-gene-fusion-positive
+    access_date: '2026-08-27'
     supported_claim: Repotrectinib has an accelerated tissue-agnostic NTRK fusion-positive solid tumor indication after progression or when no satisfactory alternative exists.
+  - source_id: fda_ntrk_larotrectinib_2025
+    source_type: regulatory_approval_letter
+    title: FDA approval letter converting the larotrectinib NTRK fusion-positive solid tumor indication to traditional approval
+    organization_or_journal: U.S. Food and Drug Administration
+    publication_date: '2025-04-09'
+    version_or_update_date: '2025-04-09'
+    url_or_doi: https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2025/211710Orig1s010ltr.pdf
+    access_date: '2026-08-27'
+    supported_claim: Larotrectinib has a tissue-agnostic NTRK fusion-positive solid tumor indication and is an individual agent, not a component of an NTRK drug combination.
+  - source_id: fda_ntrk_entrectinib_2023
+    source_type: regulatory_approval
+    title: FDA expands pediatric indication for entrectinib and approves new pellet formulation
+    organization_or_journal: U.S. Food and Drug Administration
+    publication_date: '2023-10-20'
+    version_or_update_date: '2023-10-20'
+    url_or_doi: https://www.fda.gov/drugs/resources-information-approved-drugs/fda-expands-pediatric-indication-entrectinib-and-approves-new-pellet-formulation
+    access_date: '2026-08-27'
+    supported_claim: Entrectinib has a tissue-agnostic NTRK fusion-positive solid tumor indication and is an individual agent, not a component of an NTRK drug combination.
   - source_id: fda_ret_selpercatinib_2026
     source_type: regulatory_approval
     title: FDA grants traditional approval to selpercatinib for locally advanced or metastatic RET fusion-positive solid tumors
@@ -134,13 +190,13 @@ evidence_sources:
     access_date: '2026-08-15'
     supported_claim: Selpercatinib has a tissue-agnostic RET fusion-positive solid tumor indication after prior systemic treatment or when no satisfactory alternatives exist.
   - source_id: fda_braf_dabrafenib_trametinib_2022
-    source_type: regulatory_approval
-    title: FDA grants accelerated approval to dabrafenib in combination with trametinib for unresectable or metastatic solid tumors with BRAF V600E mutation
+    source_type: regulatory_label
+    title: FDA prescribing information for dabrafenib including the BRAF V600E solid tumor indication with trametinib
     organization_or_journal: U.S. Food and Drug Administration
     publication_date: '2022-06-22'
     version_or_update_date: '2022-06-22'
-    url_or_doi: https://www.fda.gov/drugs/resources-information-approved-drugs/oncology-cancerhematologic-malignancies-approval-notifications
-    access_date: '2026-08-15'
+    url_or_doi: https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/202806s022lbl.pdf
+    access_date: '2026-08-27'
     supported_claim: Dabrafenib plus trametinib has an accelerated tissue-agnostic BRAF V600E solid tumor indication after prior treatment and no satisfactory alternatives.
   - source_id: fda_olaparib_pancreatic_2019
     source_type: regulatory_approval
@@ -187,7 +243,7 @@ candidates:
     requires_track_b: true
     evidence_status: supported_by_accessible_sources
     regulatory_status: regimen_components_approved_and_pdac_evidence_available
-    guideline_status: nci_pdq_supported
+    guideline_status: formal_guideline_not_assessed_public_evidence_summary_only
     evidence_level: randomized_trial_summary
     evidence_source_ids: [nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025]
     observed_bpc_mapping_status: observed_variant
@@ -211,7 +267,7 @@ candidates:
     requires_track_b: true
     evidence_status: supported_by_accessible_sources
     regulatory_status: fda_pancreatic_indication
-    guideline_status: nci_pdq_supported
+    guideline_status: formal_guideline_not_assessed_public_evidence_summary_only
     evidence_level: randomized_trial_and_regulatory
     evidence_source_ids: [fda_onivyde_first_line_pdac_2024, nci_pdq_pancreatic_treatment_2025]
     observed_bpc_mapping_status: not_observed_as_complete_set
@@ -235,7 +291,7 @@ candidates:
     requires_track_b: true
     evidence_status: supported_by_accessible_sources
     regulatory_status: regimen_components_approved_and_pdac_evidence_available
-    guideline_status: nci_pdq_supported
+    guideline_status: formal_guideline_not_assessed_public_evidence_summary_only
     evidence_level: randomized_trial_summary
     evidence_source_ids: [nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025]
     observed_bpc_mapping_status: observed_exact
@@ -259,7 +315,7 @@ candidates:
     requires_track_b: true
     evidence_status: supported_by_accessible_sources
     regulatory_status: pancreatic_drug_summary
-    guideline_status: nci_pdq_supported
+    guideline_status: formal_guideline_not_assessed_public_evidence_summary_only
     evidence_level: randomized_trial_summary
     evidence_source_ids: [nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025]
     observed_bpc_mapping_status: observed_exact
@@ -283,7 +339,7 @@ candidates:
     requires_track_b: true
     evidence_status: supported_by_accessible_sources
     regulatory_status: pancreatic_indication_context
-    guideline_status: nci_pdq_supported
+    guideline_status: formal_guideline_not_assessed_public_evidence_summary_only
     evidence_level: randomized_trial_summary
     evidence_source_ids: [nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025]
     observed_bpc_mapping_status: observed_exact_or_partial
@@ -307,7 +363,7 @@ candidates:
     requires_track_b: true
     evidence_status: supported_by_accessible_sources
     regulatory_status: component_drug_context
-    guideline_status: nci_pdq_supported
+    guideline_status: formal_guideline_not_assessed_public_evidence_summary_only
     evidence_level: randomized_trial_summary
     evidence_source_ids: [nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025]
     observed_bpc_mapping_status: observed_exact
@@ -331,13 +387,14 @@ candidates:
     requires_track_b: true
     evidence_status: supported_with_conflicting_or_lower_level_evidence
     regulatory_status: component_drug_context
-    guideline_status: nci_pdq_supported_with_uncertainty
+    guideline_status: formal_guideline_not_assessed_clinical_role_uncertain
     evidence_level: lower_level_or_conflicting_randomized_evidence
-    evidence_source_ids: [nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025]
+    evidence_source_ids: [jco_conko_003_2014, jco_pancreox_2016, nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025]
     observed_bpc_mapping_status: observed_variant
     main_pool_eligible: true
+    track_a_pool_status: retained_main_conditional_not_clinically_cleared
     manual_review_required: true
-    notes: [do_not_treat_observed_frequency_as_superiority, FOLFOX_and_OFF_are_context_variants]
+    notes: [conflicting_phase_3_results, do_not_treat_observed_frequency_as_superiority, FOLFOX_and_OFF_are_context_variants, track_b_absence_does_not_remove_from_track_a_pool]
   - candidate_id: gemcitabine_paclitaxel_after_folfirinox
     display_name: Gemcitabine plus solvent-based paclitaxel after FOLFIRINOX failure or intolerance
     candidate_type: cytotoxic_combination
@@ -353,15 +410,16 @@ candidates:
     exclusion_conditions: [{condition: unsafe_clinical_constraints, status: requires_track_b}]
     track_a_observability: {observed_regimen: not_observed_as_common_complete_set, prior_treatment: partial, biomarker: partial, clinical_safety: unavailable}
     requires_track_b: true
-    evidence_status: supported_by_accessible_sources
+    evidence_status: phase_3_no_overall_survival_benefit_with_pfs_or_response_signal
     regulatory_status: component_drug_context
-    guideline_status: nci_pdq_supported_with_uncertainty
+    guideline_status: formal_guideline_not_assessed_clinical_role_uncertain
     evidence_level: phase_3_contextual_evidence
-    evidence_source_ids: [nci_pdq_pancreatic_treatment_2025]
+    evidence_source_ids: [jco_gempax_2024, nci_pdq_pancreatic_treatment_2025]
     observed_bpc_mapping_status: not_observed_as_complete_set
     main_pool_eligible: true
+    track_a_pool_status: retained_main_conditional_not_clinically_cleared
     manual_review_required: true
-    notes: [do_not_merge_with_gemcitabine_nab_paclitaxel, solvent_based_paclitaxel_is_distinct]
+    notes: [do_not_merge_with_gemcitabine_nab_paclitaxel, no_overall_survival_primary_endpoint_benefit, solvent_based_paclitaxel_is_distinct, track_b_absence_does_not_remove_from_track_a_pool]
   - candidate_id: olaparib_maintenance_brca
     display_name: Olaparib maintenance for germline BRCA-mutated metastatic PDAC
     candidate_type: maintenance
@@ -379,7 +437,7 @@ candidates:
     requires_track_b: true
     evidence_status: supported_by_accessible_sources
     regulatory_status: fda_pancreatic_maintenance_indication
-    guideline_status: nci_pdq_supported
+    guideline_status: formal_guideline_not_assessed_public_evidence_summary_only
     evidence_level: randomized_trial_and_regulatory
     evidence_source_ids: [fda_olaparib_pancreatic_2019, nci_pdq_pancreatic_treatment_2025]
     observed_bpc_mapping_status: observed_drug_only_role_unresolved
@@ -461,7 +519,12 @@ candidates:
   - candidate_id: ntrk_fusion_targeted_therapy
     display_name: NTRK fusion-directed therapy class
     candidate_type: biomarker_matched_class
-    canonical_drug_set: [entrectinib, larotrectinib, repotrectinib]
+    canonical_drug_set: []
+    permitted_single_agents: [entrectinib, larotrectinib, repotrectinib]
+    agent_evidence_source_ids:
+      entrectinib: [fda_ntrk_entrectinib_2023]
+      larotrectinib: [fda_ntrk_larotrectinib_2025]
+      repotrectinib: [fda_ntrk_repotrectinib_2024]
     regimen_family: ntrk_fusion_targeted_therapy
     clinical_role: biomarker_matched_active_systemic_treatment
     treatment_setting: unresectable_or_metastatic_solid_tumor_with_ntrk_fusion
@@ -477,11 +540,12 @@ candidates:
     regulatory_status: fda_tissue_agnostic_context
     guideline_status: requires_pdac_guideline_review
     evidence_level: tissue_agnostic_regulatory
-    evidence_source_ids: [fda_ntrk_repotrectinib_2024]
+    evidence_source_ids: [fda_ntrk_entrectinib_2023, fda_ntrk_larotrectinib_2025, fda_ntrk_repotrectinib_2024]
     observed_bpc_mapping_status: not_observed_as_complete_set
     main_pool_eligible: true
+    candidate_granularity_status: retained_class_with_mutually_exclusive_single_agents
     manual_review_required: true
-    notes: [class_candidate_is_not_a_single_prescription, next_round_may_split_agents_after_clinical_review]
+    notes: [each_ranked_action_is_one_permitted_single_agent_not_the_combined_set, class_candidate_is_not_a_single_prescription, next_round_may_split_agents_after_clinical_review]
   - candidate_id: selpercatinib_ret_fusion
     display_name: Selpercatinib for RET fusion-positive solid tumor
     candidate_type: biomarker_matched
@@ -645,11 +709,11 @@ candidates:
     regulatory_status: component_drug_context
     guideline_status: requires_current_guideline_review
     evidence_level: historical_randomized_evidence
-    evidence_source_ids: [nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025]
+    evidence_source_ids: [nci_pdq_pancreatic_treatment_2025, nci_pancreatic_drugs_2025, nhc_antitumor_guidance_2025]
     observed_bpc_mapping_status: not_observed_as_complete_set
     main_pool_eligible: false
     manual_review_required: true
-    notes: [kept_extended_due_to_legacy_evidence_and_current_guideline_uncertainty]
+    notes: [kept_extended_due_to_legacy_evidence_and_current_guideline_uncertainty, nhc_2025_records_china_unapproved_indication_and_exceptional_use_requirements]
   - candidate_id: folfiri_or_irinotecan_fluoropyrimidine
     display_name: FOLFIRI or ordinary irinotecan fluoropyrimidine combination
     candidate_type: cytotoxic_combination
@@ -818,15 +882,20 @@ candidates:
     main_pool_eligible: false
     manual_review_required: true
     notes: [never_guess_masked_drug_identity, never_map_to_concrete_candidate]
+review_decisions:
+  - decision_id: retain_conditional_cytotoxic_candidates_in_track_a_main_pool
+    status: project_owner_confirmed_benchmark_design_not_medical_freeze
+    decision_date: '2026-08-27'
+    decision: retain_folfox_off_and_gemcitabine_paclitaxel_after_folfirinox_in_main_pool
+    rationale: Track B may remain unavailable, and missing safety variables should constrain interpretation rather than remove evidence-relevant candidates from the Track A benchmark.
+    safeguards: [conditional_evidence_status, manual_review_required, never_interpret_as_clinical_clearance, track_b_absence_explicit]
+  - decision_id: retain_ntrk_class_candidate
+    status: project_owner_confirmed_benchmark_design_not_medical_freeze
+    decision_date: '2026-08-27'
+    decision: retain_one_ntrk_class_candidate_with_mutually_exclusive_single_agents
+    rationale: Track A does not contain reliable agent-selection or resistance context, so individual-agent ranking would exceed the supported granularity.
+    safeguards: [canonical_drug_set_empty, each_action_uses_one_permitted_agent, agent_specific_evidence_mapping, manual_review_required]
 unresolved_decisions:
-  - decision: confirm_main_pool_boundary_for_folfox_off_and_gemcitabine_paclitaxel
-    alternatives: [retain_in_main_with_lower_level_evidence, move_to_extended_until_guideline_review]
-    impact: changes whether lower_level later_line options are ranked in the primary candidate space
-    recommendation: retain_in_main_for_v0_1_because_they_are_explicitly_discussed_in_nci_pdq_but_mark_manual_review
-  - decision: split_ntrk_class_into_individual_agents
-    alternatives: [keep_class_candidate, split_larotrectinib_entrectinib_repotrectinib]
-    impact: affects candidate count and action selection granularity
-    recommendation: keep_class_candidate until clinical review defines agent-selection rules
   - decision: confirm_current_guideline_role_of_gemcitabine_cisplatin_hrd
     alternatives: [retain_extended, promote_to_main]
     impact: affects HRD/platinum candidate coverage

@@ -1,4 +1,4 @@
-# Advanced PDAC Candidate Treatment Space v0.1
+# Advanced PDAC Candidate Treatment Space v0.1.1
 
 Status: `draft_not_locked`
 
@@ -14,19 +14,25 @@ The configuration is [candidate_treatment_space_v0.1.yaml](../../config/candidat
 
 ## 2. Evidence method and cutoff
 
-The evidence snapshot was checked on 2026-08-15 with an evidence cutoff of 2026-08-15. The search prioritized the NCI PDQ, FDA approval notices and labels, and official NCI drug summaries. The inaccessible portions of licensed guidelines, including NCCN full text, were not reconstructed from memory. Those items remain unresolved for mentor or clinical-expert review.
+The evidence snapshot was initially checked on 2026-08-15, received a targeted source-semantic correction on 2026-08-27, and added one claim-specific NHC source on 2026-08-28; the current evidence cutoff is 2026-08-28. The search prioritized the NCI PDQ evidence summary, claim-specific FDA approval notices, reviews and labels, official NCI drug summaries, and official public practice guidance when a specific claim was reviewed. NCI explicitly states that PDQ is not a formal clinical practice guideline or recommendation. The inaccessible portions of licensed guidelines, including NCCN full text, were not reconstructed from memory. Formal guideline status remains unresolved for mentor or clinical-expert review.
 
 The main sources are:
 
 | source_id | source type | supported use |
 |---|---|---|
-| `nci_pdq_pancreatic_treatment_2025` | clinical guideline summary | FOLFIRINOX, NALIRIFOX, gemcitabine combinations, second-line chemotherapy, and olaparib maintenance context |
+| `nci_pdq_pancreatic_treatment_2025` | peer-reviewed evidence summary, not a clinical guideline | treatment evidence context only; it cannot establish formal guideline status |
+| `nhc_antitumor_guidance_2025` | official practice guidance | China regulatory and exceptional-use context for gemcitabine plus erlotinib only; not clinical clearance or a main-pool promotion |
+| `jco_conko_003_2014` | phase III randomized trial | OFF benefit after gemcitabine progression |
+| `jco_pancreox_2016` | phase III randomized trial | no mFOLFOX6 benefit and greater toxicity after gemcitabine-based therapy |
+| `jco_gempax_2024` | phase III randomized trial | no overall-survival benefit for gemcitabine/paclitaxel, with PFS/response signal and greater toxicity |
 | `fda_onivyde_first_line_pdac_2024` | regulatory approval | NALIRIFOX first-line metastatic pancreatic adenocarcinoma indication |
 | `fda_olaparib_pancreatic_2019` | regulatory approval | gBRCA-mutated metastatic pancreatic adenocarcinoma maintenance indication |
 | `fda_bizengri_nrg1_pdac_2024` | regulatory approval | NRG1 fusion-positive pancreatic adenocarcinoma after prior systemic therapy |
 | `fda_keytruda_msi_h_dmmr_2017` | regulatory approval | MSI-H or dMMR tissue-agnostic pembrolizumab indication |
 | `fda_keytruda_tmb_h_2020` | regulatory approval | TMB-H tissue-agnostic pembrolizumab indication |
-| `fda_ntrk_repotrectinib_2024` | regulatory approval | NTRK fusion-positive tissue-agnostic therapy context |
+| `fda_ntrk_entrectinib_2023` | regulatory approval | entrectinib NTRK fusion-positive tissue-agnostic therapy context |
+| `fda_ntrk_larotrectinib_2025` | regulatory approval letter | larotrectinib NTRK fusion-positive traditional-approval context |
+| `fda_ntrk_repotrectinib_2024` | regulatory approval | repotrectinib NTRK fusion-positive accelerated-approval context |
 | `fda_ret_selpercatinib_2026` | regulatory approval | RET fusion-positive tissue-agnostic therapy context |
 | `fda_braf_dabrafenib_trametinib_2022` | regulatory approval | BRAF V600E tissue-agnostic therapy context |
 | `fda_enhertu_her2_solid_tumor_2024` | regulatory approval | HER2-positive IHC3+ solid-tumor therapy context |
@@ -47,18 +53,18 @@ The main pool has 16 candidates. It remains below the 20-candidate review thresh
 | `gemcitabine_monotherapy` | active systemic treatment; kept separate from combinations | `nci_pdq_pancreatic_treatment_2025`, `nci_pancreatic_drugs_2025` | exact |
 | `liposomal_irinotecan_fluorouracil_leucovorin` | later-line active treatment after gemcitabine-based therapy | `nci_pdq_pancreatic_treatment_2025`, `nci_pancreatic_drugs_2025` | exact/partial |
 | `fluorouracil_leucovorin` | later-line active treatment | `nci_pdq_pancreatic_treatment_2025`, `nci_pancreatic_drugs_2025` | exact |
-| `folfox_or_off` | later-line fluoropyrimidine/oxaliplatin context; evidence and use remain conditional | `nci_pdq_pancreatic_treatment_2025`, `nci_pancreatic_drugs_2025` | variant |
-| `gemcitabine_paclitaxel_after_folfirinox` | later-line option after FOLFIRINOX failure or intolerance | `nci_pdq_pancreatic_treatment_2025` | no complete named BPC set |
+| `folfox_or_off` | retained for Track A comparison with conditional status; CONKO-003 and PANCREOX conflict | `jco_conko_003_2014`, `jco_pancreox_2016`, `nci_pdq_pancreatic_treatment_2025`, `nci_pancreatic_drugs_2025` | variant |
+| `gemcitabine_paclitaxel_after_folfirinox` | retained for Track A comparison; no phase III OS benefit, with PFS/response signal and greater toxicity | `jco_gempax_2024`, `nci_pdq_pancreatic_treatment_2025` | no complete named BPC set |
 | `olaparib_maintenance_brca` | maintenance after platinum response/stability; germline BRCA1/2 required | `fda_olaparib_pancreatic_2019`, `nci_pdq_pancreatic_treatment_2025` | olaparib observed, role/biomarker unresolved |
 | `pembrolizumab_msi_h_dmmr` | tissue-agnostic biomarker-matched treatment; MSI-H or dMMR required | `fda_keytruda_msi_h_dmmr_2017` | pembrolizumab observed, biomarker unresolved |
 | `pembrolizumab_tmb_h` | tissue-agnostic biomarker-matched treatment; TMB-H required | `fda_keytruda_tmb_h_2020` | pembrolizumab observed, biomarker unresolved |
 | `zenocutuzumab_nrg1_fusion` | later-line NRG1 fusion-matched treatment | `fda_bizengri_nrg1_pdac_2024` | no named BPC drug mapping |
-| `ntrk_fusion_targeted_therapy` | NTRK fusion-directed class; agent selection is not a single prescription | `fda_ntrk_repotrectinib_2024` | no complete named BPC mapping |
+| `ntrk_fusion_targeted_therapy` | NTRK fusion-directed class; each action selects one permitted agent, never the three-drug set | `fda_ntrk_entrectinib_2023`, `fda_ntrk_larotrectinib_2025`, `fda_ntrk_repotrectinib_2024` | no complete named BPC mapping |
 | `selpercatinib_ret_fusion` | later-line RET fusion-matched treatment | `fda_ret_selpercatinib_2026` | no named BPC drug mapping |
 | `dabrafenib_trametinib_braf_v600e` | later-line BRAF V600E-matched combination | `fda_braf_dabrafenib_trametinib_2022` | no named BPC drug mapping |
 | `trastuzumab_deruxtecan_her2_positive` | later-line HER2-positive IHC3+ tissue-agnostic context | `fda_enhertu_her2_solid_tumor_2024` | no named BPC drug mapping |
 
-The NTRK class is intentionally not split into three drug candidates in v0.1. It is a class-level candidate because agent selection, resistance context, and clinical constraints are not represented in Track A. This is a review decision, not an assertion that the agents are interchangeable.
+The NTRK class is intentionally not split into three drug candidates in v0.1.1. It has an empty `canonical_drug_set`, a separate `permitted_single_agents` list, and an `agent_evidence_source_ids` mapping because entrectinib, larotrectinib, and repotrectinib are alternatives, not a combination. Agent selection, resistance context, and clinical constraints are not represented in Track A. Keeping a class-level ranking action remains a review decision and is not an assertion that the agents are interchangeable.
 
 ## 4. Extended candidate pool
 
@@ -69,7 +75,7 @@ The extended pool has 11 candidates. They preserve relevant observed or protocol
 | `gemcitabine_cisplatin_hrd` | observed exact component set and biologically relevant HRD context, but current guideline and biomarker granularity require review | `nci_pdq_pancreatic_treatment_2025`, `nci_pancreatic_drugs_2025` |
 | `gemcitabine_capecitabine` | observed combination; current advanced-PDAC role requires review | `nci_pancreatic_drugs_2025` |
 | `capecitabine_monotherapy` | observed drug; not promoted from frequency alone | `nci_pancreatic_drugs_2025` |
-| `gemcitabine_erlotinib` | historical randomized evidence and uncertain current role | `nci_pdq_pancreatic_treatment_2025`, `nci_pancreatic_drugs_2025` |
+| `gemcitabine_erlotinib` | historical randomized evidence and uncertain current role; NHC 2025 notes the pancreatic indication is not approved in China and requires exceptional-use governance | `nci_pdq_pancreatic_treatment_2025`, `nci_pancreatic_drugs_2025`, `nhc_antitumor_guidance_2025` |
 | `folfiri_or_irinotecan_fluoropyrimidine` | observed ordinary irinotecan combination; current line-specific role requires review | `nci_pdq_pancreatic_treatment_2025` |
 | `gemcitabine_oxaliplatin` | observed combination; current role requires review | `nci_pancreatic_drugs_2025` |
 | `kras_g12c_targeted_therapy` | protocol-relevant biomarker pathway without a locked PDAC-specific drug in this snapshot | `nci_pdq_pancreatic_treatment_2025` |
@@ -81,6 +87,8 @@ The extended pool has 11 candidates. They preserve relevant observed or protocol
 ## 5. Explicit exclusions
 
 Surgery, radiation, local treatment, supportive care, doses and schedules, individual prescriptions, patient-level candidate assignment, outcome-optimized labels, and unresolvable investigational drugs are excluded. Endocrine or clearly non-PDAC observed regimens are retained only as `not_candidate` crosswalk rows. A masked investigational component can map only to the review-action candidate and never to a concrete drug candidate.
+
+Histology scope inherits [cohort_definition_v0.1.yaml](../../cohort_definition_v0.1.yaml): adenosquamous carcinoma is a manual-review category rather than a direct candidate-space exclusion. This alignment does not medically approve its inclusion and does not change the locked 557/475 cohort outputs.
 
 ## 6. Mapping decisions
 
@@ -96,10 +104,13 @@ All active cytotoxic candidates require Track B for clinical safety constraints.
 
 ## 8. Evidence uncertainty and clinical review
 
-The candidate space is not medically confirmed. The following require mentor or clinical-expert review before freeze:
+The candidate space is not medically frozen. On 2026-08-27, the project owner confirmed two benchmark-design decisions that constrain scope without asserting clinical suitability:
 
-- whether `folfox_or_off` and `gemcitabine_paclitaxel_after_folfirinox` belong in the main pool;
-- whether the NTRK class should be split into individual agents;
+- `folfox_or_off` and `gemcitabine_paclitaxel_after_folfirinox` remain in the Track A main pool with conditional evidence status and mandatory manual review. Missing Track B safety variables limit interpretation but do not remove evidence-relevant candidates from the benchmark.
+- NTRK remains one class-level candidate with three mutually exclusive permitted single agents. It does not represent a three-drug combination or claim agent interchangeability.
+
+The following still require mentor or clinical-expert review before medical freeze:
+
 - the current guideline role and biomarker definition for `gemcitabine_cisplatin_hrd`;
 - a legally accessible current guideline snapshot, because NCCN full text was not used;
 - the Track A/Track B boundary and any future source-specific contraindication rules;
@@ -107,4 +118,4 @@ The candidate space is not medically confirmed. The following require mentor or 
 
 ## 9. Readiness for the next round
 
-The repository has a machine-readable draft, an evidence registry, a safe aggregate crosswalk, and a validator with reverse tests. It is technically ready to inform evidence-and-constraint schema design, but it is not ready for candidate freezing or patient-level labels. The next round may proceed only after the unresolved clinical and evidence-source decisions are reviewed. No model training, RAG, Agent, Baseline, patient-by-candidate Cartesian product, or patient-level label generation is part of this round.
+The repository has a machine-readable draft, an evidence registry, a safe aggregate crosswalk, and a validator with reverse tests. It is technically ready for evidence-and-constraint schema design, but it is not ready for medical candidate freezing or patient-level labels. Remaining medical decisions stay explicit and do not block schema design as long as the schema preserves conditional, unknown, and manual-review states. No model training, patient-by-candidate Cartesian product, or patient-level label generation is part of this round.

@@ -105,9 +105,9 @@ C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/audit_cohort_lock_label
 
 当前 3.1 状态：Conditional Go；严格 Extended n=557，严格 Core n=475。公开 CSV 已执行 n<5 小样本抑制。
 
-## 第四轮 4.1 候选治疗空间
+## 第四轮 4.1.1 候选治疗空间修正
 
-第四轮 4.1 新增面向晚期 PDAC 的证据绑定候选治疗空间草案。本轮不生成患者级标签、剂量、处方、模型输入或治疗建议。
+第四轮 4.1.1 修正候选空间草案中 NTRK 类别候选、具体证据链接、NCI PDQ 来源类型及腺鳞癌人工复核范围的语义。本轮不改变 557/475 队列，也不生成患者级标签、剂量、处方、模型输入或治疗建议。
 
 ```powershell
 C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/generate_candidate_regimen_crosswalk.py --repo-root .
@@ -115,3 +115,23 @@ C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/validate_candidate_trea
 ```
 
 输出包括：[候选治疗空间](config/candidate_treatment_space_v0.1.yaml)、[BPC observed regimen 交叉映射](code/mappings/candidate_regimen_crosswalk_v0.1.csv)和[设计报告](docs/notes/candidate_treatment_space_design_v0.1.md)。候选空间仍为 `draft_not_locked`，需要导师和临床专家复核。
+
+## 第四轮 4.2 证据与约束标签 Schema
+
+第四轮 4.2 定义 Track A 标签契约草案，但不生成患者级标签。证据、Track A 可观察约束、Track B 冻结状态和临床清除状态分别表达；观察治疗和 `t0` 后结局不能成为证据标签。
+
+```powershell
+python -B code/scripts/validate_evidence_constraint_label_schema.py --repo-root .
+python -B -m unittest tests.test_evidence_constraint_label_schema
+```
+
+输出包括：[标签 schema](config/evidence_constraint_label_schema_v0.1.yaml)和[schema 设计报告](docs/notes/evidence_constraint_label_schema_design_v0.1.md)。patient-candidate 表和私有 Pilot 尚未生成。
+
+## 外部材料受控接入
+
+本地补充材料通过[外部材料登记表](config/external_material_registry_v0.1.yaml)受控接入，不把大型压缩包、指南全文、授权数据库或个体检测报告提交到 Git。机器专用路径保存在被忽略的 `config/local_external_sources.yaml`。卫健委 2025 版仅作为具体声明的补充官方用药指导；NMPA 快照仅用于药名和历史上市状态核对；无胰腺癌指南的 CSCO 包、许可未确认的 DrugBank 和含个体报告的样例包均不进入当前流水线。详见[接入记录](docs/notes/external_material_intake_v0.1.md)。
+
+```powershell
+python -B code/scripts/validate_external_material_registry.py --repo-root .
+python -B -m unittest tests.test_external_material_registry
+```
