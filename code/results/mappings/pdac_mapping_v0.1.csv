@@ -33,5 +33,5 @@ rule,OncoTree PAAD + pancreatic index primary,,,,,,,include: Draft include
 rule,OncoTree PAAC/UCP + pancreatic index primary,,,,,,,exclude: Non-PDAC pancreatic subtype
 rule,OncoTree PAASC + pancreatic index primary,,,,,,,manual_review: Adenosquamous requires medical review
 rule,No OncoTree but adenocarcinoma-compatible histology/code,,,,,,,include: Fallback only when OncoTree not informative
-rule,Pancreatic primary but ambiguous histology/code,,,,,,,manual_review: Do not infer
+rule,Pancreatic primary but ambiguous histology/code,,,,,,,manual_review: inference deferred
 rule,Missing OncoTree and histology/code,,,,,,,insufficient_info: Not enough information

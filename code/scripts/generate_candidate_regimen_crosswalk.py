@@ -108,7 +108,7 @@ def main() -> int:
     parser.add_argument("--repo-root", type=Path, default=Path("."))
     args = parser.parse_args()
     root = args.repo_root.resolve()
-    count = generate(root / "code/mappings/regimen_mapping_v0.1.csv", root / "code/mappings/candidate_regimen_crosswalk_v0.1.csv")
+    count = generate(root / "code/results/mappings/regimen_mapping_v0.1.csv", root / "code/results/mappings/candidate_regimen_crosswalk_v0.1.csv")
     print(f"generated_crosswalk_rows={count}")
     return 0
 

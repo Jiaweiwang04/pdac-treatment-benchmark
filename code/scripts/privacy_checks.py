@@ -33,7 +33,7 @@ BINARY_FILE_EXTENSIONS = {
     ".rev",
     ".xlsx",
 }
-PRIVATE_PATH_PARTS = {"data/raw", "data/processed", "reports/private", "reports/patient_level", "warehouse"}
+PRIVATE_PATH_PARTS = {"data/raw", "data/processed", "code/results/reports/private", "code/results/reports/patient_level", "warehouse"}
 
 GENIE_CENTER_ID_PATTERN = re.compile(
     r"\bGENIE-(?!BPC\b)[A-Z0-9]{2,8}-(?:P-)?[A-Z0-9]*\d[A-Z0-9-]*\b",
@@ -120,7 +120,7 @@ NON_COUNT_METRIC_PATTERN = re.compile(
 
 
 def _cohort_yaml_path() -> Path:
-    return Path(__file__).resolve().parents[2] / "cohort_definition_v0.1.yaml"
+    return Path(__file__).resolve().parents[1] / "config" / "cohort_definition_v0.1.yaml"
 
 
 def _read_privacy_config() -> tuple[int, str]:

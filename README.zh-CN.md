@@ -1,88 +1,137 @@
-# pdac-treatment-benchmark
+# PDAC Treatment Benchmark
 
 语言：[English](README.md) | 中文
 
 ## 项目简介
 
-本项目构建面向晚期胰腺导管腺癌（advanced PDAC）患者的患者级证据与临床约束候选治疗识别基准。当前阶段是 BPC PANC 原始数据可行性审计，不训练模型，不输出处方或剂量，不替代医生判断。
+本项目面向晚期、不可切除或转移性胰腺导管腺癌（PDAC），构建患者级候选治疗证据与临床约束排序基准。基准使用决策时间点 `t0` 前可获得的信息，对预先定义的候选治疗方案进行结构化评估。
 
-## 数据边界
+## 研究设计
 
-- 核心原始数据：[data/raw/](data/raw/) `AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/`
-- [data/raw/](data/raw/) 为只读原始凭证，不修改、不覆盖、不提交原始患者级数据。
-- [data/processed/](data/processed/) 用于后续可再生成的派生数据；默认忽略其内容，避免误提交患者级派生数据。
-- Track A 与 Track B 分开：Track A 使用 BPC PANC 中稳定可获得字段；Track B 仅在获得真实 ECOG、实验室、剂量/减量和毒性等字段后建立。
+每条评估记录对应一个Strict Extended队列决策点和一个主池候选方案。标签分为三类：
 
-## 目录结构
+| 标签 | 用途 |
+|---|---|
+| `observed_next_regimen` | 描述医生实际选择，用于辅助对齐与行为基线 |
+| `evidence_label` | 表示指南、监管证据及Track A可观察条件支持度，是候选排序的主要目标 |
+| `outcome_label` | 表示OS、PFS等随访结局，用于生存分析和辅助评估 |
+
+Track A覆盖稳定的 `t0` 前疾病、NGS、biomarker和既往治疗信息。Track B覆盖ECOG、实验室、器官功能、剂量调整、毒性和详细禁忌证，当前状态为`frozen`。
+
+## 当前结果
+
+| 模块 | 结果 | 状态 |
+|---|---|---|
+| 严格队列 | Strict Extended 557人；Strict Core 475人 | `conditional_go` |
+| 结局覆盖 | OS 557人；PFS-I 533人；PFS-M 533人 | 已完成审计 |
+| 候选治疗空间 | 主池16项；扩展池11项 | `draft_not_locked` |
+| 标签Schema | Track A证据与约束标签v0.1 | `draft_not_locked` |
+| Pilot | 24个决策点 × 16个候选，共384行 | 规则派生，等待复核 |
+| 复核方案A | 双专家独立复核与分歧裁决 | 首选方案 |
+| 复核方案B | 冻结指南规则生成`guideline_evidence_eligibility` | 导师确认后启用 |
+
+## 环境依赖
+
+当前验证环境：
+
+- Python 3.11.15
+- pandas 3.0.3
+- pypdf 6.14.2
+- PyYAML 6.0.3
+- pytest 9.1.1
+
+安装依赖：
+
+```powershell
+python -m pip install -r code/requirements.txt
+```
+
+## 目录说明
 
 ```text
 data/
-  raw/                 # 原始数据，只读，不提交
-  processed/           # 可再生成派生数据，默认不提交内容
+  raw/                 # 原始数据凭证
+  processed/           # 可再生成的患者级派生数据
 code/
   src/                 # 可复用源代码
-  scripts/             # 审计、预处理、评测等脚本
-  notebooks/           # 探索性 notebook
-  results/             # 自动生成的聚合结果与表格
+  scripts/             # 审计、生成和验证入口
+  notebooks/           # 探索性分析
+  config/              # 队列、候选、标签和Pilot配置
+  tests/               # 自动化测试
+  results/
+    mappings/          # PDAC、regimen和候选交叉映射
+    reports/           # 可公开的聚合报告与表格
+    data_audit/        # 自动生成的数据审计结果
 docs/
-  notes/               # 研究方案、审计报告、数据分析记录
-  papers/              # 论文草稿和投稿材料
+  notes/               # 研究方案与设计决策
+    standards/         # 本地项目管理规范索引
+  papers/              # 论文材料
   slides/              # 汇报材料
-warehouse/             # 暂时闲置文件，默认不提交内容
+warehouse/             # 暂存材料
 ```
 
-## 环境
+## 数据准备
 
-使用本项目本地配置的 Python 环境。当前审计脚本使用 `pandas` 和 `pypdf`；见 `code/requirements.txt`。
+原始数据位于：
 
-## 运行数据审计
+```text
+data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public/
+```
 
-在仓库根目录运行：
+`data/raw/`保存原始数据版本，`data/processed/`保存可再生成的患者级产物，`code/results/reports/`保存执行小样本抑制后的聚合结果。外部材料登记在[external_material_registry_v0.1.yaml](code/config/external_material_registry_v0.1.yaml)，本机路径登记在`code/config/local_external_sources.yaml`。
+
+## 运行步骤
+
+### 1. 数据审计
 
 ```powershell
 python code/scripts/audit_raw_data.py --repo-root .
-```
-
-主要输出：
-
-- [数据可行性审计报告](docs/notes/data_feasibility_audit_v1.md)
-- [原始文件清单](code/results/data_audit/tables/file_inventory.csv)
-- [字段清单](code/results/data_audit/tables/field_inventory.csv)
-- [表关系清单](code/results/data_audit/tables/table_relationships.csv)
-- [缺失情况汇总](code/results/data_audit/tables/missingness_summary.csv)
-- [可行性统计汇总](code/results/data_audit/tables/feasibility_summary.csv)
-- [分类变量汇总](code/results/data_audit/tables/categorical_summaries.csv)
-- [原始数据盘点 notebook](code/notebooks/00_raw_data_inventory.ipynb)
-
-## 项目文档
-
-- [V3.0 研究方案](docs/notes/research_plan_pdac_treatment_benchmark_v3.0.docx)
-- [数据可行性审计报告](docs/notes/data_feasibility_audit_v1.md)
-
-## 当前状态
-
-已完成第一轮 BPC PANC 原始数据只读审计。报告中的主键/外键、字段含义和队列规模均为第一轮候选结论，正式建队列前必须依据数据手册、变量字典和研究方案继续核验。
-
-## 第三轮队列锁定与标签可用性审计
-
-在仓库根目录运行：
-
-```powershell
+python code/scripts/audit_cohort_t0_feasibility.py --repo-root .
 python code/scripts/audit_cohort_lock_label_feasibility.py --repo-root .
 ```
 
-主要输出：
+### 2. 候选治疗空间
 
-- [队列定义草案](cohort_definition_v0.1.yaml)
-- [第三轮审计报告](reports/cohort_lock_label_feasibility_v0.1.md)
-- [队列流程计数](reports/tables/cohort_lock_flow_counts.csv)
-- [终点覆盖](reports/tables/endpoint_coverage.csv)
-- [治疗序列质量](reports/tables/treatment_sequence_quality.csv)
-- [NGS 选择敏感性](reports/tables/ngs_selection_sensitivity.csv)
-- [标签可用性](reports/tables/label_availability.csv)
-- [时间泄漏字段审计](reports/tables/time_leakage_field_audit.csv)
-- [PDAC 映射](code/mappings/pdac_mapping_v0.1.csv)
-- [Regimen 映射](code/mappings/regimen_mapping_v0.1.csv)
+```powershell
+python code/scripts/generate_candidate_regimen_crosswalk.py --repo-root .
+python code/scripts/validate_candidate_treatment_space.py --repo-root .
+```
+
+### 3. 标签Schema与外部证据
+
+```powershell
+python code/scripts/validate_evidence_constraint_label_schema.py --repo-root .
+python code/scripts/validate_external_material_registry.py --repo-root .
+```
+
+### 4. Pilot生成与验证
+
+```powershell
+python code/scripts/build_pilot_evidence_labels.py --repo-root .
+python code/scripts/validate_pilot_evidence_labels.py --repo-root .
+```
+
+### 5. 自动化测试
+
+```powershell
+python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_evidence_constraint_label_schema.py code/tests/test_external_material_registry.py code/tests/test_pilot_evidence_labels.py -q
+```
+
+## 主要产物
+
+- [队列定义](code/config/cohort_definition_v0.1.yaml)
+- [第一轮数据审计](code/results/reports/data_feasibility_audit_v1.md)
+- [候选治疗空间](code/config/candidate_treatment_space_v0.1.yaml)
+- [标签Schema](code/config/evidence_constraint_label_schema_v0.1.yaml)
+- [Pilot协议](code/config/pilot_label_protocol_v0.1.yaml)
+- [候选-Regimen Crosswalk](code/results/mappings/candidate_regimen_crosswalk_v0.1.csv)
+- [队列审计报告](code/results/reports/cohort_lock_label_feasibility_v0.1.md)
+- [Pilot聚合报告](code/results/reports/pilot_label_validation_report_v0.1.md)
+- [项目文档索引](docs/notes/project_document_index_v1.0.md)
+
+## 下一阶段
+
+方案A完成专家复核后形成专家裁决标签。方案B在导师确认后形成指南证据适用性标签。经确认的标签将用于构建完整patient-candidate表、患者级数据切分、泄漏检查和基线训练。
 
 ## 第三轮 3.1 队列修复审计
 
@@ -94,44 +143,13 @@ C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/audit_cohort_lock_label
 
 主要修复输出：
 
-- [队列定义草案](cohort_definition_v0.1.yaml)
-- [第三轮 3.1 审计报告](reports/cohort_lock_label_feasibility_v0.1.md)
-- [新旧队列核账](reports/tables/cohort_reconciliation.csv)
-- [跨癌种 t0 审计](reports/tables/cross_cancer_t0_audit.csv)
-- [晚期证据敏感性](reports/tables/advanced_evidence_sensitivity.csv)
-- [终点覆盖](reports/tables/endpoint_coverage.csv)
-- [中心-年份分布](reports/tables/center_year_distribution.csv)
-- [Regimen 两层映射](code/mappings/regimen_mapping_v0.1.csv)
+- [队列定义草案](code/config/cohort_definition_v0.1.yaml)
+- [第三轮 3.1 审计报告](code/results/reports/cohort_lock_label_feasibility_v0.1.md)
+- [新旧队列核账](code/results/reports/tables/cohort_reconciliation.csv)
+- [跨癌种 t0 审计](code/results/reports/tables/cross_cancer_t0_audit.csv)
+- [晚期证据敏感性](code/results/reports/tables/advanced_evidence_sensitivity.csv)
+- [终点覆盖](code/results/reports/tables/endpoint_coverage.csv)
+- [中心-年份分布](code/results/reports/tables/center_year_distribution.csv)
+- [Regimen 两层映射](code/results/mappings/regimen_mapping_v0.1.csv)
 
 当前 3.1 状态：Conditional Go；严格 Extended n=557，严格 Core n=475。公开 CSV 已执行 n<5 小样本抑制。
-
-## 第四轮 4.1.1 候选治疗空间修正
-
-第四轮 4.1.1 修正候选空间草案中 NTRK 类别候选、具体证据链接、NCI PDQ 来源类型及腺鳞癌人工复核范围的语义。本轮不改变 557/475 队列，也不生成患者级标签、剂量、处方、模型输入或治疗建议。
-
-```powershell
-C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/generate_candidate_regimen_crosswalk.py --repo-root .
-C:\Users\ASUS\miniconda3\envs\ml\python.exe code/scripts/validate_candidate_treatment_space.py --repo-root .
-```
-
-输出包括：[候选治疗空间](config/candidate_treatment_space_v0.1.yaml)、[BPC observed regimen 交叉映射](code/mappings/candidate_regimen_crosswalk_v0.1.csv)和[设计报告](docs/notes/candidate_treatment_space_design_v0.1.md)。候选空间仍为 `draft_not_locked`，需要导师和临床专家复核。
-
-## 第四轮 4.2 证据与约束标签 Schema
-
-第四轮 4.2 定义 Track A 标签契约草案，但不生成患者级标签。证据、Track A 可观察约束、Track B 冻结状态和临床清除状态分别表达；观察治疗和 `t0` 后结局不能成为证据标签。
-
-```powershell
-python -B code/scripts/validate_evidence_constraint_label_schema.py --repo-root .
-python -B -m unittest tests.test_evidence_constraint_label_schema
-```
-
-输出包括：[标签 schema](config/evidence_constraint_label_schema_v0.1.yaml)和[schema 设计报告](docs/notes/evidence_constraint_label_schema_design_v0.1.md)。patient-candidate 表和私有 Pilot 尚未生成。
-
-## 外部材料受控接入
-
-本地补充材料通过[外部材料登记表](config/external_material_registry_v0.1.yaml)受控接入，不把大型压缩包、指南全文、授权数据库或个体检测报告提交到 Git。机器专用路径保存在被忽略的 `config/local_external_sources.yaml`。卫健委 2025 版仅作为具体声明的补充官方用药指导；NMPA 快照仅用于药名和历史上市状态核对；无胰腺癌指南的 CSCO 包、许可未确认的 DrugBank 和含个体报告的样例包均不进入当前流水线。详见[接入记录](docs/notes/external_material_intake_v0.1.md)。
-
-```powershell
-python -B code/scripts/validate_external_material_registry.py --repo-root .
-python -B -m unittest tests.test_external_material_registry
-```

@@ -4,7 +4,7 @@ inventory_date: '2026-08-28'
 purpose: controlled_intake_of_local_external_data_and_evidence_materials
 source_root_policy:
   tracked_absolute_paths: prohibited
-  local_path_config: config/local_external_sources.yaml
+  local_path_config: code/config/local_external_sources.yaml
   raw_material_copy_into_git: prohibited
   patient_level_material_copy_into_project: prohibited
   source_root_environment: local_machine_only

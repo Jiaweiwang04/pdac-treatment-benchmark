@@ -16,7 +16,7 @@ from pathlib import Path
 import pandas as pd
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_DIR = REPO_ROOT / "code" / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
 
@@ -317,21 +317,21 @@ class PublicPrivacyAndSuppressionTests(unittest.TestCase):
     def test_privacy_scan_fails_for_reports_identifier(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            rel = "reports/fake.csv"
+            rel = "code/results/reports/fake.csv"
             self.write_text(root, rel, "metric,value\nsample," + fake_genie_sample_id() + "\n")
             self.assertEqual(len(privacy.privacy_scan_hits(root, files=[rel])), 1)
 
     def test_safe_aggregate_table_is_not_flagged(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            rel = "reports/safe.csv"
+            rel = "code/results/reports/safe.csv"
             self.write_text(root, rel, "cohort,n_patients\nStrict Extended,557\nStrict Core,475\n")
             self.assertEqual(privacy.privacy_scan_hits(root, files=[rel]), [])
 
     def test_binary_files_are_safely_skipped(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            rel = "reports/binary.pdf"
+            rel = "code/results/reports/binary.pdf"
             path = root / rel
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(b"\xff\xfe\x00\x01")
@@ -340,9 +340,9 @@ class PublicPrivacyAndSuppressionTests(unittest.TestCase):
     def test_privacy_scan_uses_tracked_file_list(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            self.write_text(root, "reports/listed.csv", "metric,value\nn_patients,10\n")
-            self.write_text(root, "reports/unlisted.csv", "metric,value\nsample," + fake_genie_sample_id() + "\n")
-            self.assertEqual(privacy.privacy_scan_hits(root, files=["reports/listed.csv"]), [])
+            self.write_text(root, "code/results/reports/listed.csv", "metric,value\nn_patients,10\n")
+            self.write_text(root, "code/results/reports/unlisted.csv", "metric,value\nsample," + fake_genie_sample_id() + "\n")
+            self.assertEqual(privacy.privacy_scan_hits(root, files=["code/results/reports/listed.csv"]), [])
 
     def test_public_cell_suppresses_common_count_columns(self) -> None:
         small = max(1, privacy.SMALL_COUNT_THRESHOLD - 1)
@@ -365,7 +365,7 @@ class PublicPrivacyAndSuppressionTests(unittest.TestCase):
     def test_small_count_scan_fails_before_suppression_and_passes_after(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            rel = "reports/tables/ngs_selection_sensitivity.csv"
+            rel = "code/results/reports/tables/ngs_selection_sensitivity.csv"
             self.write_text(root, rel, "strategy,n_patients,different_index_sample_vs_main\nmain,10,2\n")
             self.assertEqual(len(privacy.small_count_scan_hits(root, files=[rel])), 1)
             self.write_text(root, rel, "strategy,n_patients,different_index_sample_vs_main\nmain,10,<5\n")
@@ -374,7 +374,7 @@ class PublicPrivacyAndSuppressionTests(unittest.TestCase):
     def test_small_count_scan_handles_metric_value_long_tables(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            rel = "reports/tables/long.csv"
+            rel = "code/results/reports/tables/long.csv"
             self.write_text(root, rel, "metric,value\nn_events,1\nmissing_rate,0.01\nmedian_days,3\n")
             hits = privacy.small_count_scan_hits(root, files=[rel])
             self.assertEqual(len(hits), 1)
@@ -410,7 +410,7 @@ class IntegrationOutputTests(unittest.TestCase):
             return list(csv.DictReader(handle))
 
     def test_automated_checks_all_pass(self) -> None:
-        rows = self.read_csv("reports/tables/automated_checks.csv")
+        rows = self.read_csv("code/results/reports/tables/automated_checks.csv")
         self.assertGreaterEqual(len(rows), 10)
         self.assertEqual([row for row in rows if row["status"] != "pass"], [])
 
@@ -421,7 +421,7 @@ class IntegrationOutputTests(unittest.TestCase):
         self.assertEqual(audit.scan_public_small_counts(REPO_ROOT), [])
 
     def test_endpoint_validation_statuses_are_explicit(self) -> None:
-        rows = self.read_csv("reports/tables/endpoint_coverage.csv")
+        rows = self.read_csv("code/results/reports/tables/endpoint_coverage.csv")
         statuses = {(row["endpoint"], row["post_t0_outcome_status"]) for row in rows if row["cohort"] == "Strict Extended"}
         self.assertIn(("OS", "t0_validated"), statuses)
         self.assertIn(("PFS-I", "t0_validated"), statuses)

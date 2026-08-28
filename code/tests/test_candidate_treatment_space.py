@@ -12,7 +12,7 @@ from pathlib import Path
 import yaml
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_DIR = REPO_ROOT / "code" / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
 
@@ -21,8 +21,8 @@ import privacy_checks as privacy
 import validate_candidate_treatment_space as validator
 
 
-CONFIG_PATH = REPO_ROOT / "config" / "candidate_treatment_space_v0.1.yaml"
-CROSSWALK_PATH = REPO_ROOT / "code" / "mappings" / "candidate_regimen_crosswalk_v0.1.csv"
+CONFIG_PATH = REPO_ROOT / "code" / "config" / "candidate_treatment_space_v0.1.yaml"
+CROSSWALK_PATH = REPO_ROOT / "code" / "results" / "mappings" / "candidate_regimen_crosswalk_v0.1.csv"
 
 
 def load_config() -> dict:
@@ -216,10 +216,10 @@ class CandidateTreatmentSpaceTests(unittest.TestCase):
     def test_crosswalk_is_programmatically_regenerated(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "crosswalk.csv"
-            count = generator.generate(REPO_ROOT / "code" / "mappings" / "regimen_mapping_v0.1.csv", output)
+            count = generator.generate(REPO_ROOT / "code" / "results" / "mappings" / "regimen_mapping_v0.1.csv", output)
             self.assertEqual(count, 46)
             errors = validator.validate_crosswalk(load_config(), output)
-        self.assertEqual(errors, [])
+            self.assertEqual(errors, [])
 
 
 class CandidateTreatmentSpacePrivacyTests(unittest.TestCase):
@@ -235,37 +235,37 @@ class CandidateTreatmentSpacePrivacyTests(unittest.TestCase):
     def test_synthetic_genie_like_id_in_reports_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            path = root / "reports" / "fake.md"
+            path = root / "code" / "results" / "reports" / "fake.md"
             path.parent.mkdir(parents=True)
             path.write_text(fake_genie_id("000002"), encoding="utf-8")
-            hits = privacy.privacy_scan_hits(root, ["reports/fake.md"])
+            hits = privacy.privacy_scan_hits(root, ["code/results/reports/fake.md"])
         self.assertTrue(hits)
 
     def test_safe_aggregate_table_is_not_flagged(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            path = root / "reports" / "aggregate.csv"
+            path = root / "code" / "results" / "reports" / "aggregate.csv"
             path.parent.mkdir(parents=True)
             path.write_text("metric,n\npatients,27\n", encoding="utf-8")
-            hits = privacy.privacy_scan_hits(root, ["reports/aggregate.csv"])
+            hits = privacy.privacy_scan_hits(root, ["code/results/reports/aggregate.csv"])
         self.assertEqual(hits, [])
 
     def test_binary_file_is_skipped(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            path = root / "reports" / "binary.csv"
+            path = root / "code" / "results" / "reports" / "binary.csv"
             path.parent.mkdir(parents=True)
             path.write_bytes(b"\xff\xfe\x00\x01")
-            self.assertEqual(privacy.privacy_scan_hits(root, ["reports/binary.csv"]), [])
+            self.assertEqual(privacy.privacy_scan_hits(root, ["code/results/reports/binary.csv"]), [])
 
     def test_scan_uses_tracked_file_collection(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            hidden = root / "reports" / "untracked.md"
+            hidden = root / "code" / "results" / "reports" / "untracked.md"
             hidden.parent.mkdir(parents=True)
             hidden.write_text(fake_genie_id("000003"), encoding="utf-8")
             self.assertEqual(privacy.privacy_scan_hits(root, []), [])
-            self.assertTrue(privacy.privacy_scan_hits(root, ["reports/untracked.md"]))
+            self.assertTrue(privacy.privacy_scan_hits(root, ["code/results/reports/untracked.md"]))
 
 
 class CandidateTreatmentSpaceSuppressionTests(unittest.TestCase):
@@ -288,12 +288,12 @@ class CandidateTreatmentSpaceSuppressionTests(unittest.TestCase):
     def test_unsuppressed_small_public_cell_fails_then_passes_after_suppression(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            path = root / "reports" / "counts.csv"
+            path = root / "code" / "results" / "reports" / "counts.csv"
             path.parent.mkdir(parents=True)
             path.write_text("metric,different_index_sample_vs_main\ncomparison,2\n", encoding="utf-8")
-            self.assertTrue(privacy.small_count_scan_hits(root, ["reports/counts.csv"]))
+            self.assertTrue(privacy.small_count_scan_hits(root, ["code/results/reports/counts.csv"]))
             path.write_text("metric,different_index_sample_vs_main\ncomparison,<5\n", encoding="utf-8")
-            self.assertEqual(privacy.small_count_scan_hits(root, ["reports/counts.csv"]), [])
+            self.assertEqual(privacy.small_count_scan_hits(root, ["code/results/reports/counts.csv"]), [])
 
 
 if __name__ == "__main__":

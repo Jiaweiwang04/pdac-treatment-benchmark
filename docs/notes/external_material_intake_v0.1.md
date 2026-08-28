@@ -1,32 +1,35 @@
-# External material intake v0.1
+# External Material Intake v0.1
 
-## Scope
+## Purpose
 
-This intake records local materials made available under `D:\复旦实验室\数据` without copying large, licensed, copyrighted, or patient-level artifacts into Git. The tracked source of truth is `config/external_material_registry_v0.1.yaml`; the machine-specific path map is `config/local_external_sources.yaml` and is ignored by Git.
+This document records the provenance, admission status, and project use of local materials under `D:\复旦实验室\数据`. The tracked registry is [external_material_registry_v0.1.yaml](../../code/config/external_material_registry_v0.1.yaml), and machine-specific paths are stored in `code/config/local_external_sources.yaml`.
 
-This intake does not change the Strict Extended 557 or Strict Core 475 cohorts, reselect `t0`, create patient-candidate labels, unfreeze Track B, or start training.
+## Process
 
-## Admission decisions
+Each material is assessed for source identity, version, file hash, licensing, clinical relevance, privacy risk, and intended use. Admitted sources receive a claim-specific role in the evidence registry. Deferred and quarantined sources remain recorded with their review status.
 
-- `aacr_bpc_panc_1_0_public`: already present under the ignored raw-data path. The external and repository-local PANC copies each contain 72 files, 43,623,426 bytes, and the same relative path set. No duplicate copy was made.
-- `nhc_antitumor_guidance_2025`: admitted for claim-specific supplementary China practice and regulatory context. The official notice was published on 2026-01-26. The reviewed pancreatic-cancer passage supports only the existing extended `gemcitabine_erlotinib` candidate context and does not create a new candidate or clinical-clearance label.
-- `nmpa_marketed_drugs_snapshot_20250624`: admitted only for drug-name normalization and historical market-status cross-checking. It is a 2025-06-24 snapshot, is not efficacy evidence, and cannot establish current approval without live verification.
-- `nmpa_trial_registry_snapshot`: deferred until a trial-registry protocol is defined. Trial registration does not establish efficacy.
-- `csco_2026_archive`: not admitted because the 21-file archive has no pancreatic-cancer guideline. Other tumor-specific or supportive-care guidelines cannot substitute for a PDAC guideline.
-- `drugbank_5_1_18_academic_archive`: not admitted because project-specific ingestion and redistribution rights have not been verified. It is not a clinical-efficacy source.
-- `molecular_report_input_output_examples`: quarantined. Archive metadata shows identifier-bearing individual molecular reports, so the material must not be read, copied, extracted, indexed, or used by this project.
+## Results
 
-## Candidate-space use
+| Source | Status | Project use |
+|---|---|---|
+| `aacr_bpc_panc_1_0_public` | available | primary cohort and treatment data; local copy matches the external source inventory |
+| `nhc_antitumor_guidance_2025` | admitted | China practice and regulatory context for `gemcitabine_erlotinib` |
+| `nmpa_marketed_drugs_snapshot_20250624` | admitted | drug-name normalization and historical market-status cross-check |
+| `nmpa_trial_registry_snapshot` | deferred | future trial-registry protocol |
+| `csco_2026_archive` | reviewed | archive contains 21 files and no pancreatic-cancer guideline |
+| `drugbank_5_1_18_academic_archive` | license review | ingestion and redistribution review |
+| `molecular_report_input_output_examples` | quarantined | identifier-bearing molecular-report examples |
 
-The NHC 2025 source is registered as `official_practice_guidance` and linked only to `gemcitabine_erlotinib`, which remains in the extended pool with manual review and current-role uncertainty. The guidance records the FDA first-line pancreatic-cancer context and explicitly notes that the indication is not approved in China and requires exceptional-use governance and informed consent. This source does not promote the candidate to the main pool.
+The NHC 2025 source is registered as `official_practice_guidance` and linked to the extended candidate `gemcitabine_erlotinib`. The source records the pancreatic-cancer use context and the China exceptional-use governance requirement.
+
+Large source archives, licensed databases, and patient-level examples remain in local storage. Git contains source metadata, hashes, admission decisions, and claim-specific links.
 
 ## Validation
 
-Run the tracked-policy and local-presence checks with:
-
 ```powershell
-python -B code/scripts/validate_external_material_registry.py --repo-root .
-python -B -m unittest tests.test_external_material_registry
+python code/scripts/validate_external_material_registry.py --repo-root .
+python code/scripts/validate_external_material_registry.py --repo-root . --skip-local
+python -m pytest code/tests/test_external_material_registry.py -q
 ```
 
-Use `--skip-local` when validating a clone that does not have the machine-specific external materials.
+The standard validation checks registry structure and local source hashes. The `--skip-local` mode checks the tracked registry in environments without the local source collection.

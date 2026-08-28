@@ -214,9 +214,9 @@ def main() -> int:
     parser.add_argument("--skip-local", action="store_true")
     args = parser.parse_args()
     root = args.repo_root.resolve()
-    local_path = root / "config" / "local_external_sources.yaml"
+    local_path = root / "code" / "config" / "local_external_sources.yaml"
     errors = validate_files(
-        root / "config" / "external_material_registry_v0.1.yaml",
+        root / "code" / "config" / "external_material_registry_v0.1.yaml",
         None if args.skip_local or not local_path.exists() else local_path,
     )
     if errors:

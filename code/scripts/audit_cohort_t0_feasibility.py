@@ -484,7 +484,7 @@ def build_outputs(repo_root: Path) -> dict[str, Any]:
         add_metric(f"definition_{definition}_prior_overlap_with_t0_patients", int(selected.get("prior_overlap_with_t0", pd.Series(dtype=bool)).sum()))
         add_metric(f"definition_{definition}_post_t0_evaluable_outcome_patients", int(selected.get("has_evaluable_outcome", pd.Series(dtype=bool)).sum()))
 
-    tables_dir = repo_root / "reports" / "tables"
+    tables_dir = repo_root / "code" / "results" / "reports" / "tables"
     write_csv(tables_dir / "cohort_flow_counts.csv", flow_rows, ["t0_definition", "definition_label", "step_order", "step", "n_patients", "excluded_from_previous", "notes"])
     write_csv(tables_dir / "t0_definition_comparison.csv", comparison_rows, ["t0_definition", "definition_label", "usable_patients", "raw_patients", "confirmed_pdac_compatible", "advanced_before_possible_t0", "interpretable_ngs_report_time", "definition_matching_t0_regimen", "prior_treatment_reconstructable", "post_t0_evaluable_outcome", "main_exclusion_counts", "caution"])
     write_csv(tables_dir / "ngs_sample_count_distribution.csv", sample_count_distribution(cpt), ["sample_count_per_patient", "n_patients", "n_samples", "note"])
@@ -494,7 +494,7 @@ def build_outputs(repo_root: Path) -> dict[str, Any]:
     oncotree_counts = suppress_counts(cpt["cpt_oncotree_code"])
     stage_counts = suppress_counts(cancer["stage_dx_iv"])
     resect_counts = suppress_counts(cancer["ca_resect_status"])
-    report_path = repo_root / "reports" / "cohort_t0_feasibility_v1.md"
+    report_path = repo_root / "code" / "results" / "reports" / "cohort_t0_feasibility_v1.md"
     lines = [
         "# Cohort and t0 Feasibility Audit v1",
         "",
@@ -506,7 +506,7 @@ def build_outputs(repo_root: Path) -> dict[str, Any]:
         "## Documents Reviewed",
         "",
         "- README.md and README.zh-CN.md",
-        "- docs/notes/data_feasibility_audit_v1.md",
+        "- code/results/reports/data_feasibility_audit_v1.md",
         "- docs/notes/research_plan_pdac_treatment_benchmark_v3.0.docx",
         f"- PANC analytic data guide: {data_guide_status(raw_root)}",
         "- PANC variable synopsis workbook was present and used to confirm requested field names against clinical_data columns.",
@@ -534,7 +534,7 @@ def build_outputs(repo_root: Path) -> dict[str, Any]:
         f"- Unique NGS samples: {cpt['cpt_genie_sample_id'].nunique()}",
         f"- Patients with >1 NGS sample: {int((per_patient_samples > 1).sum())}",
         f"- Maximum NGS samples per patient: {int(per_patient_samples.max())}",
-        "- Aggregated distribution: reports/tables/ngs_sample_count_distribution.csv",
+        "- Aggregated distribution: code/results/reports/tables/ngs_sample_count_distribution.csv",
         "",
         "## Aggregate Distributions",
         "",
@@ -577,14 +577,14 @@ def build_outputs(repo_root: Path) -> dict[str, Any]:
     ])
     for row in comparison_rows:
         lines.append(f"| {row['t0_definition']} | {row['definition_matching_t0_regimen']} | {row['prior_treatment_reconstructable']} | {row['post_t0_evaluable_outcome']} | {row['usable_patients']} |")
-    lines.extend(["", "Full flow: reports/tables/cohort_flow_counts.csv", "Full comparison: reports/tables/t0_definition_comparison.csv", "", "## Main Exclusion Reasons"])
+    lines.extend(["", "Full flow: code/results/reports/tables/cohort_flow_counts.csv", "Full comparison: code/results/reports/tables/t0_definition_comparison.csv", "", "## Main Exclusion Reasons"])
     for row in comparison_rows:
         lines.append(f"- Definition {row['t0_definition']}: {row['main_exclusion_counts']}")
     lines.extend([
         "",
         "## Timeline Quality and Leakage Risks",
         "",
-        "See reports/tables/timeline_quality_summary.csv for aggregate metrics.",
+        "See code/results/reports/tables/timeline_quality_summary.csv for aggregate metrics.",
         "- Same-day NGS report and regimen start affects A vs B.",
         "- Regimen end, PFS, OS, TTNT, death, and last-alive fields are post-t0/outcome fields and must be excluded from t0 inputs.",
         "- Exact dates are masked; key comparisons use day intervals from associated cancer diagnosis.",

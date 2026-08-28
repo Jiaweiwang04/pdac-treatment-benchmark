@@ -308,9 +308,9 @@ def main() -> int:
     args = parser.parse_args()
     root = args.repo_root.resolve()
     errors = validate_files(
-        root / "config" / "evidence_constraint_label_schema_v0.1.yaml",
-        root / "config" / "candidate_treatment_space_v0.1.yaml",
-        root / "cohort_definition_v0.1.yaml",
+        root / "code" / "config" / "evidence_constraint_label_schema_v0.1.yaml",
+        root / "code" / "config" / "candidate_treatment_space_v0.1.yaml",
+        root / "code" / "config" / "cohort_definition_v0.1.yaml",
     )
     if errors:
         for error in errors:

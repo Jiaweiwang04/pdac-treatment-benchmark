@@ -73,4 +73,4 @@ Conditional Go: status remains draft_not_locked.
 - Evidence-supported candidate-set labels require the next-stage evidence snapshot and candidate-space design.
 - Track B remains frozen because ECOG/labs/dose/toxicity fields are not available as stable t0 inputs.
 
-Do not start model training, RAG, agents, or baseline modeling from this audit.
+Next stage: confirm evidence labels, build the validated patient-candidate table, and begin baseline development.

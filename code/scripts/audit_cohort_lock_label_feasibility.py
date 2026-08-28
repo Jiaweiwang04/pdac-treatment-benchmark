@@ -1001,7 +1001,7 @@ def pdac_mapping_rows(cancer: pd.DataFrame) -> list[dict[str, Any]]:
         ("OncoTree PAAC/UCP + pancreatic index primary", "exclude: Non-PDAC pancreatic subtype"),
         ("OncoTree PAASC + pancreatic index primary", "manual_review: Adenosquamous requires medical review"),
         ("No OncoTree but adenocarcinoma-compatible histology/code", "include: Fallback only when OncoTree not informative"),
-        ("Pancreatic primary but ambiguous histology/code", "manual_review: Do not infer"),
+        ("Pancreatic primary but ambiguous histology/code", "manual_review: inference deferred"),
         ("Missing OncoTree and histology/code", "insufficient_info: Not enough information"),
     ]
     for value, status in rule_rows:
@@ -1744,7 +1744,7 @@ privacy:
 unresolved_issues:
 {unresolved_lines}
 """
-    (repo_root / "cohort_definition_v0.1.yaml").write_text(text, encoding="utf-8")
+    (repo_root / "code" / "config" / "cohort_definition_v0.1.yaml").write_text(text, encoding="utf-8")
 
 
 def update_readme(repo_root: Path, counts: dict[str, Any], conclusion: str) -> None:
@@ -1765,14 +1765,14 @@ C:\\Users\\ASUS\\miniconda3\\envs\\ml\\python.exe code/scripts/audit_cohort_lock
 
 Main repaired outputs:
 
-- [Cohort definition draft](cohort_definition_v0.1.yaml)
-- [Round 3.1 audit report](reports/cohort_lock_label_feasibility_v0.1.md)
-- [Cohort reconciliation](reports/tables/cohort_reconciliation.csv)
-- [Cross-cancer t0 audit](reports/tables/cross_cancer_t0_audit.csv)
-- [Advanced evidence sensitivity](reports/tables/advanced_evidence_sensitivity.csv)
-- [Endpoint coverage](reports/tables/endpoint_coverage.csv)
-- [Center-year distribution](reports/tables/center_year_distribution.csv)
-- [Regimen mapping](code/mappings/regimen_mapping_v0.1.csv)
+- [Cohort definition draft](code/config/cohort_definition_v0.1.yaml)
+- [Round 3.1 audit report](code/results/reports/cohort_lock_label_feasibility_v0.1.md)
+- [Cohort reconciliation](code/results/reports/tables/cohort_reconciliation.csv)
+- [Cross-cancer t0 audit](code/results/reports/tables/cross_cancer_t0_audit.csv)
+- [Advanced evidence sensitivity](code/results/reports/tables/advanced_evidence_sensitivity.csv)
+- [Endpoint coverage](code/results/reports/tables/endpoint_coverage.csv)
+- [Center-year distribution](code/results/reports/tables/center_year_distribution.csv)
+- [Regimen mapping](code/results/mappings/regimen_mapping_v0.1.csv)
 
 Current 3.1 status: {conclusion}; strict Extended n={counts['strict_extended_n']}, strict Core n={counts['strict_core_n']}. Counts in public CSVs apply n<5 suppression.
 """
@@ -1787,14 +1787,14 @@ C:\\Users\\ASUS\\miniconda3\\envs\\ml\\python.exe code/scripts/audit_cohort_lock
 
 主要修复输出：
 
-- [队列定义草案](cohort_definition_v0.1.yaml)
-- [第三轮 3.1 审计报告](reports/cohort_lock_label_feasibility_v0.1.md)
-- [新旧队列核账](reports/tables/cohort_reconciliation.csv)
-- [跨癌种 t0 审计](reports/tables/cross_cancer_t0_audit.csv)
-- [晚期证据敏感性](reports/tables/advanced_evidence_sensitivity.csv)
-- [终点覆盖](reports/tables/endpoint_coverage.csv)
-- [中心-年份分布](reports/tables/center_year_distribution.csv)
-- [Regimen 两层映射](code/mappings/regimen_mapping_v0.1.csv)
+- [队列定义草案](code/config/cohort_definition_v0.1.yaml)
+- [第三轮 3.1 审计报告](code/results/reports/cohort_lock_label_feasibility_v0.1.md)
+- [新旧队列核账](code/results/reports/tables/cohort_reconciliation.csv)
+- [跨癌种 t0 审计](code/results/reports/tables/cross_cancer_t0_audit.csv)
+- [晚期证据敏感性](code/results/reports/tables/advanced_evidence_sensitivity.csv)
+- [终点覆盖](code/results/reports/tables/endpoint_coverage.csv)
+- [中心-年份分布](code/results/reports/tables/center_year_distribution.csv)
+- [Regimen 两层映射](code/results/mappings/regimen_mapping_v0.1.csv)
 
 当前 3.1 状态：{conclusion}；严格 Extended n={counts['strict_extended_n']}，严格 Core n={counts['strict_core_n']}。公开 CSV 已执行 n<5 小样本抑制。
 """
@@ -1814,8 +1814,8 @@ def update_gitignore(repo_root: Path) -> None:
     text = path.read_text(encoding="utf-8") if path.exists() else ""
     additions = [
         "data/processed/cohort_lock_label_feasibility/",
-        "reports/private/",
-        "reports/patient_level/",
+        "code/results/reports/private/",
+        "code/results/reports/patient_level/",
     ]
     missing = [line for line in additions if line not in text]
     if missing:
@@ -1871,8 +1871,8 @@ def build_report(
     lines.extend(["", "## Unresolved Items", ""])
     for item in unresolved:
         lines.append(f"- {item}")
-    lines.extend(["", "Do not start model training, RAG, agents, or baseline modeling from this audit."])
-    (repo_root / "reports" / "cohort_lock_label_feasibility_v0.1.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    lines.extend(["", "Next stage: confirm evidence labels, build the validated patient-candidate table, and begin baseline development."])
+    (repo_root / "code" / "results" / "reports" / "cohort_lock_label_feasibility_v0.1.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def build_outputs(repo_root: Path) -> dict[str, Any]:
@@ -1904,8 +1904,8 @@ def build_outputs(repo_root: Path) -> dict[str, Any]:
     )
     pilot_summary = choose_pilot_set(repo_root, strict_extended, pending)
 
-    tables_dir = repo_root / "reports" / "tables"
-    mappings_dir = repo_root / "code" / "mappings"
+    tables_dir = repo_root / "code" / "results" / "reports" / "tables"
+    mappings_dir = repo_root / "code" / "results" / "mappings"
     write_public_csv(tables_dir / "cohort_lock_flow_counts.csv", flow, ["cohort_stage", "step_order", "step", "n_patients", "excluded_from_previous", "notes"])
     write_public_csv(tables_dir / "cohort_summary_v0.1.csv", cohort_rows_, ["cohort", "n_patients", "status", "definition"])
     write_public_csv(tables_dir / "cohort_reconciliation.csv", reconciliation, ["comparison", "category", "reason", "n_patients"])

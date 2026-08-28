@@ -1281,7 +1281,7 @@ def audit(repo_root: Path, raw_root: Path) -> None:
     if not raw_root.exists():
         raise FileNotFoundError(f"Raw root not found: {raw_root}")
     tables_dir = repo_root / "code" / "results" / "data_audit" / "tables"
-    report_path = repo_root / "docs" / "notes" / "data_feasibility_audit_v1.md"
+    report_path = repo_root / "code" / "results" / "reports" / "data_feasibility_audit_v1.md"
     notebook_path = repo_root / "code" / "notebooks" / "00_raw_data_inventory.ipynb"
     tables_dir.mkdir(parents=True, exist_ok=True)
     report_path.parent.mkdir(parents=True, exist_ok=True)

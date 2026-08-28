@@ -8,7 +8,7 @@ Scope: read-only feasibility audit. No modeling, no final labels, no patient-lev
 ## Documents Reviewed
 
 - README.md and README.zh-CN.md
-- docs/notes/data_feasibility_audit_v1.md
+- code/results/reports/data_feasibility_audit_v1.md
 - docs/notes/research_plan_pdac_treatment_benchmark_v3.0.docx
 - PANC analytic data guide: Read GENIE-BPC-PANC-1.0-public-Analytic-Data-Guide.pdf with pypdf; pages=190; record_id=yes; ca_seq=yes; dx_cpt_rep_days=yes; dx_reg_start_int=yes; ca_resect_status=yes; pfs_i_g_status=yes
 - PANC variable synopsis workbook was present and used to confirm requested field names against clinical_data columns.
@@ -64,7 +64,7 @@ Source: code/results/data_audit/tables/field_inventory.csv parsed from the PANC 
 - Unique NGS samples: 1130
 - Patients with >1 NGS sample: 20
 - Maximum NGS samples per patient: 3
-- Aggregated distribution: reports/tables/ngs_sample_count_distribution.csv
+- Aggregated distribution: code/results/reports/tables/ngs_sample_count_distribution.csv
 
 ## Aggregate Distributions
 
@@ -105,8 +105,8 @@ Definitions are compared only; no definition is selected.
 | B | 568 | 568 | 568 | 568 |
 | C | 50 | 50 | 50 | 50 |
 
-Full flow: reports/tables/cohort_flow_counts.csv
-Full comparison: reports/tables/t0_definition_comparison.csv
+Full flow: code/results/reports/tables/cohort_flow_counts.csv
+Full comparison: code/results/reports/tables/t0_definition_comparison.csv
 
 ## Main Exclusion Reasons
 - Definition A: non_pdac=42; no_advanced_evidence=186; no_usable_ngs_time=27; no_definition_t0=288; prior_unreconstructable=0; no_post_t0_outcome=0
@@ -115,7 +115,7 @@ Full comparison: reports/tables/t0_definition_comparison.csv
 
 ## Timeline Quality and Leakage Risks
 
-See reports/tables/timeline_quality_summary.csv for aggregate metrics.
+See code/results/reports/tables/timeline_quality_summary.csv for aggregate metrics.
 - Same-day NGS report and regimen start affects A vs B.
 - Regimen end, PFS, OS, TTNT, death, and last-alive fields are post-t0/outcome fields and must be excluded from t0 inputs.
 - Exact dates are masked; key comparisons use day intervals from associated cancer diagnosis.

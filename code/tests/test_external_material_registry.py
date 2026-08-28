@@ -10,15 +10,15 @@ from pathlib import Path
 import yaml
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_DIR = REPO_ROOT / "code" / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
 
 import validate_external_material_registry as validator
 
 
-REGISTRY_PATH = REPO_ROOT / "config" / "external_material_registry_v0.1.yaml"
-LOCAL_PATH = REPO_ROOT / "config" / "local_external_sources.yaml"
+REGISTRY_PATH = REPO_ROOT / "code" / "config" / "external_material_registry_v0.1.yaml"
+LOCAL_PATH = REPO_ROOT / "code" / "config" / "local_external_sources.yaml"
 
 
 def load_registry() -> dict:

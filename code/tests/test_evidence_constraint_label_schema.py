@@ -10,16 +10,16 @@ from pathlib import Path
 import yaml
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_DIR = REPO_ROOT / "code" / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
 
 import validate_evidence_constraint_label_schema as validator
 
 
-SCHEMA_PATH = REPO_ROOT / "config" / "evidence_constraint_label_schema_v0.1.yaml"
-CANDIDATE_PATH = REPO_ROOT / "config" / "candidate_treatment_space_v0.1.yaml"
-COHORT_PATH = REPO_ROOT / "cohort_definition_v0.1.yaml"
+SCHEMA_PATH = REPO_ROOT / "code" / "config" / "evidence_constraint_label_schema_v0.1.yaml"
+CANDIDATE_PATH = REPO_ROOT / "code" / "config" / "candidate_treatment_space_v0.1.yaml"
+COHORT_PATH = REPO_ROOT / "code" / "config" / "cohort_definition_v0.1.yaml"
 
 
 def load(path: Path) -> dict:

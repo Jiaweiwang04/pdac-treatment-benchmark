@@ -233,14 +233,14 @@ warehouse/*
 !warehouse/.gitkeep
 
 # Local management documents (kept locally, not versioned)
-docs/notes/ga01_research_workflow.pdf
-docs/notes/ga09_data_code_management.pdf
-config/local_external_sources.yaml
+docs/notes/standards/ga01_research_workflow.pdf
+docs/notes/standards/ga09_data_code_management.pdf
+code/config/local_external_sources.yaml
 
 # Local patient-level review files
 data/processed/cohort_lock_label_feasibility/
-reports/private/
-reports/patient_level/
+code/results/reports/private/
+code/results/reports/patient_level/
 
 # Office temporary lock files
 ~$*.docx

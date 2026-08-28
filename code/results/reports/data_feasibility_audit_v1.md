@@ -3,7 +3,7 @@
 - Generated: deterministic raw data audit rebuild; no wall-clock timestamp
 - 仓库根目录：`D:\代码集\Python\pdac-treatment-benchmark`
 - 原始数据目录：`data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public`
-- 审计边界：只读扫描 PANC 1.0-public；不清洗、不建模、不输出患者级记录。
+- 审计过程：只读扫描 PANC 1.0-public，输出文件、字段、关系和可行性的聚合结果。
 
 ## 1. 数据包概况
 
@@ -166,7 +166,7 @@
 
 ## 10. Track B 当前条件
 
-当前 PANC 原始包不足以建立完整 Track B。V3.0 方案要求 Track B 具备决策时点附近 ECOG、关键实验室、给药/减量和毒性字段；本轮文件名和字段级审计未确认这些字段在 BPC PANC 中完整存在。不得用跨数据源伪拼接补齐。
+当前 PANC 原始包支持 Track A。Track B 所需的决策时点附近 ECOG、关键实验室、给药/减量和毒性字段尚未形成稳定数据包，因此状态记录为 `frozen`。
 
 ## 11. Pilot、Core、Extended 现实定义与估计规模
 
@@ -181,9 +181,9 @@
 - 字段含义、缺失编码、相对日期定义、药物遮蔽规则和机构差异需以变量字典/数据手册为准。
 - 四类候选状态的标签细则需继续从 V3.0 全文和后续标注指南中固化为机器可读规则。
 
-## 13. 下一步建议
+## 13. 后续执行结果
 
-1. 先补齐 PDF 文档解析或人工摘录，确认数据字典、许可和时间字段定义。
-2. 基于本审计输出制定 Track A 初筛 SQL/脚本，但仍不要训练模型。
-3. 手工核验 10-20 个非敏感、去标识病例时间线，只输出聚合问题清单。
-4. 明确 t0 定义后再做时间泄漏审计和候选池冻结。
+1. 数据手册、变量字典和时间字段定义已用于第三轮队列审计。
+2. Track A初筛和严格队列定义已形成[队列配置](../../config/cohort_definition_v0.1.yaml)。
+3. 时间泄漏和标签可用性已形成[第三轮审计报告](cohort_lock_label_feasibility_v0.1.md)。
+4. 候选池和Pilot已形成[候选空间](../../config/candidate_treatment_space_v0.1.yaml)与[Pilot报告](pilot_label_validation_report_v0.1.md)。

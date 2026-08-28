@@ -5,18 +5,18 @@ purpose: rank frozen candidate treatments using evidence and information availab
 
 authoritative_inputs:
   cohort_definition:
-    path: cohort_definition_v0.1.yaml
+    path: code/config/cohort_definition_v0.1.yaml
     required_version: v0.1.3.1
     required_status: draft_not_locked
   candidate_space:
-    path: config/candidate_treatment_space_v0.1.yaml
+    path: code/config/candidate_treatment_space_v0.1.yaml
     required_version: v0.1.1
     required_status: draft_not_locked
     candidate_pool: main_candidate_pool
   leakage_audit:
-    path: reports/tables/time_leakage_field_audit.csv
+    path: code/results/reports/tables/time_leakage_field_audit.csv
   label_availability_audit:
-    path: reports/tables/label_availability.csv
+    path: code/results/reports/tables/label_availability.csv
 
 cohort_invariants:
   strict_extended_n: 557

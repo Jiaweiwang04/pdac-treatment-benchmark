@@ -345,7 +345,7 @@ def main() -> int:
     parser.add_argument("--repo-root", type=Path, default=Path("."))
     args = parser.parse_args()
     root = args.repo_root.resolve()
-    errors = validate_candidate_treatment_space(root / "config/candidate_treatment_space_v0.1.yaml", root / "code/mappings/candidate_regimen_crosswalk_v0.1.csv")
+    errors = validate_candidate_treatment_space(root / "code/config/candidate_treatment_space_v0.1.yaml", root / "code/results/mappings/candidate_regimen_crosswalk_v0.1.csv")
     if errors:
         for error in errors:
             print(f"FAIL: {error}")
