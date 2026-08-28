@@ -118,3 +118,5 @@ python code/scripts/validate_candidate_treatment_space.py --repo-root .
 ```
 
 The validator checks candidate IDs, pool membership, evidence references, source semantics, NTRK agent structure, crosswalk relations, and privacy-safe aggregate output.
+
+Candidate-space v0.1.1 passes all six 4.1.1 technical checks: NTRK single-agent class representation, conditional main-pool retention for `folfox_or_off` and `gemcitabine_paclitaxel_after_folfirinox`, NCI PDQ evidence-summary classification, claim-specific regulatory sources, and the adenosquamous manual-review boundary. Clinical confirmation and the formal guideline snapshot remain freeze requirements.

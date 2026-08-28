@@ -102,6 +102,7 @@ python code/scripts/validate_candidate_treatment_space.py --repo-root .
 ```powershell
 python code/scripts/validate_evidence_constraint_label_schema.py --repo-root .
 python code/scripts/validate_external_material_registry.py --repo-root .
+python code/scripts/validate_patient_candidate_dataset_schema.py --repo-root .
 ```
 
 ### 4. Pilot生成与验证
@@ -114,7 +115,7 @@ python code/scripts/validate_pilot_evidence_labels.py --repo-root .
 ### 5. 自动化测试
 
 ```powershell
-python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_evidence_constraint_label_schema.py code/tests/test_external_material_registry.py code/tests/test_pilot_evidence_labels.py -q
+python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_evidence_constraint_label_schema.py code/tests/test_external_material_registry.py code/tests/test_patient_candidate_dataset_schema.py code/tests/test_pilot_evidence_labels.py -q
 ```
 
 ## 主要产物
@@ -123,6 +124,8 @@ python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_ev
 - [第一轮数据审计](code/results/reports/data_feasibility_audit_v1.md)
 - [候选治疗空间](code/config/candidate_treatment_space_v0.1.yaml)
 - [标签Schema](code/config/evidence_constraint_label_schema_v0.1.yaml)
+- [Patient-Candidate数据集Schema](code/config/patient_candidate_dataset_schema_v0.1.yaml)
+- [Patient-Candidate数据集设计](docs/notes/patient_candidate_dataset_schema_design_v0.1.md)
 - [Pilot协议](code/config/pilot_label_protocol_v0.1.yaml)
 - [候选-Regimen Crosswalk](code/results/mappings/candidate_regimen_crosswalk_v0.1.csv)
 - [队列审计报告](code/results/reports/cohort_lock_label_feasibility_v0.1.md)
@@ -131,7 +134,7 @@ python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_ev
 
 ## 下一阶段
 
-方案A完成专家复核后形成专家裁决标签。方案B在导师确认后形成指南证据适用性标签。经确认的标签将用于构建完整patient-candidate表、患者级数据切分、泄漏检查和基线训练。
+训练数据契约已定义但尚未生成数据。方案A完成专家复核后形成专家裁决标签，方案B在导师确认后形成指南证据适用性标签。经确认的标签将用于生成patient-candidate表、冻结患者级切分、执行泄漏检查和基线训练。
 
 ## 第三轮 3.1 队列修复审计
 

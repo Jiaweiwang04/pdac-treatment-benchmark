@@ -12,6 +12,7 @@ ACTIVE_DOCUMENTS = [
     ROOT / "docs" / "notes" / "evidence_constraint_label_schema_design_v0.1.md",
     ROOT / "docs" / "notes" / "external_material_intake_v0.1.md",
     ROOT / "docs" / "notes" / "pilot_label_validation_design_v0.1.md",
+    ROOT / "docs" / "notes" / "patient_candidate_dataset_schema_design_v0.1.md",
     ROOT / "docs" / "notes" / "standards" / "standards_index_v1.0.md",
     ROOT / "code" / "results" / "reports" / "pilot_label_validation_report_v0.1.md",
 ]

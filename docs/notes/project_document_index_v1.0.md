@@ -22,6 +22,8 @@ Documents are grouped by function. Design documents describe methods and decisio
 | Candidate configuration | [candidate_treatment_space_v0.1.yaml](../../code/config/candidate_treatment_space_v0.1.yaml) | Executable candidate space and evidence registry | v0.1.1 draft |
 | Label design | [evidence_constraint_label_schema_design_v0.1.md](evidence_constraint_label_schema_design_v0.1.md) | Track A label semantics and derivation | v0.1 draft |
 | Label configuration | [evidence_constraint_label_schema_v0.1.yaml](../../code/config/evidence_constraint_label_schema_v0.1.yaml) | Executable label contract | v0.1 draft |
+| Dataset design | [patient_candidate_dataset_schema_design_v0.1.md](patient_candidate_dataset_schema_design_v0.1.md) | Training dataset separation, keys, features, labels, and split boundary | Design complete; no patient-candidate table generated |
+| Dataset configuration | [patient_candidate_dataset_schema_v0.1.yaml](../../code/config/patient_candidate_dataset_schema_v0.1.yaml) | Executable training-data contract | v0.1 draft |
 | External evidence | [external_material_intake_v0.1.md](external_material_intake_v0.1.md) | Local source admission and use | Registry validated |
 | Pilot design | [pilot_label_validation_design_v0.1.md](pilot_label_validation_design_v0.1.md) | Sampling, evidence extraction, and review | Design maintained separately from execution results |
 | Pilot protocol | [pilot_label_protocol_v0.1.yaml](../../code/config/pilot_label_protocol_v0.1.yaml) | Executable Pilot and review strategy | Plan A primary; Plan B fallback |

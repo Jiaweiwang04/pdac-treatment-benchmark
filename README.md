@@ -102,6 +102,7 @@ python code/scripts/validate_candidate_treatment_space.py --repo-root .
 ```powershell
 python code/scripts/validate_evidence_constraint_label_schema.py --repo-root .
 python code/scripts/validate_external_material_registry.py --repo-root .
+python code/scripts/validate_patient_candidate_dataset_schema.py --repo-root .
 ```
 
 ### 4. Pilot generation and validation
@@ -114,7 +115,7 @@ python code/scripts/validate_pilot_evidence_labels.py --repo-root .
 ### 5. Automated tests
 
 ```powershell
-python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_evidence_constraint_label_schema.py code/tests/test_external_material_registry.py code/tests/test_pilot_evidence_labels.py -q
+python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_evidence_constraint_label_schema.py code/tests/test_external_material_registry.py code/tests/test_patient_candidate_dataset_schema.py code/tests/test_pilot_evidence_labels.py -q
 ```
 
 ## Main Outputs
@@ -123,6 +124,8 @@ python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_ev
 - [Round 1 data audit](code/results/reports/data_feasibility_audit_v1.md)
 - [Candidate treatment space](code/config/candidate_treatment_space_v0.1.yaml)
 - [Label schema](code/config/evidence_constraint_label_schema_v0.1.yaml)
+- [Patient-candidate dataset schema](code/config/patient_candidate_dataset_schema_v0.1.yaml)
+- [Patient-candidate dataset design](docs/notes/patient_candidate_dataset_schema_design_v0.1.md)
 - [Pilot protocol](code/config/pilot_label_protocol_v0.1.yaml)
 - [Candidate-regimen crosswalk](code/results/mappings/candidate_regimen_crosswalk_v0.1.csv)
 - [Cohort audit report](code/results/reports/cohort_lock_label_feasibility_v0.1.md)
@@ -131,7 +134,7 @@ python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_ev
 
 ## Next Stage
 
-Plan A produces expert-adjudicated labels after double review. Plan B produces guideline evidence eligibility labels after supervisor approval. The confirmed label path feeds the full patient-candidate table, patient-level split, leakage audit, and baseline training.
+The training-data contracts are defined but not materialized. Plan A produces expert-adjudicated labels after double review. Plan B produces guideline evidence eligibility labels after supervisor approval. The confirmed label path then feeds patient-candidate materialization, patient-level split freezing, leakage audit, and baseline training.
 
 ## Round 3.1 Cohort Repair Audit
 
