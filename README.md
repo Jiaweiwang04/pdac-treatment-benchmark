@@ -130,6 +130,7 @@ python -m pytest code/tests/test_candidate_treatment_space.py code/tests/test_ev
 - [Candidate-regimen crosswalk](code/results/mappings/candidate_regimen_crosswalk_v0.1.csv)
 - [Cohort audit report](code/results/reports/cohort_lock_label_feasibility_v0.1.md)
 - [Pilot aggregate report](code/results/reports/pilot_label_validation_report_v0.1.md)
+- [Experiment progress report (Chinese)](code/results/reports/experiment_progress_report_v1.0.md)
 - [Project document index](docs/notes/project_document_index_v1.0.md)
 
 ## Next Stage

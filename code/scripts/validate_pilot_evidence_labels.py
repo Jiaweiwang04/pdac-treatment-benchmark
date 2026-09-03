@@ -82,6 +82,18 @@ def validate_protocol(repo_root: Path) -> list[str]:
         errors.append("tumor BRCA cannot be interpreted as germline BRCA")
     if evidence.get("missing_track_b_means_clinically_cleared") is not False:
         errors.append("missing Track B data cannot imply clinical clearance")
+    reviewer_ngs = evidence.get("reviewer_package_ngs", {})
+    for field in (
+        "exact_dates_exposed",
+        "direct_identifiers_exposed",
+        "assay_center_names_exposed",
+        "absent_variant_call_means_clinical_negative",
+        "fusion_absence_means_negative",
+        "tumor_brca_means_germline_brca",
+        "erbb2_copy_number_means_her2_ihc_3_plus",
+    ):
+        if reviewer_ngs.get(field) is not False:
+            errors.append(f"reviewer NGS policy must keep {field}=false")
     label_policy = protocol.get("label_policy", {})
     if label_policy.get("current_t0_regimen_allowed_in_label_derivation") is not False:
         errors.append("current t0 regimen cannot be used in label derivation")
@@ -116,6 +128,7 @@ def validate_private_outputs(repo_root: Path) -> list[str]:
         "candidate": private_dir / output["private_patient_candidate_rows"],
         "linkage": private_dir / output["private_case_linkage"],
         "case_index": private_dir / output["private_reviewer_case_index"],
+        "ngs_evidence": private_dir / output["private_reviewer_ngs_evidence"],
         "review": private_dir / output["private_review_template"],
     }
     for name, path in paths.items():
@@ -128,6 +141,7 @@ def validate_private_outputs(repo_root: Path) -> list[str]:
     rows = read_csv(paths["candidate"])
     linkage = read_csv(paths["linkage"])
     case_index = read_csv(paths["case_index"])
+    ngs_evidence = read_csv(paths["ngs_evidence"])
     review = read_csv(paths["review"])
     key = ["cohort", "record_id", "ca_seq", "t0_start_day"]
     minimum = int(protocol["sample"]["minimum_decision_points"])
@@ -204,6 +218,69 @@ def validate_private_outputs(repo_root: Path) -> list[str]:
                 break
             if not isinstance(parsed, list):
                 errors.append(f"reviewer case index {field} must encode a list")
+                break
+
+    required_ngs_fields = {
+        "pilot_case_code",
+        "ngs_availability",
+        "report_recency_band",
+        "specimen_category",
+        "dna_panel_gene_count",
+        "mutation_coverage_genes",
+        "mutation_noncoverage_genes",
+        "candidate_relevant_variants",
+        "fusion_events",
+        "erbb2_cna_status",
+        "msi_mmr_evidence_state",
+        "msi_results",
+        "mmr_results",
+        "tmb_status",
+        "her2_ihc_status",
+        "germline_brca_status",
+        "interpretation_notes",
+    }
+    if required_ngs_fields - set(ngs_evidence.columns):
+        errors.append("reviewer NGS evidence is missing required fields")
+    if len(ngs_evidence) != len(decision) or ngs_evidence["pilot_case_code"].duplicated().any():
+        errors.append("reviewer NGS evidence is not one row per Pilot case")
+    if set(ngs_evidence["pilot_case_code"]) != expected_case_codes:
+        errors.append("reviewer NGS evidence does not cover every Pilot case identifier")
+    if any(privacy.is_high_risk_field_name(field) for field in ngs_evidence.columns):
+        errors.append("reviewer NGS evidence exposes a high-risk identifier column")
+    if privacy.contains_identifier(ngs_evidence.to_csv(index=False)):
+        errors.append("reviewer NGS evidence exposes a GENIE identifier")
+    prohibited_ngs_fields = {
+        "record_id",
+        "sample_id",
+        "patient_id",
+        "index_ngs_sample_id",
+        "index_ngs_report_day",
+        "t0_start_day",
+        "seq_assay_id",
+    }
+    if prohibited_ngs_fields & set(ngs_evidence.columns):
+        errors.append("reviewer NGS evidence contains prohibited direct or exact-time fields")
+    if "ngs_availability" in ngs_evidence and set(ngs_evidence["ngs_availability"]) != {"available_strictly_pre_t0"}:
+        errors.append("reviewer NGS evidence contains a non-pre-t0 selected assay")
+    for field in (
+        "mutation_coverage_genes",
+        "mutation_noncoverage_genes",
+        "candidate_relevant_variants",
+        "fusion_events",
+        "msi_results",
+        "mmr_results",
+        "interpretation_notes",
+    ):
+        if field not in ngs_evidence:
+            continue
+        for index, value in enumerate(ngs_evidence[field]):
+            try:
+                parsed = json.loads(value)
+            except json.JSONDecodeError:
+                errors.append(f"invalid JSON in reviewer NGS evidence {field} at row {index + 2}")
+                break
+            if not isinstance(parsed, list):
+                errors.append(f"reviewer NGS evidence {field} must encode a list")
                 break
 
     if len(review) != len(rows):

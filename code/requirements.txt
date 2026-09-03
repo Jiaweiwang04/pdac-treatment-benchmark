@@ -1,4 +1,5 @@
 pandas
 pypdf
+python-docx
 PyYAML
 pytest

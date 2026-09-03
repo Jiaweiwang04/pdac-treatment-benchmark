@@ -28,6 +28,7 @@ Documents are grouped by function. Design documents describe methods and decisio
 | Pilot design | [pilot_label_validation_design_v0.1.md](pilot_label_validation_design_v0.1.md) | Sampling, evidence extraction, and review | Design maintained separately from execution results |
 | Pilot protocol | [pilot_label_protocol_v0.1.yaml](../../code/config/pilot_label_protocol_v0.1.yaml) | Executable Pilot and review strategy | Plan A primary; Plan B fallback |
 | Pilot result | [pilot_label_validation_report_v0.1.md](../../code/results/reports/pilot_label_validation_report_v0.1.md) | Aggregate Pilot validation | Automated checks passed |
+| Experiment progress | [experiment_progress_report_v1.0.md](../../code/results/reports/experiment_progress_report_v1.0.md) | Current experimental process, results, risks, and next stage | Updated 2026-09-02 |
 | Management standards | [standards_index_v1.0.md](standards/standards_index_v1.0.md) | Local workflow and data-code management references | Indexed; source PDFs remain local |
 
 Historical audit reports retain their original content as research records. Current status and reproduction commands are maintained in the README files.

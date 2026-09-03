@@ -57,6 +57,8 @@ Plan B produces `guideline_evidence_eligibility`. Source conflicts map to `manua
 
 Reviewer materials use codes `PILOT-001` through `PILOT-024`. The local linkage file stores formal dataset keys separately from the reviewer case index and review matrix.
 
+The reviewer package includes an anonymous, strictly pre-`t0` molecular-evidence section for each decision point. It reports normalized specimen category, report-recency band, DNA-panel coverage for candidate-relevant genes, candidate-relevant SNV/indel details, fusion or structural-variant details, ERBB2 copy-number status, and available MSI/MMR results. It does not expose direct identifiers, exact dates, center-coded assay names, the observed `t0` regimen, or outcomes. Missing calls remain unknown unless assay coverage and the source semantics support a narrower statement.
+
 ### Outputs
 
 | Output | Location | Purpose |
@@ -64,7 +66,9 @@ Reviewer materials use codes `PILOT-001` through `PILOT-024`. The local linkage 
 | Pilot decision points | `data/processed/evidence_constraint_labels/pilot_v0.1/pilot_decision_points.csv` | private extraction record |
 | Case linkage | `data/processed/evidence_constraint_labels/pilot_v0.1/pilot_case_linkage.csv` | internal key linkage |
 | Reviewer case index | `data/processed/evidence_constraint_labels/pilot_v0.1/pilot_reviewer_case_index.csv` | reviewer case summary |
+| Reviewer NGS evidence | `data/processed/evidence_constraint_labels/pilot_v0.1/pilot_reviewer_ngs_evidence.csv` | anonymous pre-`t0` molecular evidence |
 | Review matrix | `data/processed/evidence_constraint_labels/pilot_v0.1/pilot_review_template.csv` | candidate assessment matrix |
+| Reviewer package | `data/processed/evidence_constraint_labels/pilot_v0.1/PDAC_Pilot专家审核包_v1.1.docx` | Chinese expert-review document |
 | Aggregate report | `code/results/reports/pilot_label_validation_report_v0.1.md` | public validation result |
 
 ## Results
@@ -75,8 +79,9 @@ This design produces private reviewer artifacts and one aggregate validation rep
 
 ```powershell
 python code/scripts/build_pilot_evidence_labels.py --repo-root .
+python code/scripts/generate_pilot_reviewer_package.py --repo-root .
 python code/scripts/validate_pilot_evidence_labels.py --repo-root .
-python -m pytest code/tests/test_pilot_evidence_labels.py -q
+python -m pytest code/tests/test_pilot_evidence_labels.py code/tests/test_pilot_reviewer_package.py -q
 ```
 
 The validator checks sample size, candidate coverage, time alignment, linkage isolation, reviewer-file identifiers, review status, label vocabulary, privacy, and small-cell suppression.

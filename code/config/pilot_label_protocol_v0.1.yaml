@@ -65,6 +65,17 @@ evidence_policy:
   her2_ihc_3_plus_status: unavailable_unknown
   track_b_status: frozen_unavailable
   missing_track_b_means_clinically_cleared: false
+  reviewer_package_ngs:
+    mutation_genes: [BRAF, BRCA1, BRCA2, ERBB2]
+    fusion_genes: [NRG1, NTRK1, NTRK2, NTRK3, RET]
+    copy_number_genes: [ERBB2]
+    exact_dates_exposed: false
+    direct_identifiers_exposed: false
+    assay_center_names_exposed: false
+    absent_variant_call_means_clinical_negative: false
+    fusion_absence_means_negative: false
+    tumor_brca_means_germline_brca: false
+    erbb2_copy_number_means_her2_ihc_3_plus: false
 
 label_policy:
   label_origin: rule_derived
@@ -121,7 +132,10 @@ outputs:
   private_patient_candidate_rows: pilot_patient_candidate_rows.csv
   private_case_linkage: pilot_case_linkage.csv
   private_reviewer_case_index: pilot_reviewer_case_index.csv
+  private_reviewer_ngs_evidence: pilot_reviewer_ngs_evidence.csv
   private_review_template: pilot_review_template.csv
+  private_reviewer_package_template: PDAC_Pilot专家审核包_v1.0.docx
+  private_reviewer_package: PDAC_Pilot专家审核包_v1.1.docx
   public_summary_table: code/results/reports/tables/pilot_label_validation_summary_v0.1.csv
   public_report: code/results/reports/pilot_label_validation_report_v0.1.md
   public_identifier_columns_allowed: []
