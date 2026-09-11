@@ -1,0 +1,25 @@
+{
+  "project_version": "v2.0",
+  "phase": "02_decision_points",
+  "research_scope": {
+    "primary_task": "locally_advanced_or_metastatic_PDAC_systemic_therapy",
+    "primary_task_status": "user_confirmed",
+    "perioperative_records": "preserve_as_context_and_separate_stratum",
+    "label_knowledge_framework": "current_knowledge_at_fixed_cutoff",
+    "knowledge_framework_status": "user_confirmed",
+    "evidence_cutoff_date": "2026-09-10",
+    "evidence_cutoff_status": "assistant_proposed_not_yet_frozen",
+    "historical_observed_regimen": "retain_candidate_and_require_historical_and_current_guideline_or_paper_evidence",
+    "observed_treatment_is_positive_label": false,
+    "current_knowledge_allows_future_patient_data": false,
+    "active_track": "A",
+    "track_b_status": "frozen",
+    "track_a_ngs_timing": "report_strictly_before_t0_user_confirmed"
+  },
+  "processed_dir": "data/processed/v2.0/02_decision_points",
+  "results_dir": "code/results/v2.0/02_decision_points",
+  "same_day_policy": "order_unknown_do_not_assume_predecision",
+  "pathology_procedure_date_is_report_availability": false,
+  "clinical_eligibility": "not_finalized",
+  "expert_labels_generated": false
+}

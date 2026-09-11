@@ -1,9 +1,0 @@
-table,field,role,available_at_t0,allowed_as_model_input,rationale
-patient,cohort/record_id,formal key only,yes,no,"Identifiers are linkage keys, not features."
-cancer,ca_histology/naaccr_histology_cd/cpt_oncotree_code,PDAC mapping,yes,prior_only,May define cancer instance but final mapping requires medical review.
-cancer,advanced evidence fields,cohort eligibility,pre_t0_only,prior_only,Strict main analysis requires advanced_evidence_day < t0.
-cpt,dx_cpt_rep_days,NGS availability timing,pre_t0_only,prior_only,Index NGS report must be strictly before t0.
-regimen,t0 regimen_drugs,observed treatment label,at_t0,no,"The selected treatment is the label/candidate observation, not an input feature."
-regimen,regimen_number/regimen_number_within_cancer,line history reconstruction,yes,prior_only,Use only prior history and line context; no future regimen fields.
-regimen,pfs*/os*/ttnt*,post-t0 outcome,no,no,Outcome/follow-up fields are labels or censoring information.
-patient,hybrid_death_int/dob_lastalive_int/last_*,follow-up/outcome,no,no,Death and last-alive/follow-up fields leak future information.

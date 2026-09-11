@@ -1,4 +1,0 @@
-label_family,availability,extended_n,core_n,limitations
-observed_next_regimen,available_as_observed_data,557,475,Descriptive observed regimen only; standardized=475; masked=58; manual_or_unknown=24; not a gold standard.
-evidence_supported_candidate_set,not_available_from_BPC_alone,557,475,"Requires external evidence snapshot, candidate treatment space, clinical constraints, and manual/structured evidence labels."
-post_t0_outcome,endpoint_specific_mixed_validation,557,475,OS post_t0_validated=557 field_present=557; PFS-I post_t0_validated=533 field_present=533; PFS-M post_t0_validated=533 field_present=533; TTNT-any-cancer post_t0_validated=0 field_present=557; TTNT-associated-cancer post_t0_validated=0 field_present=557

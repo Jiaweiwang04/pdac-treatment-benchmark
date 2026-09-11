@@ -244,3 +244,17 @@ code/results/reports/patient_level/
 
 # Office temporary lock files
 ~$*.docx
+
+# Patient-level review pages, exports, copied sources and delivery archives
+/code/results/private/
+# Legacy output location (prevents accidental reintroduction into Git)
+/outputs/
+
+# Optional browser-verification dependencies
+node_modules/
+
+# Formal v2.0: generated results and legacy snapshots stay local.
+/code/results/v2.0/*
+!/code/results/v2.0/README.md
+# Preserve standard directories; warehouse content remains local.
+

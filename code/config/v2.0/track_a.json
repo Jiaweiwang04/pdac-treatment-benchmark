@@ -1,0 +1,16 @@
+{
+  "project_version": "v2.0",
+  "phase": "03_track_a_candidates",
+  "active_track": "A",
+  "track_b_status": "frozen",
+  "scope_status": "user_confirmed",
+  "ngs_timing_rule": "report_strictly_before_t0",
+  "ngs_rule_status": "user_confirmed",
+  "same_day_policy": "order_unknown_review_only",
+  "track_b_missingness_is_exclusion": false,
+  "progression_group_policy": "consecutive_terminal_course_assessments_with_nonprogression_reset",
+  "progression_group_policy_status": "implementation_for_adjudication_not_confirmed_clinical_episode",
+  "outcome_usage": "reference_only_not_input_or_label",
+  "processed_dir": "data/processed/v2.0/03_track_a_candidates",
+  "results_dir": "code/results/v2.0/03_track_a_candidates"
+}

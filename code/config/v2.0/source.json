@@ -1,0 +1,14 @@
+{
+  "project_version": "v2.0",
+  "source_release": "PANC 1.0-public",
+  "source_root": "data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public",
+  "clinical_directory": "clinical_data",
+  "source_mutation_policy": "read_only",
+  "raw_value_policy": "preserve_strings_and_empty_cells",
+  "time_origin": "first_index_cancer_diagnosis",
+  "regimen_record_is_final_decision": false,
+  "guideline_time_framework": "current_knowledge_at_fixed_cutoff",
+  "expert_labels_generated": false,
+  "processed_dir": "data/processed/v2.0/01_source_audit",
+  "results_dir": "code/results/v2.0/01_source_audit"
+}

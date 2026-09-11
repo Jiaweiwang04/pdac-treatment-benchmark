@@ -1,5 +1,3 @@
-pandas
-pypdf
-python-docx
-PyYAML
-pytest
+# v2.0 stages 01-02: Python 3.12 (verified 3.12.14).
+# Standard library only, including XLSX dictionary extraction and HTML rendering.
+# No third-party runtime packages are required.
