@@ -3,18 +3,14 @@
   "phase": "02_decision_points",
   "research_scope": {
     "primary_task": "locally_advanced_or_metastatic_PDAC_systemic_therapy",
-    "primary_task_status": "user_confirmed",
     "perioperative_records": "preserve_as_context_and_separate_stratum",
     "label_knowledge_framework": "current_knowledge_at_fixed_cutoff",
-    "knowledge_framework_status": "user_confirmed",
-    "evidence_cutoff_date": "2026-09-10",
-    "evidence_cutoff_status": "assistant_proposed_not_yet_frozen",
+    "evidence_cutoff_date": "2026-09-12",
+    "evidence_cutoff_status": "user_confirmed_fixed",
     "historical_observed_regimen": "retain_candidate_and_require_historical_and_current_guideline_or_paper_evidence",
     "observed_treatment_is_positive_label": false,
     "current_knowledge_allows_future_patient_data": false,
-    "active_track": "A",
-    "track_b_status": "frozen",
-    "track_a_ngs_timing": "report_strictly_before_t0_user_confirmed"
+    "screening_ngs_timing": "report_strictly_before_t0"
   },
   "processed_dir": "data/processed/v2.0/02_decision_points",
   "results_dir": "code/results/v2.0/02_decision_points",

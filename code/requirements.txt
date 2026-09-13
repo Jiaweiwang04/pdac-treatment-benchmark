@@ -1,3 +1,2 @@
-# v2.0 stages 01-02: Python 3.12 (verified 3.12.14).
-# Standard library only, including XLSX dictionary extraction and HTML rendering.
-# No third-party runtime packages are required.
+# Python 3.12.
+# The data processing pipeline uses the Python standard library.

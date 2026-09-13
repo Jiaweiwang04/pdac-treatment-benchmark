@@ -1,12 +1,11 @@
-"""Build full-cohort temporal records, candidate anchors, and a complete reading example."""
+"""Build cohort timelines, candidate anchors and molecular source tables."""
 import json
 import platform
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from .audit import write_json, write_jsonl, write_csv
-from .case_view import render_case
-from .decision_points import build_events, build_candidates, partition_time
+from .decision_points import build_events, build_candidates
 from .layout import resolve_paths
 from .molecular import load_molecular
 from .source import read_csv, sha256
@@ -78,35 +77,12 @@ def build(base, out, processed, config):
     scope_counts = dict(Counter(c['scope_at_t0'] for c in candidates))
     tier_counts = dict(Counter(c['review_tier'] for c in candidates))
     issues = Counter(x for c in candidates for x in c['information_issues'])
-    # Prefer a traceable, rich example, not an unusually high mutation count or outcome.
-    pool = [c for c in candidates if c['review_tier'] == 'metastatic_candidate_requires_information_review' and c['ngs_report_before'] and c['explicit_ductal_pathology_procedure_before']]
-    if not pool:
-        pool = [c for c in candidates if c['review_tier'] == 'metastatic_candidate_requires_information_review']
-    def score(c):
-        rows = by_patient[tuple(c['patient_key'])]
-        markers = sum(e['kind'] in {'msi_report', 'mmr_report'} and partition_time(e, c['t0_day']) == 'confirmed_before' for e in rows)
-        specimens = sum(len(e['facts']['specimens']) for e in rows if e['kind'] == 'pathology_procedure')
-        return (min(markers, 2), 2 <= sum(e['kind'] == 'pathology_procedure' for e in rows) <= 8, min(specimens, 15), c['anchor_kind'] == 'regimen_start', c['candidate_id'])
-    chosen = max(pool, key=score)
-    pk = tuple(chosen['patient_key'])
-    case = {'project_version': 'v2.0', 'purpose': 'complete_source_supported_case_demonstration_not_pilot_or_gold_label',
-            'selection': 'deterministic_rich_pathology_and_predecision_ngs_example_not_representative_sampling',
-            'research_scope': config['research_scope'], 'decision': chosen, 'events': by_patient[pk],
-            'clinical_records': {name: [r for r in rows if (r['fields']['cohort'], r['fields']['record_id']) == pk] for name, rows in tables.items()},
-            'molecular_samples': [s for s in molecular.values() if s['patient_id'] == pk[1]],
-            'data_absence': ['ECOG', 'routine_liver_and_renal_function', 'complete_toxicity_history', 'pathology_main_report_issue_date']}
-    write_json(processed/'complete_case_v2.0.json', case)
-    render_case(case, out/'complete_case_v2.0.html', {r['field']: r for r in dictionary})
-    clinical_case_rows = sum(len(rows) for rows in case['clinical_records'].values())
     summary = {'project_version': 'v2.0', 'phase': '02_decision_points', 'patients': len(tables['patient_level_dataset']),
                'clinical_records_rechecked': sum(len(rows) for rows in tables.values()), 'timeline_events': len(events),
                'regimen_records': len(tables['regimen_cancer_level_dataset']), 'candidate_anchors': len(candidates),
                'anchor_kinds': dict(Counter(c['anchor_kind'] for c in candidates)), 'scope_counts': scope_counts, 'review_tiers': tier_counts,
                'information_issue_counts': dict(issues), 'molecular': molecular_counts, 'molecular_link_issue_count': len(molecular_issues),
                'dictionary_entries': len(dictionary), 'observed_regimen_combinations': len(catalog),
-               'example': {'patient_id': pk[1], 'candidate_id': chosen['candidate_id'], 't0_day': chosen['t0_day'], 'clinical_records': clinical_case_rows,
-                           'pathology_reports': len(case['clinical_records']['pathology_report_level_dataset']),
-                           'specimens': sum(len(e['facts']['specimens']) for e in case['events'] if e['kind'] == 'pathology_procedure')},
                'final_eligible_decision_points': None, 'expert_labels': None, 'guideline_evidence_review_completed': False}
     write_json(out/'decision_point_summary_v2.0.json', summary)
     write_json(out/'molecular_link_issues_v2.0.json', molecular_issues)
@@ -126,13 +102,13 @@ def write_report(base, summary, config):
 
 版本：v2.0
 
-更新日期：20260910
+更新日期：{datetime.now(timezone.utc).strftime('%Y%m%d')}
 
 状态：完成候选锚点和资料分层初版；最终纳入与专家标签未确定。
 
 ## 目的与范围
 
-围绕局部晚期／转移性PDAC系统治疗，重建全程记录并划分时点证据。用户确认以指定截止日期的知识重评为主，历史实际方案另行保留并要求同期和当前证据。文献截止日暂定2026-09-10，尚未完成检索或标签定义。
+围绕局部晚期／转移性PDAC系统治疗，重建全程记录并划分时点证据。采用知识截止日期内的指南和论文评价候选方案，同时保留历史实际用药及相应时期证据。文献截止日固定为2026-09-12，已确认的四类标签含义见[标签定义](treatment_label_definition_v2.0.md)；证据检索与真实病例标注尚未完成。
 
 ## 方法与来源
 
@@ -148,9 +124,7 @@ def write_report(base, summary, config):
 
 分子文件整理{s['molecular']['samples']:,}个样本、{s['molecular']['mutations']:,}条小变异、{s['molecular']['structural_variants']:,}条结构变异；保留拷贝数矩阵原值和{s['molecular']['panel_definitions']}个面板定义。关联问题{s['molecular_link_issue_count']}项。没有将变异自动标为致病、胚系或可用药靶点，也没有将未见记录当作阴性。
 
-## 病例展示与追溯
-
-[结构化病例示例](../../../code/results/v2.0/02_decision_points/complete_case_v2.0.html)包含{s['example']['clinical_records']}条临床原记录、{s['example']['pathology_reports']}份病理、{s['example']['specimens']}个标本及关联分子记录。原字段和空值均保留，未来信息与报告时间未知分别标记。本例用于核查阅读格式，不是pilot抽样或专家审核金标准。
+## 输出与追溯
 
 [候选锚点表](../../../data/processed/v2.0/02_decision_points/candidate_decision_points_v2.0.csv)、[全量事件](../../../data/processed/v2.0/02_decision_points/timeline_events_v2.0.jsonl)、[运行清单](../../../code/results/v2.0/02_decision_points/run_manifest.json)保留来源和定位。[观察方案目录](../../../data/processed/v2.0/02_decision_points/observed_regimen_catalog_v2.0.csv)有{s['observed_regimen_combinations']}种原始组合，仅表示观察记录，指南和论文证据仍为未检索。
 

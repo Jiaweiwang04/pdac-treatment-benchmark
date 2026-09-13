@@ -1,0 +1,14 @@
+{
+  "project_version": "v2.0",
+  "phase": "04_candidate_review",
+  "rule_version_date": "2026-09-11",
+  "ngs_rule": "report_strictly_before_t0",
+  "nos_and_predecision_paad": "retain_candidate_with_pathology_limitations",
+  "same_or_subset_drug_set_without_intent": "independence_review_not_main",
+  "same_day_progression": "link_to_treatment_do_not_count_separately",
+  "intrinsic_clinical_missingness": "document_limitations_not_blanket_exclusion",
+  "rule_authority": "candidate_review_protocol_v2.0",
+  "expert_clinical_adjudication": false,
+  "processed_dir": "data/processed/v2.0/04_candidate_review",
+  "results_dir": "code/results/v2.0/04_candidate_review"
+}

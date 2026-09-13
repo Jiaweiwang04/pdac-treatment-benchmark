@@ -1,12 +1,14 @@
 # PANC 原始数据审计报告 v2.0
 
-版本：v2.0  
-更新日期：20260910  
+版本：v2.0
+
+更新日期：20260913
+
 状态：completed；仅表示本阶段执行状态。
 
 ## 目的与范围
 
-核实PANC 1.0-public原始文件、临床表结构、字段完整性、关联键、病理标本及全部治疗记录，为下一阶段决策点整理提供可追溯的起点。本阶段不使用旧版筛选结论，不生成最终训练／测试纳入或专家标签。
+核实PANC 1.0-public原始文件、临床表结构、字段完整性、关联键、病理标本及全部治疗记录，为下一阶段决策点整理提供可追溯的起点。统计范围为原始发布集，输出用于后续候选决策点构建。
 
 ## 输入与运行记录
 
@@ -15,8 +17,8 @@
 | 数据版本 | PANC 1.0-public |
 | 原始路径 | 由[源配置](../../../code/config/v2.0/source.json)指定，完整路径见[运行清单](../../../code/results/v2.0/01_source_audit/run_manifest.json) |
 | 文件范围 | 72个原文件；其中解析10张临床表 |
-| 开始时间UTC | 2026-09-10T21:01:47.378784+00:00 |
-| 完成时间UTC | 2026-09-10T21:01:50.359868+00:00 |
+| 开始时间UTC | 2026-09-13T09:30:31.055915+00:00 |
+| 完成时间UTC | 2026-09-13T09:30:46.467142+00:00 |
 | Python与平台 | 3.12.14；Windows-11-10.0.26200-SP0 |
 | 第三方运行依赖 | 本阶段无第三方依赖 |
 | 原始文件版本依据 | [原文件清单](../../../code/results/v2.0/01_source_audit/source_inventory.json)中的SHA-256 |
@@ -68,7 +70,7 @@
 | [治疗登记CSV](../../../data/processed/v2.0/01_source_audit/treatment_record_registry.csv)和[治疗登记JSONL](../../../data/processed/v2.0/01_source_audit/treatment_record_registry.jsonl) | 全部方案记录，训练／测试可用性仍为not_evaluated |
 | [运行清单](../../../code/results/v2.0/01_source_audit/run_manifest.json) | 运行状态、环境及输入和实现校验和 |
 
-从项目根目录运行 `python -B code/scripts/run_v2_0.py audit --config code/config/v2.0/source.json` 可重新生成本报告及当前阶段结果。报告只有本位置一份，不另存手工修订副本。
+从项目根目录运行 `python -B code/scripts/run_v2_0.py audit --config code/config/v2.0/source.json` 可重新生成本报告及当前阶段结果。
 
 ## 局限与下一步
 

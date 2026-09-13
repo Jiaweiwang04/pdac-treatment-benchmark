@@ -16,15 +16,17 @@ DOCS = {
     "README.md": ["项目简介", "环境依赖", "目录说明", "数据准备", "运行步骤", "当前结果", "常见问题排查", "联系人"],
     "README.zh-CN.md": [],
     "code/results/v2.0/README.md": [],
-    DOC_DIR + "/project_document_index_v2.0.md": ["目的与适用范围", "当前文档", "命名与内容规则", "目录执行规则", "检查与维护"],
-    DOC_DIR + "/project_status_v2.0.md": ["目的", "当前进度与依据", "已确认结果与解释范围", "下一阶段与待明确事项"],
+    DOC_DIR + "/project_document_index_v2.0.md": ["文档索引"],
+    DOC_DIR + "/project_status_v2.0.md": ["处理阶段", "结果与局限", "后续工作"],
     DOC_DIR + "/data_processing_protocol_v2.0.md": ["目的与范围", "输入及来源", "原始值保留", "主键与关联", "病理报告与标本", "输出与定位", "验证及失败处理", "局限与下一步"],
-    DOC_DIR + "/repository_cleanup_record_v2.0.md": ["目的与依据", "第一次整理", "正确项目整理与迁移", "保护与核对过程", "迁移结果及边界"],
-    DOC_DIR + "/repository_layout_record_v2.0.md": ["目的与依据", "最终目录与职责", "迁移与验证", "边界"],
     DOC_DIR + "/decision_point_protocol_v2.0.md": ["研究范围与标签口径", "输入与来源", "候选锚点定义", "时间与信息可用性", "情境与组织学分层", "信息充分性与验证", "输出与复现"],
     DOC_DIR + "/source_usage_report_v2.0.md": ["目的与来源", "临床数据用途", "分子及辅助文件用途", "临床与时间风险", "治疗标签如何使用这些数据"],
-    DOC_DIR + "/decision_point_audit_report_v2.0.md": ["目的与范围", "方法与来源", "结果", "病例展示与追溯", "局限与下一步"],
-    DOC_DIR + "/track_a_candidate_report_v2.0.md": ["目的与规则", "方法与来源", "当前数量", "输出与结局使用", "复现与边界"],
+    DOC_DIR + "/decision_point_audit_report_v2.0.md": ["目的与范围", "方法与来源", "结果", "输出与追溯", "局限与下一步"],
+    DOC_DIR + "/screening_candidate_report_v2.0.md": ["目的与规则", "方法与来源", "当前数量", "输出与结局使用", "复现与边界"],
+    DOC_DIR + "/candidate_review_report_v2.0.md": ["范围与依据", "分组规则", "当前结果", "研究局限", "输出与复现"],
+    DOC_DIR + "/candidate_cohort_report_v2.0.md": ["范围与分组规则", "筛选流程与数量", "逐点证据与边界", "候选表与输出", "复现与下一步"],
+    DOC_DIR + "/treatment_label_definition_v2.0.md": ["目的与标注对象", "四类主标签", "判定顺序与边界", "研究性方案的标记", "缺失信息与时间规则", "知识截止日与证据要求", "边界案例", "结构化字段与专家审核", "文件位置、版本与下一步"],
+    DOC_DIR + "/patient_split_protocol_v2.0.md": ["目的与范围", "划分规则与复现", "当前划分结果", "分布与泄漏核查", "Pilot与Core使用规则", "输出与后续工作"],
     REPORT: ["目的与范围", "输入与运行记录", "处理与验证方法", "结果", "输出与追溯", "局限与下一步"],
 }
 TABLE_NAMES = {
@@ -57,13 +59,15 @@ def write_audit_report(base, out, processed, report_path, summary, schemas, mani
     runtime = manifest["runtime"]
     text = f"""# PANC 原始数据审计报告 v2.0
 
-版本：v2.0  
-更新日期：{date}  
+版本：v2.0
+
+更新日期：{date}
+
 状态：{manifest['status']}；仅表示本阶段执行状态。
 
 ## 目的与范围
 
-核实PANC 1.0-public原始文件、临床表结构、字段完整性、关联键、病理标本及全部治疗记录，为下一阶段决策点整理提供可追溯的起点。本阶段不使用旧版筛选结论，不生成最终训练／测试纳入或专家标签。
+核实PANC 1.0-public原始文件、临床表结构、字段完整性、关联键、病理标本及全部治疗记录，为下一阶段决策点整理提供可追溯的起点。统计范围为原始发布集，输出用于后续候选决策点构建。
 
 ## 输入与运行记录
 
@@ -116,7 +120,7 @@ def write_audit_report(base, out, processed, report_path, summary, schemas, mani
 | {link('治疗登记CSV', processed/'treatment_record_registry.csv')}和{link('治疗登记JSONL', processed/'treatment_record_registry.jsonl')} | 全部方案记录，训练／测试可用性仍为not_evaluated |
 | {manifest_link} | 运行状态、环境及输入和实现校验和 |
 
-从项目根目录运行 `python -B code/scripts/run_v2_0.py audit --config code/config/v2.0/source.json` 可重新生成本报告及当前阶段结果。报告只有本位置一份，不另存手工修订副本。
+从项目根目录运行 `python -B code/scripts/run_v2_0.py audit --config code/config/v2.0/source.json` 可重新生成本报告及当前阶段结果。
 
 ## 局限与下一步
 
@@ -224,28 +228,102 @@ def check_documents(base=BASE):
     except (OSError, KeyError, ValueError) as error:
         errors.append(f"Cannot validate phase 02: {error}")
     try:
-        phase3 = base / "code/results/v2.0/03_track_a_candidates"
+        phase3 = base / "code/results/v2.0/03_screening_candidates"
         manifest3 = json.loads((phase3 / "run_manifest.json").read_text(encoding="utf-8"))
-        summary3 = json.loads((phase3 / "track_a_summary_v2.0.json").read_text(encoding="utf-8"))
+        summary3 = json.loads((phase3 / "screening_summary_v2.0.json").read_text(encoding="utf-8"))
         if manifest3["status"] != "completed" or manifest3["summary"] != summary3:
-            errors.append("Track A run is incomplete or inconsistent")
+            errors.append("screening run is incomplete or inconsistent")
         config3 = base / manifest3["config_file"]
         if hashlib.sha256(config3.read_bytes()).hexdigest() != manifest3["config_sha256"]:
-            errors.append("Track A config changed after execution")
+            errors.append("screening config changed after execution")
         for name, expected in {**manifest3["code_sha256"], **manifest3["input_sha256"], **manifest3["output_sha256"]}.items():
             if hashlib.sha256((base/name).read_bytes()).hexdigest() != expected:
-                errors.append(f"Track A provenance changed: {name}")
+                errors.append(f"screening provenance changed: {name}")
         if summary3["final_eligible_decision_points"] is not None or summary3["expert_labels"] is not None:
-            errors.append("Track A must not claim unadjudicated final labels or eligibility")
-        report3 = (base / DOC_DIR / "track_a_candidate_report_v2.0.md").read_text(encoding="utf-8")
+            errors.append("screening must not claim unadjudicated final labels or eligibility")
+        report3 = (base / DOC_DIR / "screening_candidate_report_v2.0.md").read_text(encoding="utf-8")
         for field in ["upstream_treatment_anchors", "progression_evidence_records", "new_progression_review_groups", "registry_records", "registry_patients"]:
             if f"{summary3[field]:,}" not in report3:
-                errors.append(f"Track A report count missing: {field}")
+                errors.append(f"screening report count missing: {field}")
         for bucket in summary3["buckets"].values():
             if f"{bucket['candidates']:,}" not in report3 or f"{bucket['patients']:,}" not in report3:
-                errors.append("Track A report bucket count missing")
+                errors.append("screening report bucket count missing")
     except (OSError, KeyError, ValueError) as error:
-        errors.append(f"Cannot validate Track A: {error}")
+        errors.append(f"Cannot validate screening: {error}")
+    try:
+        phase4 = base / "code/results/v2.0/04_candidate_review"
+        manifest4 = json.loads((phase4 / "run_manifest.json").read_text(encoding="utf-8"))
+        summary4 = json.loads((phase4 / "candidate_review_summary_v2.0.json").read_text(encoding="utf-8"))
+        if manifest4["status"] != "completed" or summary4 != manifest4["summary"]:
+            errors.append("Candidate review execution incomplete or inconsistent")
+        if hashlib.sha256((base/manifest4["config_file"]).read_bytes()).hexdigest() != manifest4["config_sha256"]:
+            errors.append("Candidate review config changed after execution")
+        for name, expected in {**manifest4["code_sha256"], **manifest4["input_sha256"], **manifest4["output_sha256"]}.items():
+            if hashlib.sha256((base/name).read_bytes()).hexdigest() != expected:
+                errors.append(f"Candidate review provenance changed: {name}")
+        if summary4["final_eligible_decision_points"] is not None or summary4["expert_labels"] is not None:
+            errors.append("Candidate review must not fabricate final eligibility or labels")
+        report4 = (base/DOC_DIR/"candidate_review_report_v2.0.md").read_text(encoding="utf-8")
+        for field in ["registry_records", "evidence_inventory_records", "same_day_progression_linked", "regimen_independence_review_added"]:
+            if f"{summary4[field]:,}" not in report4:
+                errors.append(f"Candidate review report count missing: {field}")
+        for bucket in summary4["buckets"].values():
+            if f"{bucket['records']:,}" not in report4 or f"{bucket['patients']:,}" not in report4:
+                errors.append("Candidate review report bucket count missing")
+    except (OSError, KeyError, ValueError) as error:
+        errors.append(f"Cannot validate candidate review: {error}")
+    try:
+        phase5 = base / "code/results/v2.0/05_candidate_cohort"
+        manifest5 = json.loads((phase5 / "run_manifest.json").read_text(encoding="utf-8"))
+        summary5 = json.loads((phase5 / "candidate_cohort_summary_v2.0.json").read_text(encoding="utf-8"))
+        if manifest5["status"] != "completed" or summary5 != manifest5["summary"]:
+            errors.append("Candidate cohort execution incomplete or inconsistent")
+        if hashlib.sha256((base/manifest5["config_file"]).read_bytes()).hexdigest() != manifest5["config_sha256"]:
+            errors.append("Candidate cohort config changed after execution")
+        for name, expected in {**manifest5["code_sha256"], **manifest5["input_sha256"], **manifest5["output_sha256"]}.items():
+            if hashlib.sha256((base/name).read_bytes()).hexdigest() != expected:
+                errors.append(f"Candidate cohort provenance changed: {name}")
+        if summary5["final_eligible_decision_points"] is not None or summary5["expert_labels"] is not None:
+            errors.append("Candidate cohort must not fabricate final eligibility or labels")
+        if sum(v["records"] for v in summary5["roles"].values()) != summary5["registry_records"]:
+            errors.append("Candidate roles do not partition the registry")
+        report5 = (base/DOC_DIR/"candidate_cohort_report_v2.0.md").read_text(encoding="utf-8")
+        for bucket in summary5["roles"].values():
+            if f"{bucket['records']:,}" not in report5 or f"{bucket['patients']:,}" not in report5:
+                errors.append("Candidate cohort report count missing")
+    except (OSError, KeyError, ValueError) as error:
+        errors.append(f"Cannot validate candidate cohort: {error}")
+    try:
+        labels = json.loads((base/"code/config/v2.0/treatment_labels.json").read_text(encoding="utf-8"))
+        scope = json.loads((base/"code/config/v2.0/decision_points.json").read_text(encoding="utf-8"))["research_scope"]
+        if set(labels["labels"]) != {"SUPPORTED", "CONDITIONAL", "MISMATCH", "INDETERMINATE"}:
+            errors.append("Treatment label categories differ from confirmed definitions")
+        if (labels["evidence_cutoff_date"], labels["evidence_cutoff_status"]) != (scope["evidence_cutoff_date"], scope["evidence_cutoff_status"]):
+            errors.append("Label and research knowledge cutoffs disagree")
+        definition = (base/labels["definition_document"]).read_text(encoding="utf-8")
+        if labels["evidence_cutoff_date"] not in definition or any(code not in definition for code in labels["labels"]):
+            errors.append("Label definition document and configuration disagree")
+        if not labels["research_candidates_included"] or not labels["research_candidates_must_be_explicitly_marked"]:
+            errors.append("Research candidate policy differs from confirmed rule")
+    except (OSError, KeyError, ValueError) as error:
+        errors.append(f"Cannot validate treatment label definitions: {error}")
+    try:
+        phase6 = base/"code/results/v2.0/06_patient_split"
+        manifest6 = json.loads((phase6/"run_manifest.json").read_text(encoding="utf-8"))
+        summary6 = json.loads((phase6/"patient_split_summary_v2.0.json").read_text(encoding="utf-8"))
+        if manifest6["status"] != "completed" or manifest6["summary"] != summary6:
+            errors.append("Patient split execution incomplete or inconsistent")
+        if hashlib.sha256((base/manifest6["config_file"]).read_bytes()).hexdigest() != manifest6["config_sha256"]:
+            errors.append("Patient split configuration changed after execution")
+        for name, expected in {**manifest6["code_sha256"], **manifest6["input_sha256"], **manifest6["output_sha256"]}.items():
+            if hashlib.sha256((base/name).read_bytes()).hexdigest() != expected:
+                errors.append(f"Patient split provenance changed: {name}")
+        if summary6["core_pilot_patient_overlap"] or summary6["isolation"]["cross_split_identity_collisions"]:
+            errors.append("Patient split identity leakage detected")
+        if summary6["expert_labels"] is not None or summary6["final_training_sample_count"] is not None:
+            errors.append("Patient split must not invent labels or final training sample counts")
+    except (OSError, KeyError, ValueError) as error:
+        errors.append(f"Cannot validate patient split: {error}")
     return {"project_version": "v2.0", "documents_checked": len(DOCS), "local_links_checked": links_checked,
             "errors": errors, "status": "passed" if not errors else "failed",
             "scope": "GA09 section 2.1 directory layout, current narrative documents, and report provenance; clinical eligibility is not evaluated"}

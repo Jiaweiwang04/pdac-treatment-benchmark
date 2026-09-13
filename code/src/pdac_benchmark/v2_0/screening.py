@@ -1,4 +1,4 @@
-"""Track A candidate registry; strict NGS timing, explicit review groups, no labels."""
+"""Screen candidate decisions by NGS timing and evidence availability."""
 import json
 import platform
 from collections import Counter, defaultdict
@@ -13,7 +13,7 @@ from .source import sha256
 BASE = Path(__file__).resolve().parents[4]
 MAIN_TIERS = {'metastatic_candidate_requires_information_review',
               'locally_advanced_candidate_requires_context_review'}
-TRACK_B_ISSUES = {'ECOG_not_provided', 'organ_function_labs_not_provided',
+NON_SCREENING_CLINICAL_ISSUES = {'ECOG_not_provided', 'organ_function_labs_not_provided',
                   'toxicity_and_dose_reduction_reasons_not_provided', 'clinical_eligibility_not_finalized'}
 PROGRESS = 'Progressing/Worsening/Enlarging'
 RESET = {'Stable/No change', 'Improving/Responding', 'Mixed'}
@@ -179,15 +179,12 @@ def progression_candidates(by_patient, cancers, cancer_days, treatment_candidate
     return results, all_evidence
 
 
-def assign_track(c, events):
+def assign_screening_group(c, events):
     c = dict(c)
     status, before = ngs_gate(events, c['cancer_seq'], c['t0_day'])
     c['ngs_report_before'] = before
-    c['track_a_ngs_status'] = status
-    c['active_track'] = 'A'
-    c['track_b_status'] = 'frozen'
-    c['track_b_missingness_is_exclusion'] = False
-    c['information_issues'] = [i for i in c['information_issues'] if i not in TRACK_B_ISSUES]
+    c['screening_ngs_status'] = status
+    c['information_issues'] = [i for i in c['information_issues'] if i not in NON_SCREENING_CLINICAL_ISSUES]
     if c['review_tier'].startswith('outside_main_task_'):
         bucket = 'outside_main_scope_retained'
     elif c['review_tier'] not in MAIN_TIERS:
@@ -201,7 +198,7 @@ def assign_track(c, events):
         bucket = 'progression_trigger_review'
     else:
         bucket = 'main_regimen_start_candidate'
-    c['track_a_bucket'] = bucket
+    c['screening_bucket'] = bucket
     c['independent_decision_confirmed'] = False
     c['final_training_eligibility'] = 'not_finalized'
     c['expert_label'] = None
@@ -232,8 +229,8 @@ def make_outcome_reference(c, events, tables_by_patient):
 
 
 def build(base, processed, out, config):
-    if (config['active_track'], config['track_b_status'], config['ngs_timing_rule']) != ('A', 'frozen', 'report_strictly_before_t0'):
-        raise ValueError('This version implements the user-confirmed Track A contract only')
+    if config['ngs_timing_rule'] != 'report_strictly_before_t0':
+        raise ValueError('Unsupported NGS timing rule')
     source = json.loads((base/'code/config/v2.0/source.json').read_text(encoding='utf-8'))
     phase2 = json.loads((base/'code/config/v2.0/decision_points.json').read_text(encoding='utf-8'))
     candidate_path = base/phase2['processed_dir']/'candidate_decision_points_v2.0.jsonl'
@@ -241,7 +238,7 @@ def build(base, processed, out, config):
     phase2_manifest_path = base/phase2['results_dir']/'run_manifest.json'
     phase2_manifest = json.loads(phase2_manifest_path.read_text(encoding='utf-8'))
     if phase2_manifest['status'] != 'completed':
-        raise ValueError('Phase 02 must complete before Track A screening')
+        raise ValueError('Phase 02 must complete before 候选筛选 screening')
     inputs = {str(p.relative_to(base).as_posix()): sha256(p) for p in [candidate_path, event_path, phase2_manifest_path]}
     for p in [candidate_path, event_path]:
         if inputs[p.relative_to(base).as_posix()] != phase2_manifest['output_sha256'][p.relative_to(base).as_posix()]:
@@ -262,11 +259,11 @@ def build(base, processed, out, config):
     if rebuilt != upstream:
         raise ValueError('Rebuilt timeline differs from the upstream artifact')
     added, evidence = progression_candidates(by_patient, cancers, cancer_days, candidates)
-    registry = [assign_track(c, by_patient[tuple(c['patient_key'])]) for c in candidates + added]
+    registry = [assign_screening_group(c, by_patient[tuple(c['patient_key'])]) for c in candidates + added]
     for c in registry:
         c['outcome_reference_id'] = c['candidate_id']
     if len({c['candidate_id'] for c in registry}) != len(registry):
-        raise ValueError('Duplicate Track A candidate identity')
+        raise ValueError('Duplicate 候选筛选 candidate identity')
     for c in registry:
         for ident in c['ngs_report_before']:
             if not (rebuilt[ident]['available_day'] < c['t0_day'] and rebuilt[ident]['cancer_seq'] == c['cancer_seq']):
@@ -274,59 +271,59 @@ def build(base, processed, out, config):
     outcomes = [make_outcome_reference(c, by_patient[tuple(c['patient_key'])], tables_by_patient) for c in registry]
     processed.mkdir(parents=True, exist_ok=True)
     out.mkdir(parents=True, exist_ok=True)
-    write_jsonl(processed/'track_a_candidate_registry_v2.0.jsonl', registry)
+    write_jsonl(processed/'screening_candidate_registry_v2.0.jsonl', registry)
     write_jsonl(processed/'progression_evidence_v2.0.jsonl', evidence)
     write_jsonl(processed/'candidate_outcome_references_v2.0.jsonl', outcomes)
     flat = [{'candidate_id': c['candidate_id'], 'patient_id': c['patient_key'][1], 'cohort': c['patient_key'][0],
              'cancer_seq': c['cancer_seq'], 't0_day': c['t0_day'], 'anchor_kind': c['anchor_kind'],
-             'track_a_bucket': c['track_a_bucket'], 'ngs_timing_status': c['track_a_ngs_status'],
+             'screening_bucket': c['screening_bucket'], 'ngs_timing_status': c['screening_ngs_status'],
              'ngs_before_count': len(c['ngs_report_before']), 'scope_review_tier': c['review_tier'],
              'observed_drugs_raw': ' | '.join(x['name_raw'] for x in c['observed_action_drugs']),
              'progression_evidence_count': len(c.get('progression_evidence_event_ids', [])),
              'information_issues': ' | '.join(c['information_issues']), 'independent_decision_confirmed': False,
              'final_training_eligibility': 'not_finalized', 'source_file': c['source']['file'],
              'source_logical_row': c['source']['logical_row']} for c in registry]
-    for name, selected in [('track_a_candidate_registry', flat),
-                           ('track_a_main_candidates', [r for r in flat if r['track_a_bucket'] == 'main_regimen_start_candidate']),
-                           ('track_a_review_candidates', [r for r in flat if r['track_a_bucket'] != 'main_regimen_start_candidate'])]:
+    for name, selected in [('screening_candidate_registry', flat),
+                           ('screening_main_candidates', [r for r in flat if r['screening_bucket'] == 'main_regimen_start_candidate']),
+                           ('screening_review_candidates', [r for r in flat if r['screening_bucket'] != 'main_regimen_start_candidate'])]:
         write_csv(processed/(name + '_v2.0.csv'), list(flat[0]), selected)
     buckets = {key: {'candidates': len(group), 'patients': len({tuple(c['patient_key']) for c in group})}
-               for key in sorted({c['track_a_bucket'] for c in registry})
-               for group in [[c for c in registry if c['track_a_bucket'] == key]]}
-    summary = {'project_version': 'v2.0', 'phase': '03_track_a_candidates', 'active_track': 'A', 'track_b_status': 'frozen',
+               for key in sorted({c['screening_bucket'] for c in registry})
+               for group in [[c for c in registry if c['screening_bucket'] == key]]}
+    summary = {'project_version': 'v2.0', 'phase': '03_screening_candidates', 
                'ngs_rule': config['ngs_timing_rule'], 'upstream_treatment_anchors': len(candidates),
                'progression_evidence_records': len(evidence), 'new_progression_review_groups': len(added),
                'progression_evidence_relations': dict(Counter(e['later_start_relation'] for e in evidence)),
                'registry_records': len(registry), 'registry_patients': len({tuple(c['patient_key']) for c in registry}),
-               'buckets': buckets, 'ngs_timing_statuses': dict(Counter(c['track_a_ngs_status'] for c in registry)),
-               'progression_groups_by_bucket': dict(Counter(c['track_a_bucket'] for c in registry if c['anchor_kind'].startswith('progression_'))),
+               'buckets': buckets, 'ngs_timing_statuses': dict(Counter(c['screening_ngs_status'] for c in registry)),
+               'progression_groups_by_bucket': dict(Counter(c['screening_bucket'] for c in registry if c['anchor_kind'].startswith('progression_'))),
                'final_eligible_decision_points': None, 'expert_labels': None,
                'regimen_independence_adjudicated': False, 'progression_decision_dates_adjudicated': False,
                'counts_are_review_records_not_final_decisions': True}
-    write_json(out/'track_a_summary_v2.0.json', summary)
+    write_json(out/'screening_summary_v2.0.json', summary)
     return summary, inputs
 
 
 def write_report(base, summary):
     s = summary
-    labels = {'main_regimen_start_candidate': 'Track A主候选：方案起始，NGS明确在先',
+    labels = {'main_regimen_start_candidate': '方案起始主候选：方案起始，NGS明确在先',
               'within_regimen_change_review': 'NGS在先，但方案内药物开始是否为独立调整待核',
               'progression_trigger_review': 'NGS在先、初步符合范围的进展候选组，决策日待核',
               'ngs_timing_review': '初步符合研究范围，但NGS未确认在先',
               'disease_context_review': '当前疾病情境或归属待核',
               'outside_main_scope_retained': '其他癌症或非PAAD队列亚型，保留追溯'}
     rows = '\n'.join(f"| {labels[key]} | {value['candidates']:,} | {value['patients']:,} |" for key, value in s['buckets'].items())
-    text = f'''# Track A 候选点筛选报告 v2.0
+    text = f'''# 候选点筛选报告 v2.0
 
 版本：v2.0
 
-更新日期：20260910
+更新日期：{datetime.now(timezone.utc).strftime('%Y%m%d')}
 
 状态：NGS严格在先的候选分层与进展证据归组完成；独立决策、疾病情境和最终训练资格待核查。
 
 ## 目的与规则
 
-用户确认只推进Track A，冻结Track B。NGS报告必须明确早于决策锚点；同日不自动视为在先，报告日期与癌症关联需确认。ECOG、常规肝肾功能、剂量和毒性不作为本轮筛选门槛。病理、分期、当前疾病情境与既往治疗仍需核查。完整规则见[候选点协议](decision_point_protocol_v2.0.md)，配置见[Track A配置](../../../code/config/v2.0/track_a.json)。
+NGS报告必须明确早于决策锚点；同日不自动视为在先，报告日期与癌症关联需确认。病理、分期、当前疾病情境与既往治疗仍需核查。完整规则见[候选点协议](decision_point_protocol_v2.0.md)，配置见[候选筛选配置](../../../code/config/v2.0/screening.json)。
 
 ## 方法与来源
 
@@ -350,19 +347,19 @@ def write_report(base, summary):
 
 ## 输出与结局使用
 
-[主候选表](../../../data/processed/v2.0/03_track_a_candidates/track_a_main_candidates_v2.0.csv)只包含初步符合研究范围、NGS严格在先的方案起始候选。[其余待核查和追溯表](../../../data/processed/v2.0/03_track_a_candidates/track_a_review_candidates_v2.0.csv)保留方案内调整、进展组、NGS和疾病情境疑点及范围外记录。
+[主候选表](../../../data/processed/v2.0/03_screening_candidates/screening_main_candidates_v2.0.csv)只包含初步符合研究范围、NGS严格在先的方案起始候选。[其余待核查和追溯表](../../../data/processed/v2.0/03_screening_candidates/screening_review_candidates_v2.0.csv)保留方案内调整、进展组、NGS和疾病情境疑点及范围外记录。
 
-[完整候选登记](../../../data/processed/v2.0/03_track_a_candidates/track_a_candidate_registry_v2.0.jsonl)保留来源和病理索引；[进展证据明细](../../../data/processed/v2.0/03_track_a_candidates/progression_evidence_v2.0.jsonl)保留全部原评估、来源行、是否有后续开始及候选组编号。
+[完整候选登记](../../../data/processed/v2.0/03_screening_candidates/screening_candidate_registry_v2.0.jsonl)保留来源和病理索引；[进展证据明细](../../../data/processed/v2.0/03_screening_candidates/progression_evidence_v2.0.jsonl)保留全部原评估、来源行、是否有后续开始及候选组编号。
 
-[结局参考文件](../../../data/processed/v2.0/03_track_a_candidates/candidate_outcome_references_v2.0.jsonl)单独保存后续评估索引及患者、癌症、该方案的原始终点字段。不同终点的时间原点和事件定义保持原义，不自动换算为当前候选的疗效、PFS或OS，不因无后续治疗记录补造停药或死亡。结局用于案例回顾，不进入事前模型输入或专家候选标签判断。原始病理327个字段和全部标本仍保留于第一阶段，未删除。
+[结局参考文件](../../../data/processed/v2.0/03_screening_candidates/candidate_outcome_references_v2.0.jsonl)单独保存后续评估索引及患者、癌症、该方案的原始终点字段。不同终点的时间原点和事件定义保持原义，不自动换算为当前候选的疗效、PFS或OS，不因无后续治疗记录补造停药或死亡。结局用于案例回顾，不进入事前模型输入或专家候选标签判断。原始病理327个字段和全部标本仍保留于第一阶段，未删除。
 
 ## 复现与边界
 
-运行 `python -B code/scripts/run_v2_0.py all` 重建三个阶段并检查；前两阶段已完成时可运行 `python -B code/scripts/run_v2_0.py candidates`。统计见[机器汇总](../../../code/results/v2.0/03_track_a_candidates/track_a_summary_v2.0.json)，来源见[运行清单](../../../code/results/v2.0/03_track_a_candidates/run_manifest.json)。
+运行 `python -B code/scripts/run_v2_0.py all` 重建五个阶段并检查；前两阶段已完成时可运行 `python -B code/scripts/run_v2_0.py candidates`。统计见[机器汇总](../../../code/results/v2.0/03_screening_candidates/screening_summary_v2.0.json)，来源见[运行清单](../../../code/results/v2.0/03_screening_candidates/run_manifest.json)。
 
-NGS在先只是必要条件，不证明病理、疾病情境、方案独立性或患者安全性均已确认。完整病例网页仍用于全程资料阅读，不是事前盲审包。主候选和进展候选均未形成专家标签；最终训练／测试资格仍为not_finalized。下一步核查组织学、当前局部晚期／转移性证据及调整和进展组的决策含义。
+NGS在先只是必要条件，不证明病理、疾病情境、方案独立性或患者安全性均已确认。主候选和进展候选均未形成专家标签；最终训练／测试资格仍为not_finalized。下一步核查组织学、当前局部晚期／转移性证据及调整和进展组的决策含义。
 '''
-    (base/'docs/notes/v2.0/track_a_candidate_report_v2.0.md').write_text(text, encoding='utf-8')
+    (base/'docs/notes/v2.0/screening_candidate_report_v2.0.md').write_text(text, encoding='utf-8')
 
 
 def run(config_path):
@@ -373,9 +370,9 @@ def run(config_path):
     inventory = json.loads((BASE/source['results_dir']/'source_inventory.json').read_text(encoding='utf-8'))
     for item in inventory:
         if sha256(raw/item['file']) != item['sha256']:
-            raise ValueError('Raw source changed before Track A screening')
+            raise ValueError('Raw source changed before 候选筛选 screening')
     out.mkdir(parents=True, exist_ok=True)
-    manifest = {'project_version': 'v2.0', 'phase': '03_track_a_candidates', 'status': 'running',
+    manifest = {'project_version': 'v2.0', 'phase': '03_screening_candidates', 'status': 'running',
                 'started_utc': datetime.now(timezone.utc).isoformat(),
                 'runtime': {'python': platform.python_version(), 'platform': platform.platform()},
                 'config_file': config_path.relative_to(BASE).as_posix(), 'config_sha256': sha256(config_path),
@@ -385,7 +382,7 @@ def run(config_path):
         summary, inputs = build(BASE, processed, out, config)
         for item in inventory:
             if sha256(raw/item['file']) != item['sha256']:
-                raise ValueError('Raw source changed during Track A screening')
+                raise ValueError('Raw source changed during 候选筛选 screening')
         manifest.update(status='completed', finished_utc=datetime.now(timezone.utc).isoformat(), summary=summary,
                         input_sha256=inputs, raw_source_files_rechecked=len(inventory),
                         output_sha256={p.relative_to(BASE).as_posix(): sha256(p) for p in sorted(processed.glob('*')) if p.is_file()})

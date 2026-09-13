@@ -1,5 +1,5 @@
 import unittest
-from pdac_benchmark.v2_0.track_a import assign_track, final_progression_groups, ngs_gate
+from pdac_benchmark.v2_0.screening import assign_screening_group, final_progression_groups, ngs_gate
 
 
 def ngs(day, cancer='1', direct=True, agrees=True):
@@ -15,7 +15,7 @@ def imaging(day, status='Progressing/Worsening/Enlarging', ident=None):
             'facts': {'image_overall': status, 'image_ca': 'Yes, the Impression states or implies there is evidence of cancer'}}
 
 
-class TrackATests(unittest.TestCase):
+class ScreeningTests(unittest.TestCase):
     def test_ngs_is_strictly_before_and_same_cancer_with_agreeing_dates(self):
         self.assertEqual(ngs_gate([ngs(10)], '1', 11)[0], 'confirmed_before')
         self.assertEqual(ngs_gate([ngs(10)], '1', 10), ('same_day_order_unknown', []))
@@ -57,16 +57,16 @@ class TrackATests(unittest.TestCase):
         self.assertEqual(len(ledger), 2)
         self.assertTrue(all(x['treatment_chronology_incomplete'] for x in ledger))
 
-    def test_track_b_missingness_does_not_block_track_a_and_adjustments_are_separate(self):
+    def test_missing_safety_fields_and_treatment_adjustments_are_separate(self):
         base = {'cancer_seq': '1', 't0_day': 10,
                 'review_tier': 'metastatic_candidate_requires_information_review',
                 'anchor_kind': 'regimen_start', 'information_issues': ['ECOG_not_provided', 'pathology_main_report_availability_unconfirmed']}
-        c = assign_track(base, [ngs(1)])
-        self.assertEqual(c['track_a_bucket'], 'main_regimen_start_candidate')
+        c = assign_screening_group(base, [ngs(1)])
+        self.assertEqual(c['screening_bucket'], 'main_regimen_start_candidate')
         self.assertNotIn('ECOG_not_provided', c['information_issues'])
         self.assertIn('pathology_main_report_availability_unconfirmed', c['information_issues'])
         self.assertFalse(c['independent_decision_confirmed'])
         self.assertIsNone(c['expert_label'])
-        self.assertEqual(assign_track({**base, 'anchor_kind': 'within_regimen_drug_start'}, [ngs(1)])['track_a_bucket'], 'within_regimen_change_review')
-        self.assertEqual(assign_track({**base, 'anchor_kind': 'progression_without_later_recorded_start'}, [ngs(1)])['track_a_bucket'], 'progression_trigger_review')
-        self.assertEqual(assign_track(base, [ngs(10)])['track_a_bucket'], 'ngs_timing_review')
+        self.assertEqual(assign_screening_group({**base, 'anchor_kind': 'within_regimen_drug_start'}, [ngs(1)])['screening_bucket'], 'within_regimen_change_review')
+        self.assertEqual(assign_screening_group({**base, 'anchor_kind': 'progression_without_later_recorded_start'}, [ngs(1)])['screening_bucket'], 'progression_trigger_review')
+        self.assertEqual(assign_screening_group(base, [ngs(10)])['screening_bucket'], 'ngs_timing_review')

@@ -1,0 +1,56 @@
+{
+  "project_version": "v2.0",
+  "status": "definition_confirmed_real_labels_not_generated",
+  "annotation_unit": "candidate_decision_point_x_candidate_regimen_with_explicit_use_context",
+  "active_track": "A",
+  "track_b_status": "frozen",
+  "evidence_cutoff_date": "2026-09-12",
+  "evidence_cutoff_status": "user_confirmed_fixed",
+  "evidence_search_completed": false,
+  "patient_information_policy": "respect_candidate_t0_and_source_availability",
+  "ngs_rule": "report_strictly_before_t0",
+  "labels": {
+    "SUPPORTED": {
+      "name_zh": "支持匹配",
+      "definition": "明确使用情境下有适用依据，已有患者事实满足关键Track A条件且无已知实质冲突。"
+    },
+    "CONDITIONAL": {
+      "name_zh": "条件性匹配",
+      "definition": "明确适用路径存在，但具体关键Track A条件未知；必须给出条件陈述。"
+    },
+    "MISMATCH": {
+      "name_zh": "有依据不匹配",
+      "definition": "已知患者事实与本次使用情境中有证据支持的必要适用条件实质冲突。"
+    },
+    "INDETERMINATE": {
+      "name_zh": "无法判定",
+      "definition": "资料或适用证据不足、身份或时间归属不清、或冲突未解决，不能可靠判定。"
+    }
+  },
+  "label_is_ordinal": false,
+  "unannotated_value": null,
+  "research_candidates_included": true,
+  "research_candidates_must_be_explicitly_marked": true,
+  "use_context_values": [
+    "routine",
+    "research"
+  ],
+  "use_context_unresolved_value": null,
+  "research_support_means_standard_care": false,
+  "review_status_values": [
+    "pending_review",
+    "reviewed",
+    "disputed"
+  ],
+  "evidence_grade_separate_from_label": true,
+  "unified_evidence_score": null,
+  "track_b_missingness_changes_main_label": false,
+  "observed_treatment_is_positive_label": false,
+  "unobserved_treatment_is_negative_label": false,
+  "post_treatment_outcome_determines_label": false,
+  "conditional_automatically_binary": false,
+  "indeterminate_is_negative": false,
+  "expert_labels_generated": false,
+  "expert_review_completed": false,
+  "definition_document": "docs/notes/v2.0/treatment_label_definition_v2.0.md"
+}

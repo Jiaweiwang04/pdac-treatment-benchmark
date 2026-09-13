@@ -1,0 +1,29 @@
+{
+  "project_version": "v2.0",
+  "phase": "06_patient_split",
+  "split_version": "v2.0_20260913",
+  "active_track": "A",
+  "track_b_status": "frozen",
+  "execution_date": "20260913",
+  "evidence_cutoff_date": "2026-09-12",
+  "main_patient_population_expected": 515,
+  "core_test_patients": 80,
+  "pilot_patients": 25,
+  "split_seed": 20260913,
+  "sampling_algorithm": "sha256_order_with_largest_remainder_stratum_quotas",
+  "stratification": [
+    "institution",
+    "earliest_main_candidate_scope_at_t0"
+  ],
+  "index_candidate_rule": "earliest_main_t0_then_candidate_id",
+  "pilot_is_development_subset": true,
+  "non_main_only_patients": "extension_only_unassigned_to_development_or_core",
+  "outcomes_or_labels_used_for_selection": false,
+  "molecular_features_used_for_selection": false,
+  "knowledge_corpus_shared": true,
+  "test_patient_answers_in_development": false,
+  "time_out_or_source_out_test_completed": false,
+  "expert_review_completed": false,
+  "processed_dir": "data/processed/v2.0/06_patient_split",
+  "results_dir": "code/results/v2.0/06_patient_split"
+}
