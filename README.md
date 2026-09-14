@@ -2,9 +2,9 @@
 
 版本：v2.0
 
-更新日期：20260913
+更新日期：20260914
 
-状态：候选队列构建完成；治疗方案标签与模型评估尚未开展。
+状态：候选队列和患者划分完成；治疗目录已冻结，Core组成覆盖核查已纳入流程；患者标签与模型评估待开展。
 
 ## 项目简介
 
@@ -69,7 +69,7 @@ data/raw/AACR GENIE Biopharma Collaborative Public/Data Releases/PANC/1.0-public
 
 ## 运行步骤
 
-一键运行六阶段处理和测试：
+一键运行八阶段处理和测试：
 
 ```powershell
 python -B code/scripts/run_v2_0.py all
@@ -82,6 +82,9 @@ python -B code/scripts/run_v2_0.py all
 | `candidates` | NGS 时序筛选、进展记录归组 | `03_screening_candidates/` |
 | `review` | 组织学限制、方案独立性与同日进展关联 | `04_candidate_review/` |
 | `cohort` | 主候选、进展扩展和治疗调整分组 | `05_candidate_cohort/` |
+| `split` | 患者归属、Pilot及Core索引点锁定 | `06_patient_split/` |
+| `catalog` | 开发集组合筛查、证据目录及冻结验证 | `07_treatment_catalog/` |
+| `coverage` | 冻结后Core实际治疗组成覆盖核查 | `08_core_coverage/` |
 | `check` | 单元测试、文档链接、结果及来源一致性检查 | 检查摘要 |
 
 单阶段运行示例：
@@ -93,6 +96,8 @@ python -B code/scripts/run_v2_0.py candidates
 python -B code/scripts/run_v2_0.py review
 python -B code/scripts/run_v2_0.py cohort
 python -B code/scripts/run_v2_0.py split
+python -B code/scripts/run_v2_0.py catalog
+python -B code/scripts/run_v2_0.py coverage
 python -B code/scripts/run_v2_0.py check
 ```
 
@@ -100,9 +105,15 @@ python -B code/scripts/run_v2_0.py check
 
 当前尚无模型训练命令、训练超参数或性能评估入口。
 
-标签规则已确认，见[治疗方案标签定义](docs/notes/v2.0/treatment_label_definition_v2.0.md)：支持匹配、条件性匹配、有依据不匹配、无法判定；研究性方案显式标记，知识截止日固定为2026-09-12。当前尚未生成真实标签或专家金标准。
+标签规则已定义，见[治疗方案标签定义](docs/notes/v2.0/treatment_label_definition_v2.0.md)：支持匹配、条件性匹配、有依据不匹配、无法判定；研究性方案显式标记，知识截止日固定为2026-09-12。当前尚未生成真实标签或专家金标准。
 
 患者划分已按[划分协议与结果](docs/notes/v2.0/patient_split_protocol_v2.0.md)固定：435名开发患者、80名Core测试患者，25名Pilot从开发集中选取。Core和Pilot各患者首轮使用最早主候选，其他记录继承患者归属。`split`命令重建划分，已有锁定不允许静默重抽；真实标签和模型实验尚未完成。
+
+候选方案整理见[目录与核查报告](docs/notes/v2.0/treatment_catalog_report_v2.0.md)。`catalog`命令重建开发集药物组合、方案家族、变体及证据清单；目录发布标识为 `v2.0_catalog_20260914`，包含64个方案家族、69条证据来源和8个变体索引；其中7个变体具备剂量日程定义，OFF仅保留研究索引。37个家族标记为研究性方案。
+
+[开发集逐项筛查](docs/notes/v2.0/treatment_screening_report_v2.0.md)记录84种原始药物形式的处理结论。807个开发主候选中，682个与目录完整组成一致，125个保留为参考记录。该划分没有生成患者适用性标签。
+
+目录冻结锁保存在 `data/processed/v2.0/07_treatment_catalog/treatment_catalog_lock_v2.0.json`，应随当前研究版本保留。重新运行时，程序验证方案定义、证据、药名规则、患者划分锁及开发集投影；内容改变会停止，不能删除锁来覆盖原发布版。`coverage`先验证冻结内容，再读取Core实际治疗，结果见[Core覆盖核查](docs/notes/v2.0/core_coverage_report_v2.0.md)。
 
 ## 当前结果
 

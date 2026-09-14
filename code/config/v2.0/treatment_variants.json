@@ -1,0 +1,93 @@
+[
+  {
+    "variant_id": "FOLFIRINOX_PRODIGE4",
+    "family_id": "FOLFIRINOX",
+    "name": "PRODIGE4/ACCORD11",
+    "definition_zh": "每14日；奥沙利铂85、普通伊立替康180、亚叶酸400 mg/m²；氟尿嘧啶400 mg/m²推注后2400 mg/m²持续46小时。",
+    "evidence_ids": [
+      "PRODIGE4"
+    ],
+    "assignment_from_component_names_alone": false,
+    "eligible_for_variant_level_label": true
+  },
+  {
+    "variant_id": "NALIRIFOX_NAPOLI3",
+    "family_id": "NALIRIFOX",
+    "name": "NAPOLI3",
+    "definition_zh": "28日周期第1、15日；脂质体伊立替康50、奥沙利铂60、亚叶酸400、氟尿嘧啶2400 mg/m²持续46小时。",
+    "evidence_ids": [
+      "NAPOLI3"
+    ],
+    "assignment_from_component_names_alone": false,
+    "eligible_for_variant_level_label": true
+  },
+  {
+    "variant_id": "GEM_NAB_MPACT",
+    "family_id": "GEM_NAB",
+    "name": "MPACT",
+    "definition_zh": "28日周期第1、8、15日；白蛋白紫杉醇125 mg/m²和吉西他滨1000 mg/m²。",
+    "evidence_ids": [
+      "MPACT"
+    ],
+    "assignment_from_component_names_alone": false,
+    "eligible_for_variant_level_label": true
+  },
+  {
+    "variant_id": "GTX_FINE",
+    "family_id": "GTX",
+    "name": "GTX Fine",
+    "definition_zh": "21日周期；卡培他滨750 mg/m²每日两次第1–14日；吉西他滨750 mg/m²与多西他赛30 mg/m²第4、11日。",
+    "evidence_ids": [
+      "GTX"
+    ],
+    "assignment_from_component_names_alone": false,
+    "eligible_for_variant_level_label": true
+  },
+  {
+    "variant_id": "GTX_MODIFIED_PHASE1",
+    "family_id": "GTX",
+    "name": "mGTX phase I",
+    "definition_zh": "多西他赛第1、8日，吉西他滨第8、15日，卡培他滨第8–21日；剂量探索各层不可混并。",
+    "evidence_ids": [
+      "MGTX"
+    ],
+    "assignment_from_component_names_alone": false,
+    "eligible_for_variant_level_label": true
+  },
+  {
+    "variant_id": "OFF_CONKO003",
+    "family_id": "OX_FF",
+    "name": "OFF",
+    "definition_zh": "OFF研究名称及组成可定位；当前来源间剂量表述不一致，本版仅保留研究变体索引，不用于剂量或日程层级判定。",
+    "evidence_ids": [
+      "CONKO003"
+    ],
+    "assignment_from_component_names_alone": false,
+    "definition_status": "schedule_details_pending",
+    "variant_definition_status": "reference_only_schedule_not_resolved",
+    "eligible_for_variant_level_label": false
+  },
+  {
+    "variant_id": "MFOLFOX6_PANCREOX",
+    "family_id": "OX_FF",
+    "name": "mFOLFOX6 PANCREOX",
+    "definition_zh": "每14日；奥沙利铂85、亚叶酸400 mg/m²；氟尿嘧啶400 mg/m²推注后2400 mg/m²持续46小时。",
+    "evidence_ids": [
+      "PANCREOX",
+      "ASCO2018"
+    ],
+    "assignment_from_component_names_alone": false,
+    "eligible_for_variant_level_label": true
+  },
+  {
+    "variant_id": "MFOLFIRINOX_STEIN",
+    "family_id": "FOLFIRINOX",
+    "name": "mFOLFIRINOX Stein 2016",
+    "definition_zh": "相对原FOLFIRINOX，普通伊立替康和氟尿嘧啶推注剂量各降低25%；不代表全部mFOLFIRINOX日程。",
+    "evidence_ids": [
+      "MFOLFIRINOX"
+    ],
+    "assignment_from_component_names_alone": false,
+    "eligible_for_variant_level_label": true
+  }
+]

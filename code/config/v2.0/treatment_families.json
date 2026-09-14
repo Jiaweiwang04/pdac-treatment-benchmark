@@ -1,0 +1,1230 @@
+[
+  {
+    "family_id": "FOLFIRINOX",
+    "name_zh": "FOLFIRINOX",
+    "components": [
+      "fluorouracil",
+      "irinotecan",
+      "leucovorin",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "转移性一线；局部晚期有独立mFOLFIRINOX二期证据，须注明对应变体与研究人群。",
+    "evidence_ids": [
+      "PRODIGE4",
+      "ESMO2025",
+      "MFOLFIRINOX"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_NAB",
+    "name_zh": "吉西他滨＋白蛋白紫杉醇",
+    "components": [
+      "gemcitabine",
+      "nab_paclitaxel"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "转移性一线；后线按既往方案及对应指南条款。",
+    "evidence_ids": [
+      "MPACT",
+      "ESMO2025",
+      "ASIA2025"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "NALIRIFOX",
+    "name_zh": "NALIRIFOX",
+    "components": [
+      "fluorouracil",
+      "leucovorin",
+      "liposomal_irinotecan",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "转移性一线；不可与普通伊立替康方案互换证据。",
+    "evidence_ids": [
+      "NAPOLI3",
+      "ESMO2025"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "NALIRI_FF",
+    "name_zh": "脂质体伊立替康＋氟尿嘧啶＋亚叶酸",
+    "components": [
+      "fluorouracil",
+      "leucovorin",
+      "liposomal_irinotecan"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "既往接受吉西他滨类治疗的转移性胰腺腺癌。",
+    "evidence_ids": [
+      "NAPOLI1"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM",
+    "name_zh": "吉西他滨",
+    "components": [
+      "gemcitabine"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "晚期系统治疗；一线和后线的推荐背景分别记录。",
+    "evidence_ids": [
+      "ESMO2025",
+      "GEST"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "FF",
+    "name_zh": "氟尿嘧啶＋亚叶酸",
+    "components": [
+      "fluorouracil",
+      "leucovorin"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "historical",
+    "required_context_zh": "经吉西他滨治疗后的比较研究对照方案；单独审核其当前证据。",
+    "evidence_ids": [
+      "CONKO003",
+      "NAPOLI1"
+    ],
+    "evidence_direction": "comparator",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "OX_FF",
+    "name_zh": "奥沙利铂＋氟尿嘧啶＋亚叶酸",
+    "components": [
+      "fluorouracil",
+      "leucovorin",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "吉西他滨后线且既往未使用相应方案；日程及证据存在争议。",
+    "evidence_ids": [
+      "CONKO003",
+      "ASIA2025",
+      "PANCREOX",
+      "ASCO2018"
+    ],
+    "evidence_direction": "conflicting_schedule_evidence",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "仅药物组成不能区分OFF和mFOLFOX6。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_CIS",
+    "name_zh": "吉西他滨＋顺铂",
+    "components": [
+      "cisplatin",
+      "gemcitabine"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "优先核实胚系BRCA1/2或PALB2致病变异及晚期系统治疗情境。",
+    "evidence_ids": [
+      "BRCA_CIS"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "S1",
+    "name_zh": "替吉奥",
+    "components": [
+      "s1"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "局部晚期或转移性一线；亚洲研究背景。",
+    "evidence_ids": [
+      "GEST"
+    ],
+    "evidence_direction": "noninferior",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_S1",
+    "name_zh": "吉西他滨＋替吉奥",
+    "components": [
+      "gemcitabine",
+      "s1"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "historical",
+    "required_context_zh": "局部晚期或转移性一线；记录总体研究未证实总生存优效。",
+    "evidence_ids": [
+      "GEST"
+    ],
+    "evidence_direction": "superiority_not_demonstrated",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_NIMO",
+    "name_zh": "吉西他滨＋尼妥珠单抗",
+    "components": [
+      "gemcitabine",
+      "nimotuzumab"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "充分检测支持KRAS野生型的局部晚期或转移性胰腺癌；国内批准信息据企业公示材料登记，完整推荐等级另核。",
+    "evidence_ids": [
+      "NIMO",
+      "NIMO_CN"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_ERL",
+    "name_zh": "吉西他滨＋厄洛替尼",
+    "components": [
+      "erlotinib",
+      "gemcitabine"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "historical",
+    "required_context_zh": "不可切除晚期；历史试验依据，不按EGFR突变自动匹配。",
+    "evidence_ids": [
+      "PA3"
+    ],
+    "evidence_direction": "modest_benefit",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "CAP_ERL",
+    "name_zh": "卡培他滨＋厄洛替尼",
+    "components": [
+      "capecitabine",
+      "erlotinib"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "吉西他滨治疗失败后的晚期情境。",
+    "evidence_ids": [
+      "CAP_ERL"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "NABPLAGEM",
+    "name_zh": "吉西他滨＋白蛋白紫杉醇＋顺铂",
+    "components": [
+      "cisplatin",
+      "gemcitabine",
+      "nab_paclitaxel"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "初治转移性胰腺腺癌；单臂探索。",
+    "evidence_ids": [
+      "NABPLAGEM"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GTX",
+    "name_zh": "吉西他滨＋多西他赛＋卡培他滨",
+    "components": [
+      "capecitabine",
+      "docetaxel",
+      "gemcitabine"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "转移性患者；GTX及mGTX分开记录日程。",
+    "evidence_ids": [
+      "GTX",
+      "MGTX"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "OLAPARIB",
+    "name_zh": "奥拉帕利维持",
+    "components": [
+      "olaparib"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "转移性胰腺腺癌；胚系BRCA1/2致病变异；一线含铂至少16周且无进展。",
+    "evidence_ids": [
+      "ASCO2020"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "PEMBRO",
+    "name_zh": "帕博利珠单抗",
+    "components": [
+      "pembrolizumab"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "路径一：MSI-H/dMMR，二线及以后。路径二：经验证检测的TMB≥10 mut/Mb，既往治疗后进展且无满意替代方案。两个路径分别判定。",
+    "evidence_ids": [
+      "ASCO2020",
+      "FDA_TMB"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "LARO",
+    "name_zh": "拉罗替尼",
+    "components": [
+      "larotrectinib"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "NTRK1/2/3致癌融合；并核实经治、替代方案和耐药限制。",
+    "evidence_ids": [
+      "ASCO2020"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "ENTRE",
+    "name_zh": "恩曲替尼",
+    "components": [
+      "entrectinib"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "NTRK1/2/3致癌融合；不能将其他激酶融合直接替代。",
+    "evidence_ids": [
+      "ASCO2020"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "REPO",
+    "name_zh": "瑞普替尼",
+    "components": [
+      "repotrectinib"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "晚期NTRK融合实体瘤，既往治疗后进展或无满意替代方案；标明既往TRK抑制剂暴露。",
+    "evidence_ids": [
+      "FDA_REPO"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "DAB_TRAM",
+    "name_zh": "达拉非尼＋曲美替尼",
+    "components": [
+      "dabrafenib",
+      "trametinib"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "BRAF V600E晚期实体瘤；既往治疗后进展且无满意替代方案；非V600E不得套用。",
+    "evidence_ids": [
+      "FDA_BRAF",
+      "BRAF_LABEL"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "SELP",
+    "name_zh": "塞普替尼",
+    "components": [
+      "selpercatinib"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "晚期RET致癌融合阳性；既往系统治疗后进展或无满意替代方案。",
+    "evidence_ids": [
+      "FDA_RET",
+      "RET_2026"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "TDXD",
+    "name_zh": "德曲妥珠单抗",
+    "components": [
+      "trastuzumab_deruxtecan"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "HER2 IHC3+晚期实体瘤，既往系统治疗后且无满意替代方案；分子扩增记录不足以替代IHC。",
+    "evidence_ids": [
+      "FDA_HER2"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "ZENO",
+    "name_zh": "Zenocutuzumab",
+    "components": [
+      "zenocutuzumab"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "晚期不可切除或转移性NRG1融合胰腺腺癌，既往系统治疗后进展。",
+    "evidence_ids": [
+      "FDA_NRG1"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "DARA",
+    "name_zh": "Daraxonrasib",
+    "components": [
+      "daraxonrasib"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "成人转移性胰腺腺癌；至少一种既往系统治疗，或不适合多药系统治疗。",
+    "evidence_ids": [
+      "DARA_LABEL",
+      "DARA2026"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "美国2026-08-26批准；适应证不限定某个RAS位点。未核实其他地区批准状态。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "RUCAPARIB",
+    "name_zh": "卢卡帕利维持",
+    "components": [
+      "rucaparib"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "铂敏感晚期胰腺癌，致病胚系或体细胞BRCA1/2或PALB2；需逐项核实试验亚组。",
+    "evidence_ids": [
+      "RUCAPARIB"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "SOTORASIB",
+    "name_zh": "索托拉西布",
+    "components": [
+      "sotorasib"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "既往治疗的KRAS G12C晚期胰腺癌。",
+    "evidence_ids": [
+      "SOTORASIB"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "ADAGRASIB",
+    "name_zh": "阿达格拉西布",
+    "components": [
+      "adagrasib"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "既往治疗的KRAS G12C晚期胰腺癌。",
+    "evidence_ids": [
+      "ADAGRASIB"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "ATEZO_COBI",
+    "name_zh": "阿替利珠单抗＋考比替尼",
+    "components": [
+      "atezolizumab",
+      "cobimetinib"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "经治晚期PDAC；二线与三线的研究臂结果分别记录。",
+    "evidence_ids": [
+      "MORPHEUS"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "NIVO_IPI",
+    "name_zh": "纳武利尤单抗＋伊匹木单抗",
+    "components": [
+      "ipilimumab",
+      "nivolumab"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "经治晚期胰腺腺癌；该试验双药组未观察到客观缓解。",
+    "evidence_ids": [
+      "CHECKMATE032"
+    ],
+    "evidence_direction": "no_objective_responses",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "CAP",
+    "name_zh": "卡培他滨",
+    "components": [
+      "capecitabine"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "historical",
+    "required_context_zh": "晚期系统治疗；单药历史证据，当前使用位置待指南逐项核实。",
+    "evidence_ids": [
+      "CAP_PHASE2"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEMCAP",
+    "name_zh": "吉西他滨＋卡培他滨",
+    "components": [
+      "capecitabine",
+      "gemcitabine"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "historical",
+    "required_context_zh": "局部晚期或转移性情境；不套用术后辅助研究。",
+    "evidence_ids": [
+      "GEMCAP"
+    ],
+    "evidence_direction": "trial_and_pooled_results_differ",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "FOLFIRI",
+    "name_zh": "FOLFIRI",
+    "components": [
+      "fluorouracil",
+      "irinotecan",
+      "leucovorin"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "吉西他滨类治疗后二线，脂质体伊立替康联合方案不可及时的替代选择；采用相应指南条款。",
+    "evidence_ids": [
+      "GISCAD",
+      "ASCO2018"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "FU",
+    "name_zh": "氟尿嘧啶单药",
+    "components": [
+      "fluorouracil"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "后线低强度治疗选择；不能由单一药名推定具体推注或输注日程。",
+    "evidence_ids": [
+      "ASCO2018"
+    ],
+    "evidence_direction": "guideline_option",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "NALIRI_MONO",
+    "name_zh": "脂质体伊立替康单药",
+    "components": [
+      "liposomal_irinotecan"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "吉西他滨预治疗的转移性胰腺癌；该研究单药未显示总生存优势。",
+    "evidence_ids": [
+      "NAPOLI1",
+      "NAPOLI1_ASIA"
+    ],
+    "evidence_direction": "benefit_not_demonstrated",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "CAPOX",
+    "name_zh": "卡培他滨＋奥沙利铂",
+    "components": [
+      "capecitabine",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "吉西他滨治疗后的晚期胰腺癌；具体给药强度按原研究分层核查。",
+    "evidence_ids": [
+      "XELOX_2008"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEMOX",
+    "name_zh": "吉西他滨＋奥沙利铂",
+    "components": [
+      "gemcitabine",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "吉西他滨预治疗后进展；历史二期研究，未证明与当前标准方案相比的优势。",
+    "evidence_ids": [
+      "GEMOX_2006"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_CARBO",
+    "name_zh": "吉西他滨＋卡铂",
+    "components": [
+      "carboplatin",
+      "gemcitabine"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "初治局部晚期或转移性胰腺癌的历史研究；卡铂不能直接继承顺铂的BRCA/PALB2证据。",
+    "evidence_ids": [
+      "GEM_CARBO"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_DOC",
+    "name_zh": "吉西他滨＋多西他赛",
+    "components": [
+      "docetaxel",
+      "gemcitabine"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "历史随机二期研究；不能等同于吉西他滨＋白蛋白紫杉醇。",
+    "evidence_ids": [
+      "CALGB89904"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_IRI",
+    "name_zh": "吉西他滨＋伊立替康",
+    "components": [
+      "gemcitabine",
+      "irinotecan"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "转移性胰腺癌历史随机二期研究；普通伊立替康，未证明当前推荐地位。",
+    "evidence_ids": [
+      "CALGB89904"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "IROX",
+    "name_zh": "伊立替康＋奥沙利铂",
+    "components": [
+      "irinotecan",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "二线转移性胰腺癌；随机二期研究未达到总生存主要终点。",
+    "evidence_ids": [
+      "IROX_TRIAL"
+    ],
+    "evidence_direction": "superiority_not_demonstrated",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "IRI_MONO",
+    "name_zh": "伊立替康单药",
+    "components": [
+      "irinotecan"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "二线研究中的单药对照，不能套用脂质体伊立替康的联合治疗证据。",
+    "evidence_ids": [
+      "IROX_TRIAL"
+    ],
+    "evidence_direction": "comparator",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_NAB_NIVO",
+    "name_zh": "吉西他滨＋白蛋白紫杉醇＋纳武利尤单抗",
+    "components": [
+      "gemcitabine",
+      "nab_paclitaxel",
+      "nivolumab"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "初治晚期胰腺癌；研究性组合，不能将化疗骨架获益归因于新增免疫治疗。",
+    "evidence_ids": [
+      "GN_NIVO"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "NAB_MONO",
+    "name_zh": "白蛋白紫杉醇单药",
+    "components": [
+      "nab_paclitaxel"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "吉西他滨预治疗患者的二期研究；不等同于吉西他滨联合方案。",
+    "evidence_ids": [
+      "NAB_MONO"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "AZA_PEMBRO",
+    "name_zh": "阿扎胞苷＋帕博利珠单抗",
+    "components": [
+      "azacitidine",
+      "pembrolizumab"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "二线PDAC研究；不得从个别持久应答推导为普遍推荐。",
+    "evidence_ids": [
+      "AZA_PEMBRO"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "TRAM_MONO",
+    "name_zh": "曲美替尼单药",
+    "components": [
+      "trametinib"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "仅在明确BRAF非V600突变或融合的研究性评价路径讨论；跨瘤种证据，不能用KRAS任意突变代替。",
+    "evidence_ids": [
+      "TRAM_MATCH"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "VEMU_MONO",
+    "name_zh": "维莫非尼单药",
+    "components": [
+      "vemurafenib"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "BRAF V600突变；跨瘤种研究证据，PDAC亚组不能从总体结果推算。",
+    "evidence_ids": [
+      "VEMU_BASKET"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEMOXEL",
+    "name_zh": "吉西他滨＋奥沙利铂＋卡培他滨",
+    "components": [
+      "capecitabine",
+      "gemcitabine",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "转移性胰腺癌的历史随机二期研究；具体给药日程须按原文核查。",
+    "evidence_ids": [
+      "GEMOXEL"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_NAB_CAP",
+    "name_zh": "吉西他滨＋白蛋白紫杉醇＋卡培他滨",
+    "components": [
+      "capecitabine",
+      "gemcitabine",
+      "nab_paclitaxel"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "初治转移性胰腺癌的一期研究；不同于包含顺铂的PAXG。",
+    "evidence_ids": [
+      "GN_CAP"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "CAP_NAB",
+    "name_zh": "卡培他滨＋白蛋白紫杉醇",
+    "components": [
+      "capecitabine",
+      "nab_paclitaxel"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "初治转移性胰腺腺癌的二期研究；不能套用联合吉西他滨的三药研究。",
+    "evidence_ids": [
+      "CAP_NAB"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "NAB_FF",
+    "name_zh": "白蛋白紫杉醇＋氟尿嘧啶＋亚叶酸",
+    "components": [
+      "fluorouracil",
+      "leucovorin",
+      "nab_paclitaxel"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "初治转移性胰腺癌；完整组成包含亚叶酸，研究未证明优于标准方案。",
+    "evidence_ids": [
+      "AFUGEM"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "FU_MMC",
+    "name_zh": "氟尿嘧啶＋丝裂霉素",
+    "components": [
+      "fluorouracil",
+      "mitomycin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "晚期胰腺癌历史系统治疗；不能与同步放化疗研究混用。",
+    "evidence_ids": [
+      "FU_MMC"
+    ],
+    "evidence_direction": "superiority_not_demonstrated",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_FF",
+    "name_zh": "吉西他滨＋氟尿嘧啶＋亚叶酸",
+    "components": [
+      "fluorouracil",
+      "gemcitabine",
+      "leucovorin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "晚期胰腺腺癌历史二期研究；亚叶酸为完整组合的一部分。",
+    "evidence_ids": [
+      "GEM_FF"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "CIS_FF",
+    "name_zh": "顺铂＋氟尿嘧啶＋亚叶酸",
+    "components": [
+      "cisplatin",
+      "fluorouracil",
+      "leucovorin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "初治晚期胰腺腺癌的历史二期研究。",
+    "evidence_ids": [
+      "CIS_FF"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "ERL_MONO",
+    "name_zh": "厄洛替尼单药",
+    "components": [
+      "erlotinib"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "不能继承厄洛替尼＋吉西他滨的联合证据；单药试验因无效提前终止。",
+    "evidence_ids": [
+      "ERL_MONO"
+    ],
+    "evidence_direction": "no_objective_responses",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "MMC_MONO",
+    "name_zh": "丝裂霉素单药",
+    "components": [
+      "mitomycin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "HRD晚期胰腺癌多线治疗后的研究性路径；不把任意DDR变异或VUS当作敏感标志。",
+    "evidence_ids": [
+      "MMC_HRD"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "CIS_MONO",
+    "name_zh": "顺铂单药",
+    "components": [
+      "cisplatin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "转移性胰腺腺癌历史研究；不直接继承顺铂联合吉西他滨证据。",
+    "evidence_ids": [
+      "CIS_MONO"
+    ],
+    "evidence_direction": "limited_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "TMZ_MONO",
+    "name_zh": "替莫唑胺单药",
+    "components": [
+      "temozolomide"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "胰腺腺癌试验中的阴性证据；不得以胰腺神经内分泌肿瘤疗效替代。",
+    "evidence_ids": [
+      "TMZ_MONO"
+    ],
+    "evidence_direction": "no_objective_responses",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "EVERO_MONO",
+    "name_zh": "依维莫司单药",
+    "components": [
+      "everolimus"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "吉西他滨难治胰腺癌的阴性二期研究；不能套用神经内分泌肿瘤适应证。",
+    "evidence_ids": [
+      "EVERO_MONO"
+    ],
+    "evidence_direction": "no_objective_responses",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_PAC",
+    "name_zh": "吉西他滨＋普通紫杉醇",
+    "components": [
+      "gemcitabine",
+      "paclitaxel"
+    ],
+    "evaluation_context": "routine",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "FOLFIRINOX后二线；普通紫杉醇制剂，不能替代白蛋白紫杉醇的试验证据。",
+    "evidence_ids": [
+      "GEMPAX",
+      "ESMO2025",
+      "ASIA2025"
+    ],
+    "evidence_direction": "superiority_not_demonstrated",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "ESMO 2025列为FOLFIRINOX后二线选择；原试验OS未显著改善，需同时呈现指南与试验结论。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_CETUX",
+    "name_zh": "吉西他滨＋西妥昔单抗",
+    "components": [
+      "cetuximab",
+      "gemcitabine"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "晚期胰腺腺癌的阴性三期结果；不能用EGFR表达直接支持联合治疗。",
+    "evidence_ids": [
+      "S0205"
+    ],
+    "evidence_direction": "superiority_not_demonstrated",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "GEM_FU",
+    "name_zh": "吉西他滨＋氟尿嘧啶",
+    "components": [
+      "fluorouracil",
+      "gemcitabine"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "原试验明确不含亚叶酸的双药持续输注日程；不能直接推断原病例具体日程。",
+    "evidence_ids": [
+      "GEM_FU"
+    ],
+    "evidence_direction": "benefit_not_demonstrated",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "XELOXIRI",
+    "name_zh": "卡培他滨＋奥沙利铂＋伊立替康",
+    "components": [
+      "capecitabine",
+      "irinotecan",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "current_source_review",
+    "required_context_zh": "晚期胰腺癌一线回顾性结果；普通伊立替康，不能替换为脂质体制剂。",
+    "evidence_ids": [
+      "XELOXIRI"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "人体研究参考方案；纳入不代表当前常规推荐。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  },
+  {
+    "family_id": "FOLFOX_A",
+    "name_zh": "氟尿嘧啶＋亚叶酸＋奥沙利铂＋白蛋白紫杉醇",
+    "components": [
+      "fluorouracil",
+      "leucovorin",
+      "nab_paclitaxel",
+      "oxaliplatin"
+    ],
+    "evaluation_context": "research",
+    "evidence_position": "historical",
+    "required_context_zh": "局部晚期或转移性胰腺癌的早期研究；会议摘要读取层级，不与含贝伐珠单抗的FABLOx合并。",
+    "evidence_ids": [
+      "FOLFOX_A"
+    ],
+    "evidence_direction": "supports_activity",
+    "catalog_status": "evidence_linked",
+    "notes_zh": "研究性方案；后续标签审核需核实适用条件。",
+    "patient_label": null,
+    "expert_review_status": "pending_review"
+  }
+]

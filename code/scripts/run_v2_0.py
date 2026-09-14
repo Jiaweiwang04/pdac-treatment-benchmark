@@ -14,11 +14,13 @@ from pdac_benchmark.v2_0.screening import run as run_candidates
 from pdac_benchmark.v2_0.candidate_review import run as run_review
 from pdac_benchmark.v2_0.candidate_cohort import run as run_cohort
 from pdac_benchmark.v2_0.patient_split import run as run_split
+from pdac_benchmark.v2_0.treatment_catalog import run as run_catalog
+from pdac_benchmark.v2_0.core_coverage import run as run_coverage
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["all", "audit", "timeline", "candidates", "review", "cohort", "split", "check"], nargs="?", default="all")
+    parser.add_argument("action", choices=["all", "audit", "timeline", "candidates", "review", "cohort", "split", "catalog", "coverage", "check"], nargs="?", default="all")
     parser.add_argument("--config", type=Path, default=BASE / "code/config/v2.0/source.json")
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else BASE / args.config
@@ -45,6 +47,14 @@ def main():
     if args.action in {"all", "split"}:
         result = run_split(BASE / "code/config/v2.0/patient_split.json")
         if result or args.action == "split":
+            return result
+    if args.action in {"all", "catalog"}:
+        result = run_catalog(BASE / "code/config/v2.0/treatment_catalog.json")
+        if result or args.action == "catalog":
+            return result
+    if args.action in {"all", "coverage"}:
+        result = run_coverage()
+        if result or args.action == "coverage":
             return result
     suite = unittest.defaultTestLoader.discover(str(BASE / "code/tests/v2_0"))
     tests = unittest.TextTestRunner(verbosity=2).run(suite)

@@ -27,6 +27,10 @@ DOCS = {
     DOC_DIR + "/candidate_cohort_report_v2.0.md": ["范围与分组规则", "筛选流程与数量", "逐点证据与边界", "候选表与输出", "复现与下一步"],
     DOC_DIR + "/treatment_label_definition_v2.0.md": ["目的与标注对象", "四类主标签", "判定顺序与边界", "研究性方案的标记", "缺失信息与时间规则", "知识截止日与证据要求", "边界案例", "结构化字段与专家审核", "文件位置、版本与下一步"],
     DOC_DIR + "/patient_split_protocol_v2.0.md": ["目的与范围", "划分规则与复现", "当前划分结果", "分布与泄漏核查", "Pilot与Core使用规则", "输出与后续工作"],
+    DOC_DIR + "/treatment_catalog_report_v2.0.md": ["目的与范围", "数据整理规则", "当前结果", "方案目录", "证据使用与冻结规则", "待核查与输出"],
+    DOC_DIR + "/treatment_evidence_ledger_v2.0.md": ["来源与读取范围", "证据冲突与版本边界"],
+    DOC_DIR + "/treatment_screening_report_v2.0.md": ["范围与判定", "逐项结果", "文件与复现"],
+    DOC_DIR + "/core_coverage_report_v2.0.md": ["范围与方法", "覆盖结果", "未覆盖记录", "输出与后续使用"],
     REPORT: ["目的与范围", "输入与运行记录", "处理与验证方法", "结果", "输出与追溯", "局限与下一步"],
 }
 TABLE_NAMES = {
@@ -324,6 +328,37 @@ def check_documents(base=BASE):
             errors.append("Patient split must not invent labels or final training sample counts")
     except (OSError, KeyError, ValueError) as error:
         errors.append(f"Cannot validate patient split: {error}")
+    try:
+        phase7=base/"code/results/v2.0/07_treatment_catalog"
+        m=json.loads((phase7/"run_manifest.json").read_text(encoding="utf-8"))
+        s=json.loads((phase7/"treatment_catalog_summary_v2.0.json").read_text(encoding="utf-8"))
+        if m["status"]!="completed" or m["summary"]!=s:
+            errors.append("Treatment catalog execution incomplete")
+        for name, expected in {m["config_file"]:m["config_sha256"],**m["code_sha256"],**m["input_sha256"],**m["output_sha256"]}.items():
+            if hashlib.sha256((base/name).read_bytes()).hexdigest()!=expected:
+                errors.append(f"Treatment catalog provenance changed: {name}")
+        if s["patient_labels_generated"] or s["observed_variants_assigned"]:
+            errors.append("Catalog must not infer patient labels or unrecorded variants")
+        if s["core_coverage_audit_performed"] and not s["catalog_frozen"]:
+            errors.append("Core coverage audit precedes catalog freeze")
+    except (OSError, KeyError, ValueError) as error:
+        errors.append(f"Cannot validate treatment catalog: {error}")
+    try:
+        from .catalog_release import verify
+        config=json.loads((base/"code/config/v2.0/treatment_catalog.json").read_text(encoding="utf-8"))
+        lock=verify(base,config)
+        p=base/"code/results/v2.0/08_core_coverage"
+        m=json.loads((p/"run_manifest.json").read_text(encoding="utf-8"))
+        s=json.loads((p/"core_coverage_summary_v2.0.json").read_text(encoding="utf-8"))
+        if m["status"]!="completed" or s!=m["summary"] or s["release_sha256"]!=lock["release_sha256"]:
+            errors.append("Core coverage release or summary inconsistent")
+        for name,h in {**m["code_sha256"],**m["input_sha256"],**m["output_sha256"]}.items():
+            if hashlib.sha256((base/name).read_bytes()).hexdigest()!=h:
+                errors.append("Core coverage provenance changed: "+name)
+        if s["catalog_modified_by_audit"] or s["patient_labels_generated"]:
+            errors.append("Core audit must not expand catalog or assign labels")
+    except (OSError,KeyError,ValueError) as error:
+        errors.append(f"Cannot validate frozen catalog/Core coverage: {error}")
     return {"project_version": "v2.0", "documents_checked": len(DOCS), "local_links_checked": links_checked,
             "errors": errors, "status": "passed" if not errors else "failed",
             "scope": "GA09 section 2.1 directory layout, current narrative documents, and report provenance; clinical eligibility is not evaluated"}

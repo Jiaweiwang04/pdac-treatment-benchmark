@@ -1,0 +1,211 @@
+[
+  {
+    "components": [
+      "anastrozole"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "本次公开来源检索未核验到可用于PDAC的单药人体结果；保留原记录，不能由药名反推其他癌症诊断。",
+    "search_query": "pancreatic anastrozole trial",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "capecitabine",
+      "carboplatin",
+      "fluorouracil",
+      "nab_paclitaxel"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "本次检索未核验完整四药组合；疗程药物全集也可能包含序贯、换药或原始录入差异。",
+    "search_query": "pancreatic fluorouracil nab-paclitaxel carboplatin capecitabine",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "capecitabine",
+      "cisplatin"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "检索所得部分研究另含吉西他滨、表柔比星或链脲佐菌素，不能支持该完整双药组合。",
+    "search_query": "pancreatic adenocarcinoma capecitabine and cisplatin second-line trial",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "capecitabine",
+      "liposomal_irinotecan"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "未核验到该完整双药组合的合格结果；不能用S-1或氟尿嘧啶替代卡培他滨。",
+    "search_query": "capecitabine liposomal irinotecan pancreatic trial results",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "carboplatin",
+      "irinotecan"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "未核验PDAC完整双药结果；不能用顺铂或奥沙利铂的试验替代卡铂。",
+    "search_query": "pancreatic carboplatin irinotecan trial results",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "carboplatin",
+      "pemetrexed"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "未核验PDAC完整双药结果；其他癌种治疗结果不能直接转作本研究候选依据。",
+    "search_query": "pancreatic carboplatin pemetrexed trial",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "cisplatin",
+      "etoposide",
+      "ifosfamide"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "未核验该完整三药组成的PDAC系统治疗结果；保留同癌症原始背景记录。",
+    "search_query": "pancreatic ifosfamide etoposide cisplatin trial",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "cisplatin",
+      "gemcitabine",
+      "mitomycin"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "检索所得体外药敏或另含其他组分的研究不满足该三药组合的纳入标准。",
+    "search_query": "pancreatic cisplatin gemcitabine mitomycin trial results",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "cisplatin",
+      "gemcitabine",
+      "paclitaxel"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "未核验普通紫杉醇三药组合的结果；不把NABPLAGEM的白蛋白紫杉醇制剂证据移用。",
+    "search_query": "pancreatic cisplatin gemcitabine paclitaxel GCP trial",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "cisplatin",
+      "mitomycin"
+    ],
+    "disposition": "reference_no_qualifying_evidence",
+    "rationale_zh": "检索发现其他组分联合或腹腔热灌注线索，未核验纯系统治疗双药的结果。",
+    "search_query": "pancreatic cisplatin mitomycin doublet patients",
+    "search_date": "2026-09-14",
+    "evidence_ids": [],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "fluorouracil",
+      "irinotecan"
+    ],
+    "disposition": "reference_incomplete_definition",
+    "rationale_zh": "原记录未记载亚叶酸，不能自动补全为FOLFIRI；保留实际药物组成及重复槽位。",
+    "search_query": "pancreatic fluorouracil irinotecan without leucovorin",
+    "search_date": "2026-09-14",
+    "evidence_ids": [
+      "GISCAD"
+    ],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "fluorouracil",
+      "oxaliplatin"
+    ],
+    "disposition": "reference_incomplete_definition",
+    "rationale_zh": "原记录未记载亚叶酸，不能自动补全为FOLFOX/OFF；保留实际药物组成及重复槽位。",
+    "search_query": "pancreatic fluorouracil oxaliplatin without leucovorin",
+    "search_date": "2026-09-14",
+    "evidence_ids": [
+      "CONKO003"
+    ],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "fluorouracil",
+      "liposomal_irinotecan"
+    ],
+    "disposition": "reference_incomplete_definition",
+    "rationale_zh": "原记录未记载亚叶酸，不能自动补全为脂质体伊立替康＋氟尿嘧啶＋亚叶酸；保留实际药物组成及重复槽位。",
+    "search_query": "pancreatic fluorouracil liposomal_irinotecan without leucovorin",
+    "search_date": "2026-09-14",
+    "evidence_ids": [
+      "NAPOLI1"
+    ],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "fluorouracil",
+      "irinotecan",
+      "oxaliplatin"
+    ],
+    "disposition": "reference_incomplete_definition",
+    "rationale_zh": "原记录未记载亚叶酸，不能自动补全为FOLFIRINOX；保留实际药物组成及重复槽位。",
+    "search_query": "pancreatic fluorouracil irinotecan oxaliplatin without leucovorin",
+    "search_date": "2026-09-14",
+    "evidence_ids": [
+      "PRODIGE4"
+    ],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "capecitabine",
+      "pembrolizumab"
+    ],
+    "disposition": "reference_outside_treatment_scope",
+    "rationale_zh": "所核验研究为术前放化疗且包含外照射；不作为晚期纯系统治疗双药候选。",
+    "search_query": "pancreatic capecitabine pembrolizumab results",
+    "search_date": "2026-09-14",
+    "evidence_ids": [
+      "CAP_PEMBRO_CRT"
+    ],
+    "patient_label": null
+  },
+  {
+    "components": [
+      "paclitaxel",
+      "s1"
+    ],
+    "disposition": "reference_outside_treatment_scope",
+    "rationale_zh": "核验研究包含静脉与腹腔双途径紫杉醇；原药名不能证明腹腔途径，纯系统治疗范围内不作同一方案纳入。",
+    "search_query": "pancreatic S-1 paclitaxel intravenous intraperitoneal results",
+    "search_date": "2026-09-14",
+    "evidence_ids": [
+      "S1_PAC_IP"
+    ],
+    "patient_label": null
+  }
+]
