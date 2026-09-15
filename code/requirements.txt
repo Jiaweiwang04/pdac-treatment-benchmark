@@ -1,2 +1,4 @@
-# Python 3.12.
-# The data processing pipeline uses the Python standard library.
+# Python 3.12. Data processing uses the standard library.
+# The following packages are used only for Word document generation.
+python-docx==1.2.0
+lxml==6.1.1

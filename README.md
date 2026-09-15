@@ -2,9 +2,9 @@
 
 版本：v2.0
 
-更新日期：20260914
+更新日期：20260915
 
-状态：候选队列和患者划分完成；治疗目录已冻结，Core组成覆盖核查已纳入流程；患者标签与模型评估待开展。
+状态：候选队列和患者划分完成；治疗目录已冻结；25例Pilot的175条预拟标签及审核包已生成，专家审核待完成。
 
 ## 项目简介
 
@@ -15,7 +15,7 @@
 | 项目 | 要求 |
 | --- | --- |
 | Python | 3.12；已在 3.12.14 验证 |
-| 第三方库 | 无；处理流程仅使用 Python 标准库 |
+| 第三方库 | 数据处理使用标准库；Word生成使用python-docx 1.2.0与lxml 6.1.1 |
 | 操作系统 | 已在 Windows 11 64 位验证 |
 | 硬件 | CPU，无 GPU 依赖；最低内存与磁盘需求尚未测定 |
 
@@ -105,7 +105,7 @@ python -B code/scripts/run_v2_0.py check
 
 当前尚无模型训练命令、训练超参数或性能评估入口。
 
-标签规则已定义，见[治疗方案标签定义](docs/notes/v2.0/treatment_label_definition_v2.0.md)：支持匹配、条件性匹配、有依据不匹配、无法判定；研究性方案显式标记，知识截止日固定为2026-09-12。当前尚未生成真实标签或专家金标准。
+标签规则已定义，见[治疗方案标签定义](docs/notes/v2.0/treatment_label_definition_v2.0.md)：支持匹配、条件性匹配、有依据不匹配、无法判定；研究性方案显式标记，知识截止日固定为2026-09-12。Pilot已形成175条预拟标签，尚无专家金标准。
 
 患者划分已按[划分协议与结果](docs/notes/v2.0/patient_split_protocol_v2.0.md)固定：435名开发患者、80名Core测试患者，25名Pilot从开发集中选取。Core和Pilot各患者首轮使用最早主候选，其他记录继承患者归属。`split`命令重建划分，已有锁定不允许静默重抽；真实标签和模型实验尚未完成。
 
@@ -114,6 +114,19 @@ python -B code/scripts/run_v2_0.py check
 [开发集逐项筛查](docs/notes/v2.0/treatment_screening_report_v2.0.md)记录84种原始药物形式的处理结论。807个开发主候选中，682个与目录完整组成一致，125个保留为参考记录。该划分没有生成患者适用性标签。
 
 目录冻结锁保存在 `data/processed/v2.0/07_treatment_catalog/treatment_catalog_lock_v2.0.json`，应随当前研究版本保留。重新运行时，程序验证方案定义、证据、药名规则、患者划分锁及开发集投影；内容改变会停止，不能删除锁来覆盖原发布版。`coverage`先验证冻结内容，再读取Core实际治疗，结果见[Core覆盖核查](docs/notes/v2.0/core_coverage_report_v2.0.md)。
+
+## Pilot标签审核
+
+25名Pilot患者的175条预拟标签、独立审核表、裁定表及完整资料索引见[Pilot审核协议](docs/notes/v2.0/pilot_review_protocol_v2.0.md)。两名专家分别使用独立审核表副本；预拟标签首轮可见，尚未形成专家金标准。
+
+```powershell
+python -B code/scripts/build_pilot_data_v2_0.py
+python -B code/scripts/build_pilot_documents_v2_0.py --project-root . --template "C:\Users\ASUS\Desktop\医生审核包_金标准103对.docx"
+```
+
+数据重新生成后需重新生成并检查Word版面。该审核包是八阶段处理之后的独立产物。
+
+执行 `python -B code/scripts/check_pilot_package_v2_0.py` 检查Pilot协议、文件链接及上游来源一致性。
 
 ## 当前结果
 

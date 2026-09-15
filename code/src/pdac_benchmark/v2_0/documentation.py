@@ -31,6 +31,7 @@ DOCS = {
     DOC_DIR + "/treatment_evidence_ledger_v2.0.md": ["来源与读取范围", "证据冲突与版本边界"],
     DOC_DIR + "/treatment_screening_report_v2.0.md": ["范围与判定", "逐项结果", "文件与复现"],
     DOC_DIR + "/core_coverage_report_v2.0.md": ["范围与方法", "覆盖结果", "未覆盖记录", "输出与后续使用"],
+    DOC_DIR + "/pilot_review_protocol_v2.0.md": ["范围与审核单位", "病例与时间处理", "方案与证据", "独立审核与裁定", "输出与复现", "局限与后续"],
     REPORT: ["目的与范围", "输入与运行记录", "处理与验证方法", "结果", "输出与追溯", "局限与下一步"],
 }
 TABLE_NAMES = {

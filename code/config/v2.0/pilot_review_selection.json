@@ -1,0 +1,358 @@
+{
+  "project_version": "v2.0",
+  "evidence_cutoff_date": "2026-09-12",
+  "expert_count": 2,
+  "proposed_labels_visible": true,
+  "selection": [
+    {
+      "case_id": "PILOT-01",
+      "patient_id": "GENIE-DFCI-003413",
+      "candidate_id": "v2.0:5caaf1b3ce2dfeef1655c5e8",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM_PAC",
+        "GEM",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "NIVO_IPI"
+      ]
+    },
+    {
+      "case_id": "PILOT-02",
+      "patient_id": "GENIE-DFCI-009150",
+      "candidate_id": "v2.0:91d01e2b88428c833146d40a",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "OX_FF",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL"
+      ]
+    },
+    {
+      "case_id": "PILOT-03",
+      "patient_id": "GENIE-DFCI-010297",
+      "candidate_id": "v2.0:66b808de971366bc0e835f8d",
+      "regimen_ids": [
+        "FOLFIRINOX",
+        "GEM_NAB",
+        "NALIRIFOX",
+        "GEM",
+        "S1",
+        "GEM_NIMO",
+        "NABPLAGEM"
+      ]
+    },
+    {
+      "case_id": "PILOT-04",
+      "patient_id": "GENIE-DFCI-010882",
+      "candidate_id": "v2.0:a1dcd8d9c43b9688e2ae3fd4",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "GEM_NAB",
+        "FOLFIRI",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL"
+      ]
+    },
+    {
+      "case_id": "PILOT-05",
+      "patient_id": "GENIE-DFCI-036068",
+      "candidate_id": "v2.0:677b81bbbbd8afd7bcfe8933",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL",
+        "NIVO_IPI"
+      ]
+    },
+    {
+      "case_id": "PILOT-06",
+      "patient_id": "GENIE-DFCI-079715",
+      "candidate_id": "v2.0:227aeac0ccecf6e2a068877d",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "NIVO_IPI",
+        "GEM_NAB_NIVO"
+      ]
+    },
+    {
+      "case_id": "PILOT-07",
+      "patient_id": "GENIE-DFCI-109931",
+      "candidate_id": "v2.0:6793f5a936dbb38bd868805f",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "NIVO_IPI",
+        "FOLFIRI"
+      ]
+    },
+    {
+      "case_id": "PILOT-08",
+      "patient_id": "GENIE-DFCI-113191",
+      "candidate_id": "v2.0:297db33bae3463c46f377aca",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL",
+        "OBS"
+      ]
+    },
+    {
+      "case_id": "PILOT-09",
+      "patient_id": "GENIE-MSK-P-0008458",
+      "candidate_id": "v2.0:04488d7866184cd521849047",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "GEMCAP",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP",
+        "CAP_ERL"
+      ]
+    },
+    {
+      "case_id": "PILOT-10",
+      "patient_id": "GENIE-MSK-P-0008644",
+      "candidate_id": "v2.0:2d5bb79939851168fa396c47",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "NIVO_IPI"
+      ]
+    },
+    {
+      "case_id": "PILOT-11",
+      "patient_id": "GENIE-MSK-P-0009117",
+      "candidate_id": "v2.0:af7605f76210a3e2d7f75864",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "OX_FF",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP",
+        "CAP_ERL"
+      ]
+    },
+    {
+      "case_id": "PILOT-12",
+      "patient_id": "GENIE-MSK-P-0010984",
+      "candidate_id": "v2.0:2f4580c3c848aad157178ffe",
+      "regimen_ids": [
+        "GEM_NAB",
+        "NALIRI_FF",
+        "DARA",
+        "OLAPARIB",
+        "TDXD",
+        "GEM_NIMO",
+        "RUCAPARIB",
+        "OBS"
+      ]
+    },
+    {
+      "case_id": "PILOT-13",
+      "patient_id": "GENIE-MSK-P-0011251",
+      "candidate_id": "v2.0:3a7504c4ffd6294675fedd3f",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "NIVO_IPI"
+      ]
+    },
+    {
+      "case_id": "PILOT-14",
+      "patient_id": "GENIE-MSK-P-0012208",
+      "candidate_id": "v2.0:394085978eb6af0848edc3cd",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "OX_FF",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL",
+        "OBS"
+      ]
+    },
+    {
+      "case_id": "PILOT-15",
+      "patient_id": "GENIE-MSK-P-0012787",
+      "candidate_id": "v2.0:8c1a494bff57ec71b62765c0",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "OX_FF",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL",
+        "GEM_NAB"
+      ]
+    },
+    {
+      "case_id": "PILOT-16",
+      "patient_id": "GENIE-MSK-P-0019378",
+      "candidate_id": "v2.0:7eef4bf67f2701bc30bc1840",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "NIVO_IPI",
+        "CAP"
+      ]
+    },
+    {
+      "case_id": "PILOT-17",
+      "patient_id": "GENIE-MSK-P-0022760",
+      "candidate_id": "v2.0:3cd8bbed9bc94219471b9c0b",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "DARA",
+        "OLAPARIB",
+        "GEM_NIMO",
+        "CAP_ERL",
+        "CAP"
+      ]
+    },
+    {
+      "case_id": "PILOT-18",
+      "patient_id": "GENIE-MSK-P-0023743",
+      "candidate_id": "v2.0:1b2c405fc1b42c093897e10e",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "NIVO_IPI"
+      ]
+    },
+    {
+      "case_id": "PILOT-19",
+      "patient_id": "GENIE-MSK-P-0029589",
+      "candidate_id": "v2.0:7e7a261571b80324be37de8b",
+      "regimen_ids": [
+        "FOLFIRINOX",
+        "GEM_NAB",
+        "NALIRIFOX",
+        "GEMCAP",
+        "S1",
+        "GEM_NIMO",
+        "NABPLAGEM"
+      ]
+    },
+    {
+      "case_id": "PILOT-20",
+      "patient_id": "GENIE-MSK-P-0031200",
+      "candidate_id": "v2.0:dba847ba64d166ff27c5946f",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "OX_FF",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL"
+      ]
+    },
+    {
+      "case_id": "PILOT-21",
+      "patient_id": "GENIE-MSK-P-0031701",
+      "candidate_id": "v2.0:596030ada0e1cfb42ab22d56",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "NIVO_IPI"
+      ]
+    },
+    {
+      "case_id": "PILOT-22",
+      "patient_id": "GENIE-UHN-893105",
+      "candidate_id": "v2.0:6bd9701be0215235294e2a98",
+      "regimen_ids": [
+        "FOLFIRINOX",
+        "GEM_NAB",
+        "NALIRIFOX",
+        "GEM",
+        "S1",
+        "GEM_NIMO",
+        "NABPLAGEM"
+      ]
+    },
+    {
+      "case_id": "PILOT-23",
+      "patient_id": "GENIE-UHN-OCT318516",
+      "candidate_id": "v2.0:0f603b7c9d0516673caf7bcf",
+      "regimen_ids": [
+        "GEM_NAB",
+        "GEM",
+        "DARA",
+        "OLAPARIB",
+        "GEM_CIS",
+        "GEM_NIMO",
+        "RUCAPARIB"
+      ]
+    },
+    {
+      "case_id": "PILOT-24",
+      "patient_id": "GENIE-VICC-186579",
+      "candidate_id": "v2.0:2116b076d4fde8e31c897baf",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL",
+        "OBS"
+      ]
+    },
+    {
+      "case_id": "PILOT-25",
+      "patient_id": "GENIE-VICC-245893",
+      "candidate_id": "v2.0:e5be4020316935cf7b243022",
+      "regimen_ids": [
+        "NALIRI_FF",
+        "FOLFIRI",
+        "OX_FF",
+        "DARA",
+        "PEMBRO",
+        "GEM_NIMO",
+        "CAP_ERL",
+        "FU"
+      ]
+    }
+  ]
+}
