@@ -1,0 +1,23 @@
+{
+  "project_version": "v2.0",
+  "phase": "10_development_split",
+  "split_version": "v2.0_development_20261003",
+  "execution_date": "20261003",
+  "evidence_cutoff_date": "2026-09-12",
+  "development_patients": 435,
+  "training_patients": 348,
+  "validation_patients": 87,
+  "core_test_patients": 80,
+  "pilot_patients": 25,
+  "split_seed": 20261003,
+  "sampling_namespace": "development_validation",
+  "sampling_algorithm": "sha256_order_with_largest_remainder_stratum_quotas",
+  "stratification": ["institution", "earliest_main_candidate_scope_at_t0"],
+  "pilot_policy": "existing_locked_pilot_training_only",
+  "outcomes_or_labels_used_for_selection": false,
+  "molecular_features_used_for_selection": false,
+  "expert_review_completed": false,
+  "processed_dir": "data/processed/v2.0/10_development_split",
+  "results_dir": "code/results/v2.0/10_development_split",
+  "report_file": "docs/notes/v2.0/development_split/development_split_protocol_v2.0.md"
+}

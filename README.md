@@ -2,9 +2,9 @@
 
 版本：v2.0
 
-更新日期：20260915
+更新日期：20261003
 
-状态：候选队列和患者划分完成；治疗目录已冻结；25例Pilot的175条预拟标签及审核包已生成，专家审核待完成。
+状态：开发集内部348人训练／87人验证划分已完成，25名Pilot全部在训练侧，Core 80人保持锁定；专家标签审核与裁定待完成。
 
 ## 项目简介
 
@@ -14,7 +14,7 @@
 
 | 项目 | 要求 |
 | --- | --- |
-| Python | 3.12；已在 3.12.14 验证 |
+| Python | 数据处理与检查已在3.11.15验证；原八阶段曾在3.12.14验证 |
 | 第三方库 | 数据处理使用标准库；Word生成使用python-docx 1.2.0与lxml 6.1.1 |
 | 操作系统 | 已在 Windows 11 64 位验证 |
 | 硬件 | CPU，无 GPU 依赖；最低内存与磁盘需求尚未测定 |
@@ -26,7 +26,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r code/requirements.txt
 ```
 
-以下命令中的 `python` 指向该环境的解释器；未激活环境时可使用 `.\.venv\Scripts\python.exe`。
+以下命令中的 `python` 指向该环境的解释器；未激活环境时可使用 `.\.venv\Scripts\python.exe`。开发集划分只使用标准库。
 
 ## 目录说明
 
@@ -107,7 +107,16 @@ python -B code/scripts/run_v2_0.py check
 
 标签规则已定义，见[治疗方案标签定义](docs/notes/v2.0/treatment_label_definition_v2.0.md)：支持匹配、条件性匹配、有依据不匹配、无法判定；研究性方案显式标记，知识截止日固定为2026-09-12。Pilot已形成175条预拟标签，尚无专家金标准。
 
-患者划分已按[划分协议与结果](docs/notes/v2.0/patient_split_protocol_v2.0.md)固定：435名开发患者、80名Core测试患者，25名Pilot从开发集中选取。Core和Pilot各患者首轮使用最早主候选，其他记录继承患者归属。`split`命令重建划分，已有锁定不允许静默重抽；真实标签和模型实验尚未完成。
+患者划分已按[划分协议与结果](docs/notes/v2.0/patient_split_protocol_v2.0.md)固定：435名开发患者、80名Core测试患者，25名Pilot从开发集中选取。Core和Pilot各患者首轮使用最早主候选，其他记录继承患者归属。`split`命令重建原开发／Core划分，已有锁定不允许静默重抽；真实标签和模型实验尚未完成。
+
+新增[开发集内部划分协议与结果](docs/notes/v2.0/development_split/development_split_protocol_v2.0.md)：348名训练患者（含全部25名既有Pilot）、87名验证患者，Core及原锁保持不变。独立入口和只读检查如下；`all`不自动执行该阶段，后续衍生数据必须继承新的`development_fold`／`effective_split`字段。
+
+```powershell
+python -B code/scripts/build_development_split_v2_0.py
+python -B code/scripts/build_development_split_v2_0.py --check
+```
+
+验证患者此前参与了全开发集治疗目录整理，本次属于后续内部验证，不能称为端到端未接触的独立验证。正式标签审核与裁定仍待完成。
 
 候选方案整理见[目录与核查报告](docs/notes/v2.0/treatment_catalog_report_v2.0.md)。`catalog`命令重建开发集药物组合、方案家族、变体及证据清单；目录发布标识为 `v2.0_catalog_20260914`，包含64个方案家族、69条证据来源和8个变体索引；其中7个变体具备剂量日程定义，OFF仅保留研究索引。37个家族标记为研究性方案。
 

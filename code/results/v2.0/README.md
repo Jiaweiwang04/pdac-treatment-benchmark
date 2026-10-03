@@ -2,7 +2,7 @@
 
 版本：v2.0
 
-更新日期：20260915
+更新日期：20261003
 
 状态：八阶段处理结果及Pilot标签审核包的文件入口。
 
@@ -16,8 +16,11 @@
 | `06_patient_split/` | 患者划分、分层名额、分布审计与来源统计 |
 | `07_treatment_catalog/` | 开发集逐项筛查、冻结治疗目录和证据来源统计 |
 | `08_core_coverage/` | 冻结后Core实际治疗组成覆盖统计及来源 |
+| `10_development_split/` | 348训练／87验证、Pilot训练预留、分层名额、分布与身份隔离、独立运行清单 |
 
 各阶段 `run_manifest.json` 记录执行状态、输入、配置及代码校验和。`documentation_check_v2.0.json` 保存测试和文档核查摘要。
+
+内部划分见[协议与结果](../../../docs/notes/v2.0/development_split/development_split_protocol_v2.0.md)，由`build_development_split_v2_0.py`独立生成，`--check`只读核对；原`all`命令不自动执行此阶段。
 
 候选表、临床记录和事件索引见 [中间数据目录](../../../data/processed/v2.0/)。研究方法与阶段结果见 [文档索引](../../../docs/notes/v2.0/project_document_index_v2.0.md)，复现命令见 [项目说明](../../../README.md)。
 

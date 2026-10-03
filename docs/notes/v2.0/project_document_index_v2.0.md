@@ -2,7 +2,7 @@
 
 版本：v2.0
 
-更新日期：20260915
+更新日期：20261003
 
 状态：对应八阶段处理、冻结治疗目录及Pilot标签审核材料。
 
@@ -22,6 +22,7 @@
 | [候选集合报告](candidate_cohort_report_v2.0.md) | 主候选、扩展组、附录与逐点证据 |
 | [治疗方案标签定义](treatment_label_definition_v2.0.md) | 四类含义、判定边界、研究属性、知识截止日与专家审核要求 |
 | [患者划分协议与结果](patient_split_protocol_v2.0.md) | 开发／Core归属、Pilot名单、索引点、分层、复现锁定及泄漏审计 |
+| [开发集内部划分协议与结果](development_split/development_split_protocol_v2.0.md) | 348训练／87验证、Pilot仅用于训练、原锁保持、分布及身份隔离检查、已有目录开发暴露 |
 | [候选治疗方案目录](treatment_catalog_report_v2.0.md) | 开发集药名及组合核查、方案家族、变体、证据缺口 |
 | [治疗证据来源说明](treatment_evidence_ledger_v2.0.md) | 指南、论文和监管文件的日期、读取层级和结果方向 |
 | [开发集治疗逐项筛查](treatment_screening_report_v2.0.md) | 84种原始记录形式的纳入或保留结论与依据 |
